@@ -26,10 +26,10 @@ BAR
 
 
 # Change ownership of the ftpusers file to root
-chown root:root /etc/vsftpd/ftpusers
+sudo chown root:root /etc/vsftpd/ftpusers
 
 # Change permissions of the ftpusers file to 640
-chmod 640 /etc/vsftpd/ftpusers
+sudo chmod 640 /etc/vsftpd/ftpusers
 
 
 
