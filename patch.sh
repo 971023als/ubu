@@ -6,6 +6,8 @@ TMP1=`SCRIPTNAME`.log
 
 > $TMP1 
 
+. U-16.sh
+
 . U-42.sh
 
 . U-59.sh
