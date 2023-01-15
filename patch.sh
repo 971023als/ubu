@@ -19,3 +19,5 @@ TMP1=`SCRIPTNAME`.log
 . U-63.sh
 
 . U-64.sh
+
+. U-72.sh
