@@ -26,15 +26,9 @@ TMP1=`SCRIPTNAME`.log
 > $TMP1
 
 
-# Open the /etc/profile file
-sudo vi /etc/profile
-
 # Add the following line to the file
-echo "TMOUT=600" | sudo tee -a /etc/profile
-echo "export TMOUT" | sudo tee -a /etc/profile
-
-# Reload the profile file
-source /etc/profile
+echo "TMOUT=600"  >  etc/profile
+echo "export TMOUT" >  etc/profile
 
 
 

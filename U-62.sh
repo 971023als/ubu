@@ -25,16 +25,6 @@ TMP1=`SCRIPTNAME`.log
 > $TMP1 
 
 
-# Get FTP account ID
-echo "Enter FTP account ID: "
-read FTP_ACCOUNT
-
-# Change login shell for FTP account
-usermod -s /bin/false $FTP_ACCOUNT
-
-# Verify the change
-grep $FTP_ACCOUNT /etc/passwd
-
 
 
 

@@ -34,13 +34,12 @@ read -p "Enter username: " username
 # Check if user is a member of the "administrator" group
 if ! groups $username | grep -q 'administrator'; then
   WARN "Error: User is not a member of the 'administrator' group"
+else
+  OK "정상입니다"
 fi
 
 # Remove user from the "administrator" group
 sudo deluser $username administrator
-
-
- 
 
  
 
