@@ -27,7 +27,7 @@ TMP1=`SCRIPTNAME`.log
 
 
 # Open the /etc/profile file
-sudo nano /etc/profile
+sudo vi /etc/profile
 
 # Add the following line to the file
 echo "TMOUT=600" | sudo tee -a /etc/profile

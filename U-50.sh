@@ -33,7 +33,7 @@ read -p "Enter username: " username
 
 # Check if user is a member of the "administrator" group
 if ! groups $username | grep -q 'administrator'; then
-  echo "Error: User is not a member of the 'administrator' group"
+  WARN "Error: User is not a member of the 'administrator' group"
 fi
 
 # Remove user from the "administrator" group

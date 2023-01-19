@@ -25,7 +25,7 @@ TMP1=`SCRIPTNAME`.log
 
 
 # Open the snmpd.conf file in a text editor
-nano /etc/snmp/snmpd.conf
+vi /etc/snmp/snmpd.conf
 
 # Add the com2sec notConfigUser default ogani line to the file
 echo "com2sec notConfigUser default ogani" >> /etc/snmp/snmpd.conf

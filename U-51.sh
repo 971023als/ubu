@@ -38,7 +38,9 @@ read -p "Enter group name: " group_name
 
 # Check if group exists
 if ! grep -q $group_name /etc/group; then
-  echo "Error: Group does not exist"
+  WARN "group 존재하지 않음"
+else
+  OK "group 존재함"
 fi
 
 # Delete group
