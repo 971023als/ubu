@@ -24,6 +24,7 @@ TMP1=`SCRIPTNAME`.log
 
 > $TMP1 
 
+
 # Backup the original rsyslog.conf file
 cp /etc/rsyslog.conf /etc/rsyslog.conf.bak
 
@@ -37,8 +38,6 @@ echo "*.emerg *" >> /etc/rsyslog.conf
 
 # Restart the rsyslog daemon
 systemctl restart rsyslog
-
-
 
 
 

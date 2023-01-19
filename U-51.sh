@@ -28,6 +28,7 @@ EOF
 
 BAR
 
+
 TMP1=`SCRIPTNAME`.log
 
 > $TMP1
@@ -38,7 +39,6 @@ read -p "Enter group name: " group_name
 # Check if group exists
 if ! grep -q $group_name /etc/group; then
   echo "Error: Group does not exist"
-  exit 1
 fi
 
 # Delete group

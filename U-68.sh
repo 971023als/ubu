@@ -23,7 +23,6 @@ TMP1=`SCRIPTNAME`.log
 
 > $TMP1 
 
-#!/bin/bash
 
 # Edit the /etc/motd file
 echo "이 시스템에 오신 것을 환영합니다!" | sudo tee -a /etc/motd

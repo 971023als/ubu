@@ -19,9 +19,11 @@ EOF
 
 BAR
 
+
 TMP1=`SCRIPTNAME`.log
 
 >$TMP1  
+
 
 # Update package list
 apt update -y
@@ -59,7 +61,6 @@ ${SCHEDULE} root /usr/bin/apt upgrade -y >> /var/log/patch_management.log 2>&1" 
 
 
 
-
 # Define schedule for patch management
 SCHEDULE="0 0 * * 1" # Runs every Monday at midnight
 
@@ -70,7 +71,6 @@ touch /var/log/apache_patch_management.log
 echo "${SCHEDULE} root /usr/bin/apt update -y >> /var/log/apache_patch_management.log 2>&1
 ${SCHEDULE} root /usr/bin/apt install --only-upgrade apache2 -y >> /var/log/apache_patch_management.log 2>&1
 ${SCHEDULE} root /etc/init.d/apache2 restart >> /var/log/apache_patch_management.log 2>&1" | crontab -
-
 
 
 
@@ -87,7 +87,6 @@ ${SCHEDULE} root /etc/init.d/mysql restart >> /var/log/mysql_patch_management.lo
 
 
 
-
 # Define schedule for patch management
 SCHEDULE="0 0 * * 1" # Runs every Monday at midnight
 
@@ -98,7 +97,6 @@ touch /var/log/php_patch_management.log
 echo "${SCHEDULE} root /usr/bin/apt update -y >> /var/log/php_patch_management.log 2>&1
 ${SCHEDULE} root /usr/bin/apt install --only-upgrade php -y >> /var/log/php_patch_management.log 2>&1
 ${SCHEDULE} root /etc/init.d/php7.4-fpm restart >> /var/log/php_patch_management.log 2>&1" | crontab -
-
 
 
 

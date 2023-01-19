@@ -19,9 +19,11 @@ EOF
 
 BAR
 
+
 TMP1=`SCRIPTNAME`.log
 
 > $TMP1 
+
 
 # Open the Apache configuration file
 sudo nano /etc/apache2/conf-available/security.conf
@@ -37,8 +39,6 @@ sudo a2enconf security
 
 # Restart Apache to apply the changes
 sudo service apache2 restart
-
-
 
 
 cat $result

@@ -45,7 +45,6 @@ read -p "Enter new UID: " new_uid
 # Check if user exists
 if ! grep -q $username /etc/passwd; then
   echo "Error: User does not exist"
-  exit 1
 fi
 
 # Change user's UID

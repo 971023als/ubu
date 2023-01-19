@@ -19,9 +19,11 @@ EOF
 
 BAR
 
+
 TMP1=`SCRIPTNAME`.log
 
 > $TMP1 
+
 
 # Get FTP account ID
 echo "Enter FTP account ID: "

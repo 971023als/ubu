@@ -38,7 +38,6 @@ read -p "Enter username: " username
 # Check if user exists
 if ! grep -q $username /etc/passwd; then
   echo "Error: User does not exist"
-  exit 1
 fi
 
 # Change user's shell to /bin/false

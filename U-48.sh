@@ -20,9 +20,11 @@ EOF
 
 BAR
 
+
 TMP1=`SCRIPTNAME`.log
 
 > $TMP1
+
 
 # Get the password minimum age
 min_age=$(grep -i "^password.*minimum.*age" /etc/login.defs | awk '{print $NF}')
