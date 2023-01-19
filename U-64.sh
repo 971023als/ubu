@@ -25,7 +25,7 @@ TMP1=`SCRIPTNAME`.log
 
 
 # Add root account to the ftpusers file
-echo "root" >> /etc/vsftpd/ftpusers
+echo "root" > /etc/vsftpd/ftpusers
 
 # Restart vsftpd service
 systemctl restart vsftpd

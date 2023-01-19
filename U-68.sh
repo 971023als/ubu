@@ -25,23 +25,23 @@ TMP1=`SCRIPTNAME`.log
 
 
 # Edit the /etc/motd file
-echo "이 시스템에 오신 것을 환영합니다!" | sudo tee -a /etc/motd
-echo "다음 경고에 주의하십시오.: " | sudo tee -a /etc/motd
+echo "이 시스템에 오신 것을 환영합니다!" > /etc/motd
+echo "다음 경고에 주의하십시오.: " > /etc/motd
 
 # Edit the /etc/issue.net file
-echo "이 시스템에 오신 것을 환영합니다!!" | sudo tee -a /etc/issue.net
-echo "다음 경고에 주의하십시오. " | sudo tee -a /etc/issue.net
+echo "이 시스템에 오신 것을 환영합니다!!" > /etc/issue.net 
+echo "다음 경고에 주의하십시오. " > /etc/issue.net 
 
 # Edit the /etc/vsftpd/vsftpd.conf file
-sudo sed -i 's/#ftpd_banner=.*/ftpd_banner=이 시스템에 오신 것을 환영합니다!/' /etc/vsftpd/vsftpd.conf
-sudo echo "ftpd_banner=다음 경고에 주의하십시오: " | sudo tee -a /etc/vsftpd/vsftpd.conf
+sudo sed -i 's/#ftpd_banner=.*/ftpd_banner=이 시스템에 오신 것을 환영합니다!/' > /etc/vsftpd/vsftpd.conf  
+sudo echo "ftpd_banner=다음 경고에 주의하십시오: " > /etc/vsftpd/vsftpd.conf  
 
 # Edit the /etc/mail/sendmail.cf file
-sudo echo "GreetingMessage=이 시스템에 오신 것을 환영합니다!" | sudo tee -a /etc/mail/sendmail.cf
+sudo echo "GreetingMessage=이 시스템에 오신 것을 환영합니다!"  > /etc/mail/sendmail.cf
 
 # Edit the /etc/named.conf file
-sudo sed -i 's/GreetingMessage.*/GreetingMessage=이 시스템에 오신 것을 환영합니다!\' /etc/named.conf
-sudo echo "GreetingMessage=다음 경고에 주의하십시오: " | sudo tee -a /etc/named.conf
+sudo sed -i 's/GreetingMessage.*/GreetingMessage=이 시스템에 오신 것을 환영합니다!\'  > /etc/named.conf
+sudo echo "GreetingMessage=다음 경고에 주의하십시오: "  > /etc/named.conf 
 
 
 cat $result

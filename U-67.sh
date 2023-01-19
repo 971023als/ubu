@@ -24,14 +24,10 @@ TMP1=`SCRIPTNAME`.log
 > $TMP1 
 
 
-# Open the snmpd.conf file in a text editor
-vi /etc/snmp/snmpd.conf
+
 
 # Add the com2sec notConfigUser default ogani line to the file
-echo "com2sec notConfigUser default ogani" >> /etc/snmp/snmpd.conf
-
-# Save and close the file
-ctrl+x, y, enter
+echo "com2sec notConfigUser default ogani" > /etc/snmp/snmpd.conf
 
 # Start the snmpd service
 systemctl start snmpd
