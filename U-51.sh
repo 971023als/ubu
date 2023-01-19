@@ -6,8 +6,6 @@
 
  
 
-TMP1=`SCRIPTNAME`.log
-
 TMP2=/tmp/tmp1
 
 TMP3=/tmp/tmp2
@@ -30,7 +28,9 @@ EOF
 
 BAR
 
+TMP1=`SCRIPTNAME`.log
 
+> $TMP1
 
 # Prompt for group name
 read -p "Enter group name: " group_name

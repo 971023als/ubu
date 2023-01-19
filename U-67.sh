@@ -4,11 +4,6 @@
 
 . function.sh
 
-
-TMP1=`SCRIPTNAME`.log
-
-> $TMP1  
-
 BAR
 
 CODE [U-67] SNMP 서비스 Community String의 복잡성 설정
@@ -22,6 +17,10 @@ cat << EOF >> $result
 EOF
 
 BAR
+
+TMP1=`SCRIPTNAME`.log
+
+> $TMP1 
 
 # Open the snmpd.conf file in a text editor
 nano /etc/snmp/snmpd.conf

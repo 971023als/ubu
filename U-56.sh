@@ -4,11 +4,6 @@
 
 . function.sh
 
-
-TMP1=`SCRIPTNAME`.log
-
-> $TMP1 
-
  
 
 BAR
@@ -25,6 +20,9 @@ EOF
 
 BAR
 
+TMP1=`SCRIPTNAME`.log
+
+> $TMP1
 
 # Open the /etc/profile file
 sudo nano /etc/profile
@@ -35,8 +33,6 @@ echo "export umask" | sudo tee -a /etc/profile
 
 # Reload the profile file
 source /etc/profile
-
-
 
 cat $result
 

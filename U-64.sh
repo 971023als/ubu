@@ -3,11 +3,6 @@
  
 
 . function.sh
-
- 
-TMP1=`SCRIPTNAME`.log
-
-> $TMP1 
  
 
 BAR
@@ -23,6 +18,10 @@ cat << EOF >> $result
 EOF
 
 BAR
+
+TMP1=`SCRIPTNAME`.log
+
+> $TMP1 
 
 
 # Add root account to the ftpusers file

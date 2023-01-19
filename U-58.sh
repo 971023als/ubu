@@ -3,11 +3,7 @@
  
 
 . function.sh
-
  
-TMP1=`SCRIPTNAME`.log
-
-> $TMP1  
  
 
 BAR
@@ -24,7 +20,9 @@ EOF
 
 BAR
 
+TMP1=`SCRIPTNAME`.log
 
+> $TMP1
 
 # Delete user accounts that do not have a home directory
 for user in $(awk -F: '{ if (!($3 >= 1000 && $3 <= 60000)) print $1}' /etc/passwd); do

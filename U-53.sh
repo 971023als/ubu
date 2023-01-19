@@ -6,10 +6,6 @@
 
  
 
-TMP1=`SCRIPTNAME`.log
-
-> $TMP1
-
 TMP2=/tmp/tmp1
 
 > $TMP2
@@ -29,6 +25,11 @@ cat << EOF >> $result
 EOF
 
 BAR
+
+
+TMP1=`SCRIPTNAME`.log
+
+> $TMP1
 
 
 # Prompt for username

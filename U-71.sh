@@ -3,11 +3,6 @@
  
 
 . function.sh
-
- 
-TMP1=`SCRIPTNAME`.log
-
-> $TMP1 
  
 
 BAR
@@ -23,6 +18,10 @@ cat << EOF >> $result
 EOF
 
 BAR
+
+TMP1=`SCRIPTNAME`.log
+
+> $TMP1 
 
 # Open the Apache configuration file
 sudo nano /etc/apache2/conf-available/security.conf

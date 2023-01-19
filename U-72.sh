@@ -5,10 +5,6 @@
 . function.sh
 
  
-TMP1=`SCRIPTNAME`.log
-
-> $TMP1 
- 
 
 BAR
 
@@ -24,7 +20,9 @@ EOF
 
 BAR
 
-#!/bin/bash
+TMP1=`SCRIPTNAME`.log
+
+> $TMP1 
 
 # Backup the original rsyslog.conf file
 cp /etc/rsyslog.conf /etc/rsyslog.conf.bak

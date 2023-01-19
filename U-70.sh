@@ -5,10 +5,6 @@
 . function.sh
 
  
-TMP1=`SCRIPTNAME`.log
-
-> $TMP1   
- 
 
 BAR
 
@@ -24,6 +20,9 @@ EOF
 
 BAR
 
+TMP1=`SCRIPTNAME`.log
+
+> $TMP1 
 
 # Stop the SMTP service
 sudo service postfix stop
