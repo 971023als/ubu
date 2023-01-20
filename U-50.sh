@@ -33,7 +33,7 @@ read -p "Enter username: " username
 
 # Check if user is a member of the "administrator" group
 if ! groups $username | grep -q 'administrator'; then
-  WARN "Error: User is not a member of the 'administrator' group"
+  WARN "사용자가 '관리자' 그룹의 멤버가 아닙니다"
 else
   OK "정상입니다"
 fi
