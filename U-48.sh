@@ -4,6 +4,10 @@
 
 . function.sh
 
+TMP1=`SCRIPTNAME`.log
+
+> $TMP1
+
  
 
 BAR
@@ -20,24 +24,7 @@ EOF
 
 BAR
 
-
-TMP1=`SCRIPTNAME`.log
-
-> $TMP1
-
-
-# Get the password minimum age
-min_age=$(grep -i "^password.*minimum.*age" /etc/login.defs | awk '{print $NF}')
-
-# check if the variable min_age is empty
-if [ -z "$min_age" ]; then
-  WARN "암호 최소 사용 기간이 설정되지 않았습니다"
-else
-  OK "암호 최소 사용 기간이 설정됨"
-fi
-
-
-
+echo "PASS_MIN_DAYS 1" > /etc/login.defs
  
 
 cat $result

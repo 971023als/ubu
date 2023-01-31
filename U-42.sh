@@ -25,6 +25,27 @@ TMP1=`SCRIPTNAME`.log
 >$TMP1  
 
 
+# Set the log file path
+log_file="/var/log/patch.log"
+
+# Check if the patch log file exists
+if [ ! -f $log_file ]; then
+  touch $log_file
+fi
+
+# Install patches
+apt-get update
+apt-get upgrade -y
+
+# Log the patches installed
+echo "Patches installed at $(date)" >> $log_file
+
+# Verify installed patches
+if apt-get -s dist-upgrade | grep "0 upgraded, 0 newly installed"; then
+  OK "No new patches available"
+else
+  WARN "New patches available"
+fi
 
 
 
