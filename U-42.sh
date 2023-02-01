@@ -1,9 +1,6 @@
 #!/bin/bash
 
- 
-
-. function.sh 
-  
+. function.sh
 
 BAR
 
@@ -11,47 +8,25 @@ CODE [U-42] 최신 보안패치 및 벤더 권고사항 적용
 
 cat << EOF >> $result
 
-[양호]: 패치 적용 정책을 수립하여 주기적으로 패치를 관리하고 있는 경우
+[양호]: 패치 적용 정책을 수립하여 주기적으로 패치관리를 하고 있으며, 패치 관련 내용을 확인하고 적용했을 경우
 
-[취약]: 패치 적용 정책을 수립하지 않고 주기적으로 패치관리를 하지 않는 경우
+[취약]: 패치 적용 정책을 수립하지 않고 주기적으로 패치관리를 하지 않거나 패치 관련 내용을 확인하지 않고 적용하지 않았을 경우
 
 EOF
 
 BAR
-
 
 TMP1=`SCRIPTNAME`.log
 
 >$TMP1  
 
 
-# Set the log file path
-log_file="/var/log/patch.log"
 
-# Check if the patch log file exists
-if [ ! -f $log_file ]; then
-  touch $log_file
-fi
 
-# Install patches
-apt-get update
-apt-get upgrade -y
-
-# Log the patches installed
-echo "Patches installed at $(date)" >> $log_file
-
-# Verify installed patches
-if apt-get -s dist-upgrade | grep "0 upgraded, 0 newly installed"; then
-  OK "No new patches available"
-else
-  WARN "New patches available"
-fi
 
 
 
 
 cat $result
 
-echo ; echo 
-
- 
+echo ; echo
