@@ -1,6 +1,15 @@
 #!/bin/bash
 
+ 
+
+ 
+
 . function.sh
+
+ 
+ TMP1=`SCRIPTNAME`.log
+
+> $TMP1
 
 BAR
 
@@ -16,12 +25,18 @@ EOF
 
 BAR
 
-TMP1=`SCRIPTNAME`.log
 
->$TMP1  
+# 섀도 암호 파일이 있는지 확인하십시오
+if [ ! -f /etc/shadow ]; then
+    WARN "쉐도우 패스워드 파일이 없습니다. 암호는 암호화되지 않고 저장되지 않습니다"
+else
+    OK "쉐도우 패스워드 파일이 있습니다. 암호는 섀도 암호를 사용하여 암호화되고 저장됩니다."
+fi
 
-##고민필요
 
+ 
+
+ 
 
 cat $result
 

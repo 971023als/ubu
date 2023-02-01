@@ -43,7 +43,6 @@ fi
 
 ## xinetd 경우 
 # vi 편집기에서 핑거 서비스 파일 열기
-vi /etc/xinetd.d/finger
 
 # 핑거 서비스 사용 안 함
 # "disable = no" 행을 "disable = yes"로 변경
