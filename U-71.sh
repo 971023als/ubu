@@ -25,9 +25,6 @@ TMP1=`SCRIPTNAME`.log
 > $TMP1 
 
 
-# Open the Apache configuration file
-sudo vi /etc/apache2/conf-available/security.conf
-
 # Find and edit the ServerTokens setting
 sudo sed -i 's/ServerTokens.*/ServerTokens Prod/' /etc/apache2/conf-available/security.conf
 
