@@ -22,6 +22,10 @@ TMP1=`SCRIPTNAME`.log
 
 #@@@@@@@@@@@@@@@@@@@@@@@조치해야하는 파일을 받아오는 방법 확인 필요@@@@@@@@@@@@@@@@
 
+sudo chmod +w /path/to/file
+
+sudo chmod u+w /path/to/file
+
 # 확인할 파일
 file_name="/path/to/file"
 

@@ -59,7 +59,7 @@ then
         echo "allow-transfer and xfrnets are not set in /etc/named.conf"
     fi
 else
-    echo "DNS service is not running"
+    OK "DNS service is not running"
 
     # kill -9를 사용하여 DNS 서비스 중지
     sudo kill -9 $PID

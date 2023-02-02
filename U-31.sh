@@ -21,7 +21,6 @@ TMP1=`SCRIPTNAME`.log
 >$TMP1  
 
 # vi로 sendmail.cf 구성 파일 열기
-vi /etc/mail/sendmail.cf
 
 # R$* $#error$@ 5.7.1$ 라인에 주석을 추가
 sed -i 's/#R\$\* \$#error\$@ 5.7.1\$:/R\$\* \$#error\$@ 5.7.1\$: "550 Relaying denied"/g' /etc/mail/sendmail.cf

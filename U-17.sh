@@ -4,7 +4,7 @@
 
 BAR
 
-CODE [U-01] $HOME/.rhosts, hosts.equiv 사용 금지
+CODE [U-17] $HOME/.rhosts, hosts.equiv 사용 금지
 
 cat << EOF >> $result
 
@@ -27,7 +27,7 @@ TMP1=`SCRIPTNAME`.log
 sudo chown root /etc/hosts.equiv
 
 # $HOME/.r 호스트의 소유권을 <user_name>(으)로 변경
-sudo chown <user_name> $HOME/.rhosts
+sudo chown user $HOME/.rhosts
 
 
 

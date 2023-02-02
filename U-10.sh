@@ -4,13 +4,13 @@
 
 BAR
 
-CODE [U-10] /etc/(x)inetd.conf 파일 소유자 및 권한 설정
+CODE [U-10] /etc/inetd.conf 파일 소유자 및 권한 설정		
 
 cat << EOF >> $result
 
-[양호]: 원격 서비스를 사용하지 않거나 사용시 직접 접속을 차단한 경우
+[양호]: /etc/inetd.conf 파일의 소유자가 root이고, 권한이 600인 경우
 
-[취약]: root 직접 접속을 허용하고 원격 서비스를 사용하는 경우
+[취약]: /etc/inetd.conf 파일의 소유자가 root가 아니거나, 권한이 600이 아닌 경우
 
 EOF
 

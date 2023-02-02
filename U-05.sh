@@ -32,6 +32,7 @@ for profile in "$root_profile" "$etc_profile"; do
   cat "$profile" | sed 's/PATH=.:$PATH:$HOME\/bin/PATH=$PATH:$HOME\/bin:./g' > "$tmp_file"
   mv "$tmp_file" "$profile"
   chmod 644 "$profile"
+  vi "$profile"
 done
 
 

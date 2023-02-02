@@ -26,12 +26,41 @@ EOF
 BAR
 
 
-# 섀도 암호 파일이 있는지 확인하십시오
-if [ ! -f /etc/shadow ]; then
-    WARN "쉐도우 패스워드 파일이 없습니다. 암호는 암호화되지 않고 저장되지 않습니다"
+Encrypts and saves password to the shadow file
+encrypt_and_save_password() {
+
+Encrypt password using the SHA-512 encryption method
+encrypted_password=$(openssl passwd -6 -salt $(openssl rand -hex 8) $1)
+
+Save the encrypted password to the shadow file
+echo "${username}:${encrypted_password}" >> /etc/shadow
+}
+
+Check if shadow file exists
+if [ -f /etc/shadow ]; then
+OK "섀도우 암호 파일 사용: /etc/shadow"
+
+Read the username and password
+read -p "Enter username: " username
+read -sp "Enter password: " password
+echo
+
+Encrypt and save password to the shadow file
+encrypt_and_save_password $password
 else
-    OK "쉐도우 패스워드 파일이 있습니다. 암호는 섀도 암호를 사용하여 암호화되고 저장됩니다."
+WARN "섀도 암호 파일을 찾을 수 없습니다. 파일 생성: /etc/shadow"
+touch /etc/shadow
+
+Read the username and password
+read -p "Enter username: " username
+read -sp "Enter password: " password
+echo
+
+Encrypt and save password to the shadow file
+encrypt_and_save_password $password
 fi
+
+OK "비밀번호가 성공적으로 암호화되어 섀도 파일에 저장되었습니다."
 
 
  
