@@ -27,7 +27,7 @@ auth required /lib/security/$ISA/pam_wheel.so use_uid
 
 
 # wheel 그룹에 su 명령어를 사용할 사용자 추가
-usermod -G wheel user
+usermod -G wheel [username]
 
 # /etc/group 파일을 수정하여 필요한 계정 추가
 wheel:x:10:root,username

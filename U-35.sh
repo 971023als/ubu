@@ -21,10 +21,19 @@ TMP1=`SCRIPTNAME`.log
 >$TMP1  
 
 # Apache 구성 파일 정의
-file="/etc/apache2/apache2.conf"
+file="/[Apache_home]/conf/httpd.conf"
 
-# "AllowOverrideNone"을 "AllowOverride AuthConfig"로 바꿉니다
-sed -i 's/Options Indexes/Options/g' $file
+# 파일이 있는지 확인
+if [ -f "$file" ]; then
+    #  vi 편집기에서 파일을 열고 "Options"을 검색
+    vi +/Options "$file"
+    # "Options Indexes"을 "Options"으로 바꾸기
+    :%s/Options Indexes/Options/g
+    # 파일 저장 후 종료
+    :wq
+else
+    echo "httpd.conf file not found in /[Apache_home]/conf/"
+fi
 
 
 
