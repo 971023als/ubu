@@ -24,14 +24,24 @@ TMP1=`SCRIPTNAME`.log
 
 > $TMP1   
 
-# Stop FTP service
-service vsftpd stop
+# Define the account name
+account_name="ftp"
 
-# Remove FTP package
-apt remove vsftpd -y
+# Find the line in the /etc/passwd file that corresponds to the account
+line=$(grep "^$account_name:" /etc/passwd)
 
-# Disable vsftpd service from starting at boot time
-systemctl disable vsftpd
+# Extract the current login shell
+current_shell=$(echo $line | cut -d: -f7)
+
+# Check if the current shell is already set to /bin/false
+if [ "$current_shell" != "/bin/false" ]; then
+  # Replace the current shell with /bin/false
+  new_line=$(echo $line | sed "s#$current_shell#/bin/false#")
+
+  # Update the /etc/passwd file
+  sudo sed -i "s#$current_shell#$/bin/false#" /etc/passwd
+fi
+
 
 
 cat $result

@@ -26,10 +26,10 @@ TMP1=`SCRIPTNAME`.log
 
 
 # Stop the SMTP service
-sudo service postfix stop
+sudo systemctl stop postfix.service
 
 # Disable the SMTP service from starting at boot
-sudo update-rc.d postfix disable
+sudo systemctl disable postfix.service
 
 
     

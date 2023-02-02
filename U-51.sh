@@ -33,17 +33,17 @@ TMP1=`SCRIPTNAME`.log
 
 > $TMP1
 
-# Prompt for group name
-read -p "Enter group name: " group_name
+# 그룹 이름 확인
+read -p "Enter group del name: " group_name
 
-# Check if group exists
+# 그룹이 있는지 확인하십시오
 if ! grep -q $group_name /etc/group; then
   WARN "존재하지 않은 계정에 GID 설정이 되어있는 경우"
 else
   OK "존재하지 않는 계정에 GID 설정을 금지한 경우"
 fi
 
-# Delete group
+# 그룹 삭제
 groupdel $group_name
 
 

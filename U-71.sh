@@ -24,15 +24,27 @@ TMP1=`SCRIPTNAME`.log
 
 > $TMP1 
 
+#!/bin/bash
 
-# Find and edit the ServerTokens setting
-sudo sed -i 's/ServerTokens.*/ServerTokens Prod/' /etc/apache2/conf-available/security.conf
+# Check if the ServerTokens directive is already set
+grep -q "^ServerTokens" /etc/apache2/conf-available/security.conf
+if [ $? -eq 0 ]; then
+  # Replace the existing ServerTokens directive
+  sed -i 's/^ServerTokens.*/ServerTokens Prod/' /etc/apache2/conf-available/security.conf
+else
+  # Add the ServerTokens directive
+  echo "ServerTokens Prod" >> /etc/apache2/conf-available/security.conf
+fi
 
-# Find and edit the ServerSignature setting
-sudo sed -i 's/ServerSignature On/ServerSignature Off/' /etc/apache2/conf-available/security.conf
-
-# Enable the security configuration
-sudo a2enconf security
+# Check if the ServerSignature directive is already set
+grep -q "^ServerSignature" /etc/apache2/conf-available/security.conf
+if [ $? -eq 0 ]; then
+  # Replace the existing ServerSignature directive
+  sed -i 's/^ServerSignature.*/ServerSignature Off/' /etc/apache2/conf-available/security.conf
+else
+  # Add the ServerSignature directive
+  echo "ServerSignature Off" >> /etc/apache2/conf-available/security.conf
+fi
 
 # Restart Apache to apply the changes
 sudo service apache2 restart
