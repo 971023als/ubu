@@ -29,28 +29,26 @@ TMP1=`SCRIPTNAME`.log
 
 
 
-# Define directory to be cleaned
-dir="/home/user/"
+# Define hidden files and directories
+hidden_files=$(find / -type f -name ".*")
+hidden_dirs=$(find / -type d -name ".*")
 
-# Change to directory
-cd $dir
-
-# Find all hidden files
-hidden_files=`find . -name ".*"`
-
-# Loop through hidden files and delete them
+# Check if any unwanted or suspicious files or directories exist
 for file in $hidden_files; do
-  if [ -f $file ]; then
-    rm -f $file
+  if [[ $(basename $file) =~ "unwanted-file" ]]; then
+    echo "Found unwanted file: $file"
+    # Perform desired action, such as deleting the file or sending a notification
+    rm $file
   fi
 done
 
-
-# Define a time threshold for files to be considered old
-THRESHOLD=60 # 60 days
-
-# Find all hidden files older than the threshold
-find / -type f -name ".*" -mtime +$THRESHOLD -exec rm -f {} \;
+for dir in $hidden_dirs; do
+  if [[ $(basename $dir) =~ "suspicious-dir" ]]; then
+    echo "Found suspicious directory: $dir"
+    # Perform desired action, such as deleting the directory or sending a notification
+    rm -r $dir
+  fi
+done
 
 
 

@@ -50,7 +50,6 @@ then
         sed -i 's/^options {/options {\n\txfrnets IP_ADDRESS;/' /etc/named.conf
         else
         echo "Unsupported BIND version: $bind_version"
-        exit 1
         fi
 
         # DNS 서비스를 다시 시작
