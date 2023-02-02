@@ -21,19 +21,10 @@ TMP1=`SCRIPTNAME`.log
 >$TMP1  
 
 # Apache 구성 파일 정의
-file="/[Apache_home]/conf/httpd.conf"
+file="/etc/apache2/apache2.conf"
 
-# 파일이 있는지 확인
-if [ -f "$file" ]; then
-    # vi 편집기에서 파일을 열고 "Options"을 검색
-    vi +/Options "$file"
-    # "Options FollowSymLinks"를 "Options"으로 바꿈
-    :%s/Options FollowSymLinks/Options/g
-    # 파일 저장 후 종료
-    :wq
-else
-    echo "httpd.conf file not found in /[Apache_home]/conf/"
-fi
+# "Options FollowSymLinks"을 "Options"로 바꿉니다
+sed -i 's/Options FollowSymLinks/Options/g' $file
 
 
 

@@ -33,8 +33,8 @@ if [ ! -f $log_file ]; then
 fi
 
 # Install patches
-yum update
-yum upgrade -y
+apt update
+apt upgrade -y
 
 # Log the patches installed
 echo "Patches installed at $(date)" >> $log_file

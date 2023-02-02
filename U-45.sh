@@ -18,19 +18,23 @@ EOF
 BAR
 
 
-# /etc/pam.d/su 파일을 아래와 같이 설정(주석제거)
-auth sufficient /lib/security/pam_rootok.so
-auth required /lib/security/pam_wheel.so debug group=wheel
-auth sufficient /lib/security/$ISA/pam_rootok.so
-auth required /lib/security/$ISA/pam_wheel.so use_uid
+# 휠 그룹이 이미 존재하는지 점검하
+if grep -q '^wheel:' /etc/group; then
+  echo "wheel group already exists"
+else
+  # 휠 그룹 생성
+  sudo groupadd wheel
+  echo "wheel group created"
+fi
 
+# su 명령 그룹을 휠로 변경
+sudo chgrp wheel /usr/bin/su
 
+# su 명령의 권한을 4750으로 변경
+sudo chmod 4750 /usr/bin/su
 
-# wheel 그룹에 su 명령어를 사용할 사용자 추가
-usermod -G wheel [username]
+sudo usermod -G wheel ubuntu
 
-# /etc/group 파일을 수정하여 필요한 계정 추가
-wheel:x:10:root,username
 
 cat $result
 

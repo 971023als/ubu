@@ -35,7 +35,7 @@ TMP1=`SCRIPTNAME`.log
 
 # Prompt for group name
 read -p "Enter group name: " group_name
-ㅕ
+
 # Check if group exists
 if ! grep -q $group_name /etc/group; then
   WARN "group 존재하지 않음"
