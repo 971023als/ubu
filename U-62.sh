@@ -24,27 +24,23 @@ TMP1=`SCRIPTNAME`.log
 
 > $TMP1 
 
-# Define the account name
+# 계정 이름 정의
 account_name="ftp"
 
-# Find the line in the /etc/passwd file that corresponds to the account
+# /etc/passwd 파일에서 계정에 해당하는 줄 찾기
 line=$(grep "^$account_name:" /etc/passwd)
 
-# Extract the current login shell
+# 현재 로그인 셸 추출
 current_shell=$(echo $line | cut -d: -f7)
 
-# Check if the current shell is already set to /bin/false
+# 현재 셸이 이미 /bin/false로 설정되어 있는지 확인하십시오
 if [ "$current_shell" != "/bin/false" ]; then
-  # Replace the current shell with /bin/false
+  # 현재 셸을 /bin/false로 바꿉니다
   new_line=$(echo $line | sed "s#$current_shell#/bin/false#")
 
-  # Update the /etc/passwd file
+  # /etc/passwd 파일 업데이트
   sudo sed -i "s#$line#$new_line#" /etc/passwd
 fi
-
-
-
-
 
 cat $result
 

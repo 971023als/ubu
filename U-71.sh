@@ -24,7 +24,6 @@ TMP1=`SCRIPTNAME`.log
 
 > $TMP1 
 
-#!/bin/bash
 
 # Check if the ServerTokens directive is already set
 grep -q "^ServerTokens" /etc/apache2/conf-available/security.conf
