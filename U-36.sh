@@ -30,7 +30,7 @@ sed -i "s/User.*/User $USERNAME/g" $APACHE_CONF_FILE
 sed -i "s/Group.*/Group $GROUPNAME/g" $APACHE_CONF_FILE
 
 # Apache 서비스 다시 시작
-systemctl restart apache2
+sudo service apache2 restart
 
 cat $result
 

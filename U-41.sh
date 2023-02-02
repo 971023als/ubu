@@ -25,10 +25,10 @@ TMP1=`SCRIPTNAME`.log
 NEW_DOCUMENT_ROOT="/path/to/new/document/root"
 
 # 현재 httpd.conf 파일 백업
-cp /usr/local/apache2/conf/httpd.conf /usr/local/apache2/conf/httpd.conf.bak
+cp /usr/local/etc/apache2/apache2.conf /usr/local/apache2/conf/httpd.conf.bak
 
 # 현재 DocumentRoot를 새 DocumentRoot로 바꾸기
-sed -i "s@DocumentRoot /usr/local/apache2/htdocs@DocumentRoot $NEW_DOCUMENT_ROOT@g" /usr/local/apache2/conf/httpd.conf
+sed -i "s@DocumentRoot /usr/local/apache2/htdocs@DocumentRoot $NEW_DOCUMENT_ROOT@g" /usr/local/etc/apache2/apache2.conf
 
 # Apache를 재시작하여 변경 내용 적용
 systemctl restart apache2

@@ -33,7 +33,7 @@ limit=1048576
 echo "
 <Directory [Directory_Path]>
     LimitRequestBody $limit
-</Directory>" >> /[Apache_home]/conf/httpd.conf
+</Directory>" >> /etc/apache2/apache2.conf
 
 # 변경 내용을 적용하려면 파일을 저장하고 Apache를 다시 시작
 sudo service apache2 restart

@@ -33,7 +33,7 @@ sudo chgrp wheel /usr/bin/su
 # su 명령의 권한을 4750으로 변경
 sudo chmod 4750 /usr/bin/su
 
-sudo usermod -G wheel ubuntu
+sudo usermod -G wheel user
 
 
 cat $result

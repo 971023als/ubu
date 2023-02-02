@@ -40,7 +40,7 @@ apt upgrade -y
 echo "Patches installed at $(date)" >> $log_file
 
 # Verify installed patches
-if yum -s dist-upgrade | grep "0 upgraded, 0 newly installed"; then
+if apt -s dist-upgrade | grep "0 upgraded, 0 newly installed"; then
   OK "No new patches available"
 else
   WARN "New patches available"
