@@ -37,9 +37,9 @@ read -p "Enter username: " username
 
 # Check if user exists
 if ! grep -q $username /etc/passwd; then
-  WARN "user 존재하지 않음"
+  WARN "로그인이 필요하지 않은 계정에 /bin/false(nologin) 쉘이 부여되어 있는 경우"
 else
-  OK "user 존재함"
+  OK "로그인이 필요하지 않은 계정에 /bin/false(nologin) 쉘이 부여되지 않은 경우"
 fi
 
 # Change user's shell to /bin/false

@@ -38,9 +38,9 @@ read -p "Enter group name: " group_name
 
 # Check if group exists
 if ! grep -q $group_name /etc/group; then
-  WARN "group 존재하지 않음"
+  WARN "존재하지 않은 계정에 GID 설정이 되어있는 경우"
 else
-  OK "group 존재함"
+  OK "존재하지 않는 계정에 GID 설정을 금지한 경우"
 fi
 
 # Delete group

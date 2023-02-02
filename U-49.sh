@@ -28,13 +28,13 @@ TMP1=`SCRIPTNAME`.log
 
 
 # Prompt for username
-read -p "Enter username: " username
+read -p "Enter userdel name: " username
 
 # Check if user exists
 if ! grep -q $username /etc/passwd; then
-  WARN "user 존재하지 않음"
+  WARN "존재함 "
 else
-  OK "user 존재함"
+  OK "존재하지 않음"
 fi
 
 # Delete user account

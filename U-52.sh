@@ -44,9 +44,9 @@ read -p "Enter new UID: " new_uid
 
 # Check if user exists
 if ! grep -q $username /etc/passwd; then
-  WARN "user 존재하지 않음"
+  WARN "동일한 UID로 설정된 사용자 계정이 존재하는 경우"
 else
-  OK "user 존재함"
+  OK "동일한 UID로 설정된 사용자 계정이 존재하지 않는 경우"
 fi
 
 # Change user's UID

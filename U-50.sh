@@ -31,9 +31,9 @@ read -p "Enter username: " username
 
 # Check if user is a member of the "manager" group
 if ! groups $username | grep -q 'manager'; then
-  WARN "user 존재하지 않음"
+  OK "불필요한 계정이 등록 안 되었습니다"
 else
-  OK "user 존재함"
+  WARN "불필요한 계정이 등록 되었습니다"
 fi
 
 # Remove user from the "manager" group
