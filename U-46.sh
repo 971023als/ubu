@@ -21,7 +21,7 @@ TMP1=`SCRIPTNAME`.log
 >$TMP1  
 
 # 파일 Open 
-sudo nano /etc/login.defs
+
 
 # 사용자에게 최소 암호 길이를 입력하라는 메시지 표시
 echo "Enter the minimum password length:"
