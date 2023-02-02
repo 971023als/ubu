@@ -26,7 +26,6 @@ TMP1=`SCRIPTNAME`.log
 limit=1048576
 
 # Apache 구성 파일 열기
-sudo vi /[Apache_home]/conf/httpd.conf
 
 # 모든 집합 디렉토리에 LimitRequestBody 지시어 추가
 # R[Directory_Path]를 실제 디렉터리 경로로 바꿉니다
