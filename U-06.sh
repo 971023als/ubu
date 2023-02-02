@@ -20,21 +20,27 @@ TMP1=`SCRIPTNAME`.log
 
 >$TMP1  
 
-root_dir="/path/to/root/directory"
-new_owner="new_user"
+# 백업 디렉토리 설정
+backup_dir="./backup_nouser_nogroup"
 
-for file in "$root_dir"/*; do
-  if [ ! -e "$file" ]; then
-    continue
-  fi
-  
-  owner=$(stat -c '%U' "$file")
-  if [ -z "$owner" ]; then
-    rm -rf "$file"
-  elif [ "$owner" != "$new_owner" ]; then
-    chown "$new_owner" "$file"
-  fi
+# 백업 디렉토리(존재하지 않는 경우) 생성
+if [ ! -d "$backup_dir" ]; then
+  mkdir "$backup_dir"
+fi
+
+# "사용자"가 소유한 파일 찾기 및 백업
+for file in $(find / -nouser -print); do
+  cp -R "$file" "$backup_dir"
+  rm -rf "$file"
 done
+
+# "no group"이 소유한 파일 찾기 및 백업
+for file in $(find / -nogroup -print); do
+  cp -R "$file" "$backup_dir"
+  rm -rf "$file"
+done
+
+echo "사용자 및 그룹 없음 소유의 파일이 백업 및 삭제되었습니다."
 
 cat $result
 
