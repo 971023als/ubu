@@ -24,24 +24,14 @@ TMP1=`SCRIPTNAME`.log
 
 > $TMP1   
 
-# Define the account name
-account_name="ftp"
+# FTP 서비스를 중지합니다:
+sudo service ftpd stop
 
-# Find the line in the /etc/passwd file that corresponds to the account
-line=$(grep "^$account_name:" /etc/passwd)
+# 부팅 시 FTP 서비스를 시작하지 않도록 설정합니다
+sudo chkconfig ftpd off
 
-# Extract the current login shell
-current_shell=$(echo $line | cut -d: -f7)
-
-# Check if the current shell is already set to /bin/false
-if [ "$current_shell" != "/bin/false" ]; then
-  # Replace the current shell with /bin/false
-  new_line=$(echo $line | sed "s#$current_shell#/bin/false#")
-
-  # Update the /etc/passwd file
-  sudo sed -i "s#$current_shell#$/bin/false#" /etc/passwd
-fi
-
+# FTP 서비스가 중지되고 비활성화되었는지 확인합니다:
+sudo service ftpd status
 
 
 cat $result
