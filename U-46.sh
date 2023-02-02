@@ -30,9 +30,6 @@ read -r min_len
 # "PASS_MIN_LEN"이 포함된 라인을 검색하고 입력된 최소 길이로 값을 설정
 sed -i "s/^PASS_MIN_LEN.*/PASS_MIN_LEN $min_len/" /etc/login.defs
 
-# 파일 저장 후 종료
-:wq
-
 cat $result
 
 echo ; echo
