@@ -4,7 +4,7 @@
 
 BAR
 
-CODE [U-24] NFS 서비스 비활성화
+CODE [U-24] NFS 서비스 비활성화		
 
 cat << EOF >> $result
 
@@ -16,22 +16,37 @@ EOF
 
 BAR
 
-TMP1=`SCRIPTNAME`.log
-
->$TMP1  
 
 
-# NFS 서비스 데몬 중지
-kill -9 $(pidof nfsd)
+#
+sudo exportfs -rav
 
-# 시작 스크립트 찾기
-if ls -al /etc/rc.d/rc*.d/* | grep -q "nfs"; then
-  # 시작 스크립트 이름 바꾸기
-  mv /etc/rc.d/rc2.d/S60nfs /etc/rc.d/rc2.d/_S60nfs
-else
-  echo "NFS startup script not found."
-fi
+#
+sudo service nfs restart
 
+
+
+# NFS 서비스 데몬을 중지
+sudo service nfs stop
+
+# NFS 서비스 실행 여부 확인
+sudo service nfs status
+
+# nfsd, statd 및 mountd의 상태 표시
+sudo service nfsd status
+sudo service statd status
+sudo service mountd status
+
+
+
+# 스크립트의 이름 변경
+sudo rm <script_name>
+
+#
+sudo mv <script_name> <new_script_name>
+
+# 
+sudo chkconfig <script_name> off
 
 cat $result
 

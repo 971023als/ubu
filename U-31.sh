@@ -4,7 +4,7 @@
 
 BAR
 
-CODE [U-31] 스팸 메일 릴레이 제한
+CODE [U-31] 스팸 메일 릴레이 제한		
 
 cat << EOF >> $result
 
@@ -16,25 +16,42 @@ EOF
 
 BAR
 
-TMP1=`SCRIPTNAME`.log
 
->$TMP1  
 
-# vi로 sendmail.cf 구성 파일 열기
 
-# R$* $#error$@ 5.7.1$ 라인에 주석을 추가
-sed -i 's/#R\$\* \$#error\$@ 5.7.1\$:/R\$\* \$#error\$@ 5.7.1\$: "550 Relaying denied"/g' /etc/mail/sendmail.cf
+# 파일 경로 지정
+file="/etc/mail/access"
 
-# 송신 메일 액세스 제한 확인
-if [ ! -f /etc/mail/access ]; then
-  echo "Creating sendmail access file"
-  touch /etc/mail/access
+# 주석을 제거할 라인 지정
+line="R$* $#error $@ 5.7.1 $: \"550 Relaying denied\""
+
+# 라인에서 주석을 제거
+sed -i "s/#//" $file
+
+# 라인이 수정되었는지 확인
+grep "$line" $file
+
+#
+sed -i '/#R/ s/#//' $file
+
+
+
+
+
+# 파일 경로 지정
+file="/etc/mail/access"
+
+# DB 파일의 경로를 지정
+db_file="/etc/mail/access.db"
+
+# 파일이 수정되었는지 확인
+if [ $(stat -c %Y $file) -gt $(stat -c %Y $db_file) ]; then
+    # 파일이 수정된 경우 DB 파일 생성
+    makemap hash $db_file < $file
+    echo "DB file created successfully"
+else
+    echo "No modifications made, DB file not created"
 fi
-
-# DB 파일 생성
-makemap hash /etc/mail/access.db < /etc/mail/access
-
-
 
 cat $result
 

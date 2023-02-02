@@ -21,19 +21,18 @@ TMP1=`SCRIPTNAME`.log
 >$TMP1  
 
 # Apache 구성 파일 정의
-file="/[Apache_home]/conf/httpd.conf"
+file="/etc/conf/httpd.conf"
 
-# 파일이 있는지 확인
-if [ -f "$file" ]; then
-    # vi 편집기에서 파일을 열고 "AllowOverride"를 검색
-    vi +/AllowOverride "$file"
-    # "AllowOverrideNone"을 "AllowOverride AuthConfig"로 바꿈
-    :%s/AllowOverride None/AllowOverride AuthConfig/g
-    # 파일 저장 후 종료
-    :wq
+# "AllowOverrideNone"을 "AllowOverride AuthConfig"로 바꿉니다
+sed -i 's/AllowOverride None/AllowOverride AuthConfig/g' $file
+
+# 변경되었는지 확인합니다
+if grep -q "AllowOverride AuthConfig" $file; then
+  OK "AllowOverrideNone이 AllowOverride AuthConfig로 성공적으로 대체되었습니다."
 else
-    echo "httpd.conf file not found in /[Apache_home]/conf/"
+  WARN "AllowOverrideNone을 AllowOverrideAuthConfig로 바꿀 수 없음"
 fi
+
 
 
 # Apache 데몬을 재시작하여 변경된 설정 적용

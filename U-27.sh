@@ -4,7 +4,7 @@
 
 BAR
 
-CODE [U-27] RPC 서비스 확인
+CODE [U-27] RPC 서비스 확인		
 
 cat << EOF >> $result
 
@@ -15,18 +15,6 @@ cat << EOF >> $result
 EOF
 
 BAR
-
-TMP1=`SCRIPTNAME`.log
-
->$TMP1  
-
-# xinetd 서비스 다시 시작
-sudo sed -i 's/rpc.cmsd.*/#&/g' /etc/inetd.conf
-sudo service inetutils-inetd restart
-
-# xinetd 일 경우!
-# xinetd 디렉토리로 이동
-cd /etc/xinetd.d/
 
 
 
@@ -39,6 +27,7 @@ user = nobody
 server = /usr/sbin/in.fingerd
 disable = yes
 }" > /etc/xinetd.d/finger
+
 
 
 cat $result

@@ -4,7 +4,7 @@
 
 BAR
 
-CODE [U-19] Finger 서비스 비활성화
+CODE [U-19] finger 서비스 비활성화		
 
 cat << EOF >> $result
 
@@ -17,39 +17,16 @@ EOF
 BAR
 
 
-TMP1=`SCRIPTNAME`.log
 
->$TMP1  
-
-# /etc/inetd.conf에서 핑거 서비스 라인을 주석 처리
-sed -i 's/^finger/#finger/' /etc/inetd.conf
-
-
-
-
-# inetd 서비스의 PID를 가져오기
-pid=$(pgrep inetd)
-
-# inetd 서비스에 HUP 신호를 보내 구성을 다시 로드
-kill -HUP $pid
-
-# inetd 서비스가 다시 시작되었는지 확인
-if pgrep inetd; then
-  echo "inetd service restarted successfully"
-else
-  echo "inetd service failed to restart"
-fi
-
-
-## xinetd 경우 
-# vi 편집기에서 핑거 서비스 파일 열기
-
-# 핑거 서비스 사용 안 함
-# "disable = no" 행을 "disable = yes"로 변경
-sed -i 's/disable = no/disable = yes/g' /etc/xinetd.d/finger
-
-# xinetd 서비스 다시 시작
-systemctl restart xinetd
+# finger 파일 설정
+echo "service finger
+{
+socket_type = stream
+wait = no
+user = nobody
+server = /usr/sbin/in.fingerd
+disable = yes
+}" > /etc/xinetd.d/finger
 
 
 cat $result

@@ -16,25 +16,22 @@ EOF
 
 BAR
 
-TMP1=`SCRIPTNAME`.log
+# /etc/securety 파일에서 pts/0 tops/x 설정 제거
+sudo sed -i 's/^[^#]*pts\/[0-9]/#&/g' /etc/securety
 
->$TMP1  
+# /etc/pam.d/login 파일 백업
+sudo cp /etc/pam.d/login /etc/pam.d/login.bak
 
-
-# 백업 원본 파일
-sudo cp /etc/security /etc/security.bak
-
-# pts/0 tops/x 설정 제거 또는 주석 달기
-sudo sed -i '/^pts\/[0-9]/s/^/#/' /etc/security
+# /etc/pam.d/login 파일에 새 설정 삽입
+sudo echo "auth required pam_tally2.so deny=5 onerr=fail unlock_time=1800" >> /etc/pam.d/login
 
 
-# (Telnet 서비스 사용시 auth required /lib/security/pam_securetty.so 새로 삽입하는 방법으로 함)
-sudo sed -i '$ a auth required /lib/security/pam_securety.so' /etc/pam.d/login
 
+# /etc/securety 파일 백업
+sudo cp /etc/securety /etc/securety.bak
 
-# (SSH 서비스 사용시 PermitRootLogin No 새로 삽입하는 방법으로 함)
-sudo sh -c "echo 'PermitRootLogin No' >> /etc/ssh/sshd_config"
-
+# /etc/securety 파일에서 pts/x 관련 설정 제거
+sudo sed -i '/pts\/[0-9]/d' /etc/securety
 
 
 cat $result

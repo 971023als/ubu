@@ -54,9 +54,6 @@ server = /usr/sdin/in.fingerd
 disable = yes
 }" > /etc/xinetd.d/rexec
 
-# xinetd 서비스 재시작
-systemctl restart xinetd
-
 
 cat $result
 

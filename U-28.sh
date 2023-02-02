@@ -4,7 +4,7 @@
 
 BAR
 
-CODE [U-28] NIS, NIS+ 점검
+CODE [U-28] NIS , NIS+ 점검		
 
 cat << EOF >> $result
 
@@ -16,20 +16,14 @@ EOF
 
 BAR
 
-TMP1=`SCRIPTNAME`.log
+# nfs 데몬 서비스 중지
+sudo systemctl stop nfs-server
 
->$TMP1  
+# rm 명령을 사용하여 /etc/init.d/ 디렉토리에 있는 스크립트 파일을 삭제
+sudo rm -f /etc/init.d/[script_name]
 
-# NFS 서비스 데몬 중지
-# [PID]를 프로세스의 실제 PID로 바꾸기
-kill -9 [PID]
-
-# NFS 시작 스크립트의 위치를 확인
-ls -al /etc/rc.d/rc*.d/* | egrep "ypserv|ypbind|ypxfrd|rpc.yppasswdd|rpc.ypupdated"
-
-# NFS 시작 스크립트 이름 바꾸기
-mv /etc/rc.d/rc2.d/S73ypbind /etc/rc.d/rc2.d/_S73ypbind
-
+# mv 명령을 사용하여 /etc/init.d/ 디렉토리에 있는 스크립트 파일의 이름 변경
+sudo mv /etc/init.d/[old_script_name] /etc/init.d/[new_script_name]
 
 cat $result
 
