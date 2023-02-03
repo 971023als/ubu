@@ -20,18 +20,13 @@ TMP1=`SCRIPTNAME`.log
 
 >$TMP1  
 
-root_dir="/path/to/root/directory"
-new_owner="root"
+# 존재하지 않는 소유자 및 그룹이 있는 파일 및 디렉터리 찾기
+results=$(find / \( -nouser -o -nogroup \) -print 2>/dev/null)
 
-for file in "$root_dir"/*; do
-  if [ ! -e "$file" ]; then
-    continue
-  fi
-  
-  owner=$(stat -c '%U' "$file")
-  if [ "$owner" != "$new_owner" ]; then
-    chown "$new_owner" "$file"
-  fi
+# 결과의 각 항목을 반복해서 살펴보다
+for item in $results; do
+  # 주인을 뿌리째 바꾸다
+  chown root:root "$item"
 done
 
 cat $result
