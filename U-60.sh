@@ -27,7 +27,7 @@ TMP1=`SCRIPTNAME`.log
 > $TMP1  
 
 
-sudo apt-get install openssh-server
+sudo apt-get install openssh-server -y
 
 sudo systemctl start ssh
 

@@ -24,13 +24,11 @@ TMP1=`SCRIPTNAME`.log
 > $TMP1 
 
 
+# 파일 정의
+file="/etc/snmpd.conf"
 
-
-# Add the com2sec notConfigUser default ogani line to the file
-echo "com2sec notConfigUser default ogani" > /etc/snmp/snmpd.conf
-
-# Start the snmpd service
-systemctl start snmpd
+# "get-community-name: public / set-commnunity-name : private"을 "get-community-name: min / set-commnunity-name: min"로 바꿉니다
+sed -i 's/get-community-name: public / set-commnunity-name : private/get-community-name: min / set-commnunity-name: min/g' $file
 
 
 
