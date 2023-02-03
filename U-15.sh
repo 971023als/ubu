@@ -4,7 +4,7 @@
 
 BAR
 
-CODE [U-15] world writable 파일 점검
+CODE [U-15] world writable 파일 점검 @@ 조치 후 웹 서비스 장애  @@
 
 cat << EOF >> $result
 
