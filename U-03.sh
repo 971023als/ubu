@@ -20,11 +20,18 @@ TMP1=`SCRIPTNAME`.log
 
 >$TMP1  
 
-# 원본 파일을 백업
-cp /etc/pam.d/system-auth /etc/pam.d/system-auth.bak
 
-# 파일 내용 변경
-echo -e "auth required /lib/security/pam_tally.so deny=5 unlock_time=120\nno_magic_root\naccount required /lib/security/pam_tally.so no_magic_root reset" > /etc/pam.d/system-auth
+# 원본 파일을 백업하다
+cp /etc/pam.d/common-auth /etc/pam.d/common-auth.bak
+
+# pam_failock.so 모듈을 추가합니다
+echo "auth        required      pam_faillock.so preauth silent deny=10 unlock_time=900" >> /etc/pam.d/common-auth
+echo "auth        [default=die] pam_faillock.so authfail deny=10 unlock_time=900" >> /etc/pam.d/common-auth
+
+# pam_unix.so 앞에 pam_failock.so 모듈을 삽입합니다
+sed -i '/pam_unix.so/ i\auth        required      pam_faillock.so preauth silent deny=10 unlock_time=900' /etc/pam.d/common-auth
+sed -i '/pam_unix.so/ i\auth        [default=die] pam_faillock.so authfail deny=10 unlock_time=900' /etc/pam.d/common-auth
+
 
 
 cat $result

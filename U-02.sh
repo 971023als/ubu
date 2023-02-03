@@ -20,15 +20,14 @@ TMP1=`SCRIPTNAME`.log
 
 >$TMP1  
 
-# 확인필요
+# 원본 파일을 백업하다
+cp /etc/pam.d/common-password /etc/pam.d/common-password
 
-# 원본 파일을 백업
-cp /etc/pam.d/system-auth /etc/pam.d/system-auth.bak
+# 최소 암호 길이를 8자로 설정
+echo "password requisite pam_pwquality.so minlen=8" >> /etc/pam.d/common-password
 
-# 파일 내용 변경
-echo -e "auth required /lib/security/pam_tally.so deny=5 unlock_time=120\nno_magic_root\naccount required /lib/security/pam_tally.so no_magic_root reset" > /etc/pam.d/system-auth
-
-
+# 영문, 숫자 및 특수 문자 필요
+echo "password requisite pam_pwquality.so dcredit=-1 ucredit=-1 ocredit=-1 lcredit=-1" >> /etc/pam.d/common-password
 
 cat $result
 
