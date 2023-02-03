@@ -26,18 +26,15 @@ TMP1=`SCRIPTNAME`.log
 
 > $TMP1
 
-# Prompt for username
-read -p "Enter username: " username
+necessary_accounts=("root" "bin" "daemon" "adm" "lp" "sync" "shutdown" "halt" "ubuntu" "user")
 
-# Check if user is a member of the "manager" group
-if ! groups $username | grep -q 'manager'; then
-  OK "불필요한 계정이 등록 안 되었습니다"
-else
-  WARN "불필요한 계정이 등록 되었습니다"
-fi
+all_users=$(getent passwd | awk -F: '{print $1}')
 
-# Remove user from the "manager" group
-gpasswd -d $username manager
+for user in $all_users; do
+  if ! echo "${necessary_accounts[@]}" | grep -wq "$user"; then
+    userdel "$user"
+  fi
+done
 
  
 
