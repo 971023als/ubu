@@ -20,14 +20,18 @@ TMP1=`SCRIPTNAME`.log
 
 >$TMP1  
 
-# 존재하지 않는 소유자 및 그룹이 있는 파일 및 디렉터리 찾기
+# specify the user to replace the owner with
+new_owner=user
+
+# find files and directories with nonexistent owners and groups
 results=$(find / \( -nouser -o -nogroup \) -print 2>/dev/null)
 
-# 결과의 각 항목을 반복해서 살펴보다
+# loop through each item in the results
 for item in $results; do
-  # 주인을 뿌리째 바꾸다
-  chown root:root "$item"
+  # change the owner to the specified user
+  chown $new_owner:$new_owner "$item"
 done
+
 
 cat $result
 
