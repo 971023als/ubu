@@ -28,9 +28,9 @@ TMP1=`SCRIPTNAME`.log
 echo "이 시스템에 오신 것을 환영합니다!" > /etc/motd
 echo "다음 경고에 주의하십시오.: " >> /etc/motd
 
-# /etc/issue 파일 편집
-echo "이 시스템에 오신 것을 환영합니다!" > /etc/issue
-echo "다음 경고에 주의하십시오.: " >> /etc/issue
+# /etc/issue.net 파일 편집
+echo "이 시스템에 오신 것을 환영합니다!" > /etc/issue.net
+echo "다음 경고에 주의하십시오.: " >> /etc/issue.net
 
 # /etc/vsftpd/vsftpd.conf 파일 편집
 sudo sed -i 's/#ftpd_banner=.*/ftpd_banner=이 시스템에 오신 것을 환영합니다!/' /etc/vsftpd/vsftpd.conf
