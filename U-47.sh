@@ -20,7 +20,6 @@ TMP1=`SCRIPTNAME`.log
 
 >$TMP1  
 
-# 파일Open
 
 
 echo "PASS_MAX_DAYS 10" > /etc/login.defs
