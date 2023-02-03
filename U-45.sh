@@ -18,22 +18,19 @@ EOF
 BAR
 
 
-# 휠 그룹이 이미 존재하는지 점검하
-if grep -q '^wheel:' /etc/group; then
-  INFO "휠 그룹이 이미 존재합니다"
-else
-  # 휠 그룹 생성
-  sudo groupadd wheel
-  INFO "휠 그룹 생성됨"
-fi
+# su 명령의 그룹을 휠 그룹으로 변경합니다
+chgrp wheel /bin/su
 
-# su 명령 그룹을 휠로 변경
-sudo chgrp wheel /usr/bin/su
+# su 명령의 사용 권한을 변경하여 새 셸을 만들 수 있도록 허용
+chmod 4750 /bin/su
 
-# su 명령의 권한을 4750으로 변경
-sudo chmod 4750 /usr/bin/su
+# 지정한 계정을 새 셸에 추가합니다
+new_accounts="root bin daemon adm lp sync halt subuntu user"
+echo "Adding accounts: $new_accounts"
+for account in $new_accounts; do
+  usermod -a -G wheel $account
+done
 
-sudo usermod -G wheel user
 
 
 cat $result

@@ -20,21 +20,21 @@ TMP1=`SCRIPTNAME`.log
 
 >$TMP1  
 
-#@@@@@@@@@100이상으로 하면 되는데, 어떤값으로 하면 좋은지 상의필요.@@@@@@@@@@
+# /etc/passwd에서 UID가 0인 계정을 확인합니다
+if grep -q ":0:" /etc/passwd; then
+  # UID가 0인 계정의 사용자 이름 가져오기
+  username=$(grep ":0:" /etc/passwd | cut -d: -f1)
 
-# 현재 UID가 0인지 확인
-if [ $UID -eq 0 ]; then
-  # UID를 100으로 변경 
-  usermod -u 100 $USER
-  # UID 변경이 성공했는지 확인
-  if [ $? -eq 0 ]; then
-    echo "UID successfully changed to 100"
-  else
-    echo "Error: UID change failed"
+  # 계정이 사용 중인지 확인합니다
+  if who | grep -q $username; then
+    INFO "UID가 0인 계정 $username이(가) 현재 사용 중이므로 변경하거나 삭제할 수 없습니다."
   fi
-else
-  echo "Error: Only root user can change UID"
-fi
+
+  # 계정의 UID를 다른 값으로 변경합니다
+  new_uid=1000 # 예제 값, 필요에 따라 변경
+  usermod -u $new_uid $username
+  OK "$username의 UID를 $new_uid로 변경했습니다."
+
 
 cat $result
 
