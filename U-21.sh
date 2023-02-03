@@ -16,7 +16,11 @@ EOF
 
 BAR
 
+rlogin="/etc/xinetd.d/rlogin"
 
+rsh="/etc/xinetd.d/rsh"
+
+rexec="/etc/xinetd.d/rexec"
 
 # rlogin 파일 생성
 echo "service rlogin
@@ -28,10 +32,10 @@ log_on_success += USERID
 log_on_failure += USERID
 server = /usr/sdin/in.fingerd
 disable = yes
-}" > /etc/xinetd.d/rlogin
+}" > $rlogin
 
 # rsh 파일 생성
-echo "service rlogin
+echo "service rsh
 {
 socket_type = stream
 wait = no
@@ -40,10 +44,10 @@ log_on_success += USERID
 log_on_failure += USERID
 server = /usr/sdin/in.fingerd
 disable = yes
-}" > /etc/xinetd.d/rsh
+}" > $rsh
 
 # rexec 파일 생성
-echo "service rlogin
+echo "service rexec
 {
 socket_type = stream
 wait = no
@@ -52,7 +56,7 @@ log_on_success += USERID
 log_on_failure += USERID
 server = /usr/sdin/in.fingerd
 disable = yes
-}" > /etc/xinetd.d/rexec
+}" > $rexec
 
 
 cat $result
