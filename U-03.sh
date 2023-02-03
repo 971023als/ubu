@@ -21,17 +21,19 @@ TMP1=`SCRIPTNAME`.log
 >$TMP1  
 
 # 원본 파일 백업
-cp /etc/pam.d/system-auth /etc/pam.d/system-auth.bak
+cp /etc/pam.d/common-auth /etc/pam.d/common-auth.bak
 
-# 원하는 줄 바꾸기
-sed -i 's/auth.*/auth required \/lib\/security\/pam_tally.so deny=5 unlock_time=120 no_magic_root/' /etc/pam.d/system-auth
-
-# 원하는 라인이 없는 경우 추가
-grep -q 'account required /lib/security/pam_tally.so no_magic_root reset' /etc/pam.d/system-auth || echo 'account required /lib/security/pam_tally.so no_magic_root reset' >> /etc/pam.d/system-auth
+#  파일 수정
+echo "auth required /lib/security/pam_tally.so deny=5 unlock_time=120 no_magic_root" >> /etc/pam.d/common-auth
+echo "account required /lib/security/pam_tally.so no_magic_root reset" >> /etc/pam.d/common-auth
 
 # 변경 사항 확인
-echo "The following lines were added to /etc/pam.d/system-auth:"
-grep 'pam_tally' /etc/pam.d/system-auth
+grep -q "auth required /lib/security/pam_tally.so deny=5 unlock_time=120 no_magic_root" /etc/pam.d/common-auth
+if [ $? -eq 0 ]; then
+    OK "/etc/pam.d/common-auth 파일에 성공적으로 추가되었습니다"
+else
+    WARN "/etc/pam.d/common-auth 파일에 줄을 추가하는 동안 오류가 발생했습니다."
+fi
 
 
 
