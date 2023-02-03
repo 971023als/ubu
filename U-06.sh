@@ -21,7 +21,7 @@ TMP1=`SCRIPTNAME`.log
 >$TMP1  
 
 root_dir="/path/to/root/directory"
-new_owner="new_user"
+new_owner="root"
 
 for file in "$root_dir"/*; do
   if [ ! -e "$file" ]; then
@@ -29,9 +29,7 @@ for file in "$root_dir"/*; do
   fi
   
   owner=$(stat -c '%U' "$file")
-  if [ -z "$owner" ]; then
-    rm -rf "$file"
-  elif [ "$owner" != "$new_owner" ]; then
+  if [ "$owner" != "$new_owner" ]; then
     chown "$new_owner" "$file"
   fi
 done
