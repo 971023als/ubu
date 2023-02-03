@@ -45,9 +45,6 @@ fi
 # Change user's shell to /bin/false
 usermod -s /bin/false $username
 
-# or change user's shell to /sbin/nologin
-# usermod -s /sbin/nologin $username
-
 
 
 

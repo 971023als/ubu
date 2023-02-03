@@ -27,7 +27,7 @@ sudo chown root:root /etc/inetd.conf
 sudo chmod 600 /etc/inetd.conf
 
 
-# # LINUX - xinetd
+
 # 소유자 및 그룹을 루트로 변경
 sudo chown root:root /etc/xinetd.conf
 

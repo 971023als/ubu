@@ -26,15 +26,24 @@ EOF
 BAR
 
 
-SI=`apt list installed | grep sendmail | awk '{print $1}'`
+# Sendmail 서비스 중지
+sudo service sendmail stop
 
-if [ $SI ]
-	then
-		SV=`echo \$Z | /usr/lib/sendmail -bt -d0 | sed -n '1p' | awk '{print $2}'`
-		OK " 설치된 sendmail의 버전은 $SV 입니다" 
-		OK " 최신 버전의 설치 및 업그레이드를 위해 sendmail 데몬의 중지가 필요하기 때문에 적절한 시간대에 수행해야 함" 
-	else
-		WARN " sendmail이 설치되어 있지 않습니다 " 
+# Sendmail 서비스가 중지되었는지 확인합니다
+if [ $? -eq 0 ]; then
+  OK "메일 보내기 서비스가 성공적으로 중지됨"
+else
+  WARN "Sendmail 서비스를 중지하지 못했습니다"
+fi
+
+# 부팅 시 Sendmail 서비스를 시작하지 않도록 설정
+sudo chkconfig sendmail off
+
+# Sendmail 서비스가 부팅 시 시작되지 않도록 설정되었는지 확인합니다
+if [ $(chkconfig --list sendmail | grep on | wc -l) -eq 0 ]; then
+  OK "부팅 시 메일 보내기 서비스를 시작할 수 없음"
+else
+  WARN "부팅 시 Sendmail 서비스를 시작하지 않도록 설정하지 못했습니다."
 fi
 
 

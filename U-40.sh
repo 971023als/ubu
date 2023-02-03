@@ -25,9 +25,6 @@ TMP1=`SCRIPTNAME`.log
 # 파일 크기 제한 설정(바이트)
 limit=1048576
 
-# Apache 구성 파일 열기
-
-
 # 모든 집합 디렉토리에 LimitRequestBody 지시어 추가
 # R[Directory_Path]를 실제 디렉터리 경로로 바꿉니다
 echo "

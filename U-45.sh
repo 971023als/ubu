@@ -20,11 +20,11 @@ BAR
 
 # 휠 그룹이 이미 존재하는지 점검하
 if grep -q '^wheel:' /etc/group; then
-  echo "wheel group already exists"
+  INFO "휠 그룹이 이미 존재합니다"
 else
   # 휠 그룹 생성
   sudo groupadd wheel
-  echo "wheel group created"
+  INFO "휠 그룹 생성됨"
 fi
 
 # su 명령 그룹을 휠로 변경

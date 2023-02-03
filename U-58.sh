@@ -24,14 +24,7 @@ TMP1=`SCRIPTNAME`.log
 
 > $TMP1
 
-# Delete user accounts that do not have a home directory
-for user in $(awk -F: '{ if (!($3 >= 1000 && $3 <= 60000)) print $1}' /etc/passwd); do
-  if [ ! -d /home/$user ]; then
-    userdel $user
-  fi
-done
-
-# Specify a home directory for user accounts that do not have a home directory
+# 홈 디렉토리가 없는 사용자 계정의 홈 디렉토리 지정
 for user in $(awk -F: '{ if ($3 >= 1000 && $3 <= 60000) print $1}' /etc/passwd); do
   if [ ! -d /home/$user ]; then
     usermod -d /home/$user $user

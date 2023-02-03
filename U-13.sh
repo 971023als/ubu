@@ -17,11 +17,14 @@ EOF
 
 BAR
 
-# SUID(사용자 ID 설정) 또는 SGID(그룹 ID 설정) 비트가 설정된 시스템의 모든 파일을 찾고 권한 및 소유권 정보를 표시
-find / -type f \( -perm /u+s -o -perm /g+s \) -exec ls -l {} \;
+# SUID 또는 SGID 비트가 설정된 모든 파일 찾기
+files=$(find / -type f \( -perm /u+s -o -perm /g+s \))
 
-# SUID 또는 SGID 비트가 설정된 시스템의 모든 파일을 찾은 다음 제거
-sudo find / -type f \( -perm /u+s -o -perm /g+s \) -exec chmod u-s,g-s {} \;
+# 파일을 루프하여 SUID 및 SGID 비트 제거
+for file in $files; do
+  sudo chmod u-s,g-s $file
+done
+
 
 cat $result
 

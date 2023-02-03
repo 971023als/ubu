@@ -21,8 +21,6 @@ BAR
 # sendmail.cf 파일의 경로를 지정
 file="/etc/mail/sendmail.cf"
 
-# vi 편집기를 사용하여 파일 열기
-
 
 
 # sendmail.cf 파일의 경로를 지정

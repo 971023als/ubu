@@ -25,11 +25,11 @@ TMP1=`SCRIPTNAME`.log
 > $TMP1 
 
 
-# Stop the SMTP service
-sudo systemctl stop postfix.service
+# SMTP 서비스 중지
+sudo service sendmail stop
 
-# Disable the SMTP service from starting at boot
-sudo systemctl disable postfix.service
+# 부팅 시 SMTP 서비스 시작을 비활성화합니다.
+sudo chkconfig sendmail off
 
 
     

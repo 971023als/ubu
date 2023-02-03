@@ -4,7 +4,7 @@
 
 BAR
 
-CODE [U-06] 파일 및 디렉터리 소유자 설정
+CODE [U-06] 파일 및 디렉터리 소유자 설정 @@su 말고 sudo su 해야 함 @@
 
 cat << EOF >> $result
 
@@ -20,21 +20,18 @@ TMP1=`SCRIPTNAME`.log
 
 >$TMP1  
 
-root_dir="/path/to/root/directory"
-new_owner="new_user"
+# 소유자를 바꿀 사용자를 지정합니다
+new_owner=user
 
-for file in "$root_dir"/*; do
-  if [ ! -e "$file" ]; then
-    continue
-  fi
-  
-  owner=$(stat -c '%U' "$file")
-  if [ -z "$owner" ]; then
-    rm -rf "$file"
-  elif [ "$owner" != "$new_owner" ]; then
-    chown "$new_owner" "$file"
-  fi
+# 존재하지 않는 소유자 및 그룹이 있는 파일 및 디렉터리 찾기
+results=$(find / \( -nouser -o -nogroup \) -print 2>/dev/null)
+
+# 결과의 각 항목을 반복해서 살펴보다
+for item in $results; do
+  # 소유자를 지정된 사용자로 변경
+  chown $new_owner:$new_owner "$item"
 done
+
 
 cat $result
 

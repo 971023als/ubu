@@ -31,7 +31,7 @@ sudo chmod 750 /usr/bin/crontab
 dir="/etc/cron.d/"
 
 # cron 관련 파일 정의
-files=("cron.daily" "cron.hourly" "cron.monthly" "cron.weekly")
+files=("crontab" "cron.hourly" "cron.daily" "cron.weekly" "cron.monthly"  "cron.allow" "cron.deny" )
 
 for file in "${files[@]}"
 do

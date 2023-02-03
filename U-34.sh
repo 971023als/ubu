@@ -22,46 +22,25 @@ TMP1=`SCRIPTNAME`.log
 
 
 
-# DNS 서비스가 실행 중인지 확인
-if ps -ef | grep -q "named" | grep -v "grep"
-then
-    # 실행 중인 프로세스의 PID
-    PID=$(ps -ef | grep "named" | grep -v "grep" | awk '{print $2}')
-    echo "DNS service is running with PID $PID"
+#DNS 서비스 중지
+sudo service named stop
 
-    # /etc/name.conf에서 allow-transfer 및 xfrnets 설정을 확인
-    ALLOW_TRANSFER=$(grep -o "allow-transfer" /etc/named.conf)
-    XFRNETS=$(grep -o "xfrnets" /etc/named.conf)
-    if [ -n "$ALLOW_TRANSFER" ] && [ -n "$XFRNETS" ]
-    then
-        echo "allow-transfer and xfrnets are set in /etc/named.conf"
+#부팅 시 DNS 서비스를 시작하지 않도록 설정
+sudo chkconfig named off
 
-        # 필요에 따라 allow-transfer 및 xfrnets 설정 수정
-        # ...
-        # BIND 버전 확인
-        bind_version=$(named -v | awk '{print $3}')
+#DNS 서비스가 중지되었는지 확인합니다
 
-        # BIND 버전을 기준으로 설정 수정
-        if [ "$bind_version" == "8" ]; then
-        # /etc/name.conf의 옵션에서 allow-transfer 수정
-        sed -i 's/^options {/options {\n\tallow-transfer IP_ADDRESS;/' /etc/named.conf
-        elif [ "$bind_version" == "4.9" ]; then
-        #  /etc/name.conf의 옵션에서 xfrnets 수정
-        sed -i 's/^options {/options {\n\txfrnets IP_ADDRESS;/' /etc/named.conf
-        else
-        echo "Unsupported BIND version: $bind_version"
-        fi
-
-        # DNS 서비스를 다시 시작
-        sudo systemctl restart named
-    else
-        echo "allow-transfer and xfrnets are not set in /etc/named.conf"
-    fi
+if [ $(sudo service named status | grep -c "is running") -eq 0 ]; then
+OK "DNS 서비스가 중지되었습니다."
 else
-    OK "DNS service is not running"
+WARN "DNS 서비스가 아직 실행 중입니다."
+fi
 
-    # kill -9를 사용하여 DNS 서비스 중지
-    sudo kill -9 $PID
+#부팅 시 DNS 서비스가 사용되지 않도록 설정되었는지 확인
+if [ "$(sudo chkconfig --list named | grep -c "3:off")" -eq 1 ]; then
+OK "DNS 서비스가 부팅 시 비활성화됩니다."
+else
+WARN "부팅 시 DNS 서비스가 사용되지 않도록 설정되지 않았습니다."
 fi
 
 

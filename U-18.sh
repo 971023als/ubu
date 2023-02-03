@@ -20,6 +20,7 @@ TMP1=`SCRIPTNAME`.log
 
 >$TMP1  
 
+# 주요통신기반시설 IP 범위 제시 바탕으로 설정
 
 # IP 범위 192.168.1.0/24에서 포트 22로 들어오는 TCP 연결 허용192.168.1.0/24
 sudo iptables -A INPUT -p tcp -s 192.168.1.0/24 --dport 22 -j ACCEPT

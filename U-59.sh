@@ -29,15 +29,15 @@ TMP1=`SCRIPTNAME`.log
 
 
 
-# Define hidden files and directories
+# 숨김 파일 및 디렉토리 정의
 hidden_files=$(find / -type f -name ".*")
 hidden_dirs=$(find / -type d -name ".*")
 
-# Check if any unwanted or suspicious files or directories exist
+# 원치 않거나 의심스러운 파일이나 디렉토리가 있는지 확인
 for file in $hidden_files; do
   if [[ $(basename $file) =~ "unwanted-file" ]]; then
     echo "Found unwanted file: $file"
-    # Perform desired action, such as deleting the file or sending a notification
+     # 파일 삭제 또는 알림 전송과 같은 원하는 작업을 수행합니다.
     rm $file
   fi
 done
@@ -45,7 +45,7 @@ done
 for dir in $hidden_dirs; do
   if [[ $(basename $dir) =~ "suspicious-dir" ]]; then
     echo "Found suspicious directory: $dir"
-    # Perform desired action, such as deleting the directory or sending a notification
+    # 디렉터리 삭제 또는 알림 전송과 같은 원하는 작업을 수행합니다.
     rm -r $dir
   fi
 done
