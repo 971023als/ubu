@@ -25,19 +25,7 @@ TMP1=`SCRIPTNAME`.log
 > $TMP1 
 
 
-# Backup the original rsyslog.conf file
-cp /etc/rsyslog.conf /etc/rsyslog.conf.bak
 
-# Modify the rsyslog.conf file
-echo "*.info;mail.none;authpriv.none;cron.none /var/log/messages" >> /etc/rsyslog.conf
-echo "authpriv.* /var/log/secure" >> /etc/rsyslog.conf
-echo "mail.* /var/log/maillog" >> /etc/rsyslog.conf
-echo "cron.* /var/log/cron" >> /etc/rsyslog.conf
-echo "*.alert /dev/console" >> /etc/rsyslog.conf
-echo "*.emerg *" >> /etc/rsyslog.conf
-
-# Restart the rsyslog daemon
-systemctl restart rsyslog
 
 
 
