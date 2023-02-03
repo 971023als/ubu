@@ -20,20 +20,15 @@ TMP1=`SCRIPTNAME`.log
 
 >$TMP1  
 
-# @@@@@@@@@@@@@@@@@@@@@@별도의 디렉터리 경로를 아래처럼 할 것인지 확인 필요@@@@@@@@@@@@@@@@@@@@@@@@@222
-# 새 DocumentRoot 정의
-NEW_DOCUMENT_ROOT="/path/to/new/document/root"
+# Apache의 구성 디렉터리로 변경
+file="/etc/apache2/sites-enabled/"
 
-# 현재 httpd.conf 파일 백업
-cp /usr/local/etc/apache2/apache2.conf /usr/local/apache2/conf/httpd.conf.bak
+# DocumentRoot 값을 원하는 경로로 바꿉니다
+sed -i 's#DocumentRoot /var/www/html#DocumentRoot /home/ubuntu/newphp/' $file
 
-# 현재 DocumentRoot를 새 DocumentRoot로 바꾸기
-sed -i "s@DocumentRoot /usr/local/apache2/htdocs@DocumentRoot $NEW_DOCUMENT_ROOT@g" /usr/local/etc/apache2/apache2.conf
 
-# Apache를 재시작하여 변경 내용 적용
+# Restart Apache to apply the changes
 systemctl restart apache2
-
-
 
 
 
