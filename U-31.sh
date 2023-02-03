@@ -48,9 +48,9 @@ db_file="/etc/mail/access.db"
 if [ $(stat -c %Y $file) -gt $(stat -c %Y $db_file) ]; then
     # 파일이 수정된 경우 DB 파일 생성
     makemap hash $db_file < $file
-    echo "DB file created successfully"
+    INFO "DB 파일이 생성되었습니다"
 else
-    echo "No modifications made, DB file not created"
+    OK "수정 사항 없음, DB 파일이 생성되지 않음"
 fi
 
 cat $result

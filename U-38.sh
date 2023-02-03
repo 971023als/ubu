@@ -21,15 +21,15 @@ TMP1=`SCRIPTNAME`.log
 >$TMP1  
 
 # 불필요한 파일 및 디렉터리 확인
-echo "Checking for unnecessary files and directories in Apache home directory..."
+INFO "Apache 홈 디렉토리에서 불필요한 파일 및 디렉터리 확인..."
 find /etc/apache2/apache2.conf -type d -name "manual"
 
 # manual 디렉터리 및 파일 제거
-echo "Removing manual directory and files..."
+INFO "수동 디렉터리 및 파일 제거..."
 sudo rm -rf /etc/apache2/apache2.conf/manual
 
 # 파일 및 디렉터리가 제거되었는지 확인
-echo "Verifying that the manual directory and files were removed..."
+INFO "수동 디렉터리 및 파일이 제거되었는지 확인하는 중..."
 ls /etc/apache2/apache2.conf
 
 
