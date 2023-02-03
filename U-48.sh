@@ -24,7 +24,7 @@ EOF
 
 BAR
 
-echo "PASS_MIN_DAYS 1" > /etc/login.defs
+echo "PASS_MIN_DAYS 7" > /etc/login.defs
  
 
 cat $result
