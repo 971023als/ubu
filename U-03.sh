@@ -20,8 +20,11 @@ TMP1=`SCRIPTNAME`.log
 
 >$TMP1  
 
- 
+# 계정 잠금 임계값을 5로 설정
+echo "auth required pam_tally2.so deny=5 unlock_time=900" >> /etc/pam.d/common-auth
 
+# 변경 사항 확인
+grep "pam_tally2.so" /etc/pam.d/common-auth
 
 
 
