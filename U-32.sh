@@ -29,17 +29,21 @@ else
   INFO "SMTP 서비스가 실행되고 있지 않습니다"
 fi
 
-# 원본 submit.cf 파일 백업
-cp /etc/mail/submit.cf /etc/mail/submit.cf.bak
+sendmail_cfg_file="/etc/mail/sendmail.cf"
 
-# submit.cf에서 sendmail_enable 변수를 NO로 설정합니다
-sed -i 's/^O sendmail_enable=.*/O sendmail_enable=NO/' /etc/mail/submit.cf
-
-# submit.cf에서 sendmail_enable 변수가 NO로 설정되어 있는지 확인합니다
-if grep -q "^O sendmail_enable=NO" /etc/mail/submit.cf; then
-  OK "/etc/mail/submit.cf에서 sendmail_enable 변수가 NO로 설정되었습니다"
+#  sendmail.cf 파일이 있는지 확인합니다
+if [ -f "$sendmail_cfg_file" ]; then
+  # 개인 정보 옵션 라인이 있는지 확인합니다
+  if grep -q "^O PrivacyOptions=" "$sendmail_cfg_file"; then
+    # 기존 개인 정보 옵션 줄 바꾸기
+    sed -i 's/^O PrivacyOptions=.*/O PrivacyOptions= restrictqrun/' "$sendmail_cfg_file"
+  else
+    # 개인 정보 옵션 라인 추가
+    echo "O PrivacyOptions= restrictqrun" >> "$sendmail_cfg_file"
+  fi
+  OK "sendmail.cf 파일에 개인 정보 옵션이 추가/수정되었습니다."
 else
-  WARN "/etc/mail/submit.cf에서 sendmail_enable 변수를 NO로 설정하지 못했습니다"
+  WARN "sendmail.cf 파일을 찾을 수 없습니다."
 fi
 
 
