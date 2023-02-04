@@ -17,6 +17,7 @@ EOF
 
 BAR
 
+sudo group del wheel
 
 # su 명령의 그룹을 휠 그룹으로 변경합니다
 chgrp wheel /bin/su
@@ -25,7 +26,14 @@ chgrp wheel /bin/su
 chmod 4750 /bin/su
 
 # 지정한 계정을 새 셸에 추가합니다
-new_accounts="root bin daemon adm lp sync halt subuntu user"
+new_accounts=("root bin daemon adm 
+lp sync shutdown halt ubuntu user
+messagebus syslog avahi kernoops
+whoopsie colord systemd-network 
+systemd-resolve systemd-timesync mysql
+dbus rpc rpcuser haldaemon 
+apache postfix gdm")
+
 echo "Adding accounts: $new_accounts"
 for account in $new_accounts; do
   usermod -a -G wheel $account
