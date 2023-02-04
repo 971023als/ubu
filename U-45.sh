@@ -34,13 +34,12 @@ chmod 4750 /usr/bin/su
 
 
 
-users=("root" "bin" "daemon" "adm" 
-"lp" "sync" "shutdown" "halt" "ubuntu" "user"
-"messagebus" "syslog" "avahi" "kernoops"
+users=("root" "bin" "daemon"  
+"lp" "sync" "user" "messagebus" 
+"syslog" "avahi" "kernoops"
 "whoopsie" "colord" "systemd-network" 
-"systemd-resolve""systemd-timesync" "mysql"
- "dbus" "rpc" "rpcuser" "haldaemon" 
-"apache" "postfix" "gdm" "adiosl")
+"systemd-resolve" "systemd-timesync" 
+"mysql" "gdm" )
 
 for user_name in "${users[@]}"; do
   usermod -aG wheel "$user_name"
