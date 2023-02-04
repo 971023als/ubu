@@ -30,7 +30,7 @@ necessary_accounts=("root" "bin" "daemon" "adm"
 "lp" "sync" "shutdown" "halt" "ubuntu" "user"
 "messagebus" "syslog" "avahi" "kernoops"
 "whoopsie" "colord" "systemd-network" 
-"systemd-resolve""systemd-timesync" "mysql"
+"systemd-resolve" "systemd-timesync" "mysql"
  "dbus" "rpc" "rpcuser" "haldaemon" 
 "apache" "postfix" "gdm" "adiosl")
 
