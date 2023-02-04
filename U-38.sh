@@ -15,10 +15,7 @@ cat << EOF >> $result
 EOF
 
 BAR
-
-TMP1=`SCRIPTNAME`.log
-
->$TMP1  
+ 
 
 # 불필요한 파일 및 디렉터리 확인
 INFO "Apache 홈 디렉토리에서 불필요한 파일 및 디렉터리 확인..."
