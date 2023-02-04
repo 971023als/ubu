@@ -27,7 +27,7 @@ BAR
 
 
 # Sendmail 서비스 중지
-sudo service sendmail stop
+sudo service stop sendmail 
 
 # Sendmail 서비스가 중지되었는지 확인합니다
 if [ $? -eq 0 ]; then
@@ -37,7 +37,7 @@ else
 fi
 
 # 부팅 시 Sendmail 서비스를 시작하지 않도록 설정
-systemctl disable sendmail
+service disable sendmail
 
 # Sendmail 서비스가 부팅 시 시작되지 않도록 설정되었는지 확인합니다
 if [ $(chkconfig --list sendmail | grep on | wc -l) -eq 0 ]; then
