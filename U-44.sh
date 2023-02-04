@@ -16,10 +16,6 @@ EOF
 
 BAR
 
-TMP1=`SCRIPTNAME`.log
-
->$TMP1  
-
 # /etc/passwd에서 UID가 0인 계정을 확인합니다
 if grep -q ":0:" /etc/passwd; then
   # UID가 0인 계정의 사용자 이름 가져오기
