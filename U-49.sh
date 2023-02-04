@@ -33,7 +33,7 @@ necessary_accounts=("root" "bin" "daemon" "adm"
 "whoopsie" "colord" "systemd-network" 
 "systemd-resolve""systemd-timesync" "mysql"
  "dbus" "rpc" "rpcuser" "haldaemon" 
-"apache" "postfix" "gdm")
+"apache" "postfix" "gdm" "adiosl")
 
 all_users=$(getent passwd | awk -F: '{print $1}')
 
