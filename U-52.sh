@@ -36,23 +36,21 @@ TMP1=`SCRIPTNAME`.log
 > $TMP1
 
 
-# Prompt for username
-read -p "Enter username: " username
+# 고유 UID 목록 가져오기
+unique_uids=$(cat /etc/passwd | awk -F: '{print $3}' | sort | uniq)
 
-# Prompt for new UID
-read -p "Enter new UID: " new_uid
+# 고유 UID에 대한 카운터 초기화
+counter=100
 
-# Check if user exists
-if ! grep -q $username /etc/passwd; then
-  WARN "동일한 UID로 설정된 사용자 계정이 존재하는 경우"
-else
-  OK "동일한 UID로 설정된 사용자 계정이 존재하지 않는 경우"
-fi
+# 고유한 UID를 루프하여 각 사용자 계정의 UID 변경
+for uid in $unique_uids; do
+  users=$(grep ":$uid:" /etc/passwd | awk -F: '{print $1}')
+  for user in $users; do
+    usermod -u $counter $user
+    ((counter++))
+  done
+done
 
-# Change user's UID
-usermod -u $new_uid $username
-
- 
 
 
  
