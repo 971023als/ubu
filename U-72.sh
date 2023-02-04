@@ -40,7 +40,7 @@ cron.* /var/log/cron
 EOF
 
 # Restart the rsyslog service
-systemctl restart rsyslog
+service rsyslog restart
 
 
 
