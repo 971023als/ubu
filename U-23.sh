@@ -61,11 +61,6 @@ socket_type = stream
 }" > /etc/xinetd.d/chargen
 
 
-
-
-# xinetd 서비스 재시작
-sudo service xinetd restart
-
 cat $result
 
 echo ; echo
