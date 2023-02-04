@@ -28,8 +28,6 @@ TMP1=`SCRIPTNAME`.log
 # SMTP 서비스 중지
 sudo service sendmail stop
 
-# 부팅 시 SMTP 서비스 시작을 비활성화합니다.
-sudo chkconfig sendmail off
 
 
     

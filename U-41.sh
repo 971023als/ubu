@@ -28,7 +28,8 @@ sed -i 's#DocumentRoot /var/www/html#DocumentRoot /home/ubuntu/newphp/' $file
 
 
 # Restart Apache to apply the changes
-systemctl restart apache2
+service restart apache2
+
 
 
 
