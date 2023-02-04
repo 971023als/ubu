@@ -18,27 +18,29 @@ EOF
 
 BAR
 
-# sendmail.cf 파일의 경로를 지정
-file="/etc/mail/sendmail.cf"
+# SMTP 서비스의 프로세스 ID 가져오기
+SMTP_PID=$(pidof smtp)
 
-
-
-# sendmail.cf 파일의 경로를 지정
-file="/etc/mail/sendmail.cf"
-
-# restrictqrun 옵션이 이미 있는지 확인
-if grep -q "restrictqrun" $file; then
-    echo "restrictqrun option already exists"
+# 프로세스에 SIGTERM 신호를 전송하여 SMTP 서비스 중지
+if [ -n "$SMTP_PID" ]; then
+  kill -SIGTERM $SMTP_PID
+  OK "SMTP 서비스가 중지되었습니다"
 else
-    # restrictqrun 옵션 추가
-    sed -i '/O PrivacyOptions=/ s/$/, restrictqrun/' $file
-    echo "restrictqrun option added successfully"
+  INFO "SMTP 서비스가 실행되고 있지 않습니다"
 fi
 
+# 원본 submit.cf 파일 백업
+cp /etc/mail/submit.cf /etc/mail/submit.cf.bak
 
+# submit.cf에서 sendmail_enable 변수를 NO로 설정합니다
+sed -i 's/^O sendmail_enable=.*/O sendmail_enable=NO/' /etc/mail/submit.cf
 
-# Sendmail 서비스 다시 시작
-service sendmail restart
+# submit.cf에서 sendmail_enable 변수가 NO로 설정되어 있는지 확인합니다
+if grep -q "^O sendmail_enable=NO" /etc/mail/submit.cf; then
+  OK "/etc/mail/submit.cf에서 sendmail_enable 변수가 NO로 설정되었습니다"
+else
+  WARN "/etc/mail/submit.cf에서 sendmail_enable 변수를 NO로 설정하지 못했습니다"
+fi
 
 
 cat $result
