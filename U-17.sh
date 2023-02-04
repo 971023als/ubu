@@ -24,22 +24,23 @@ TMP1=`SCRIPTNAME`.log
 >$TMP1  
 
 
-# /etc/hosts.equiv에 대한 소유자 및 사용 권한 설정
+# /etc/syslog.equiv 소유자 및 사용 권한 설정
 if [ -f /etc/hosts.equiv ]; then
   chown root:root /etc/hosts.equiv
   chmod 600 /etc/hosts.equiv
-# Set '+' to equiv in /etc/hosts.equiv
+  # /etc/hosts.equiv에서 '+'를 equiv로 설정합니다
   echo "+" > /etc/hosts.equiv
 fi
 
-# $HOME/.r 호스트에 대한 소유자 및 사용 권한 설정
+# $HOME/.r호스트 소유자 및 권한 설정
 for dir in $(cat /etc/passwd | awk -F: '{print $6}'); do
   if [ -f "$dir/.rhosts" ]; then
     chown root:root "$dir/.rhosts"
     chmod 600 "$dir/.rhosts"
   fi
 done
-# 각 사용자에 대해 '+'를 $HOME/.rhosts로 설정
+
+# $HOME/.rhosts에서 각 사용자에 대해 '+' 설정
 for user in $(ls /home); do
   echo "+" > /home/$user/.rhosts
 done

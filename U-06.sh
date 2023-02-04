@@ -21,7 +21,7 @@ TMP1=`SCRIPTNAME`.log
 >$TMP1  
 
 # 소유자를 바꿀 사용자를 지정합니다
-new_owner=user
+new_owner=root
 
 # 존재하지 않는 소유자 및 그룹이 있는 파일 및 디렉터리 찾기
 results=$(find / \( -nouser -o -nogroup \) -print 2>/dev/null)
