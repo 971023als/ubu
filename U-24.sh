@@ -18,24 +18,6 @@ BAR
 
 
 
-#
-sudo exportfs -rav
-
-#
-sudo service nfs restart
-
-
-
-# NFS 서비스 데몬을 중지
-sudo service nfs stop
-
-# NFS 서비스 실행 여부 확인
-sudo service nfs status
-
-# nfsd, statd 및 mountd의 상태 표시
-sudo service nfsd status
-sudo service statd status
-sudo service mountd status
 
 
 cat $result
