@@ -40,10 +40,10 @@ apt upgrade -y
 echo "Patches installed at $(date)" >> $log_file
 
 # 설치된 패치 확인
-if apt -s dist-upgrade | grep "0 upgraded, 0 newly installed"; then
-  OK "No new patches available"
+if yum -s dist-upgrade | grep "0 upgraded, 0 newly installed"; then
+  OK "사용 가능한 새 패치가 없습니다"
 else
-  WARN "New patches available"
+  INFO "사용 가능한 새 패치가 존재합니다"
 fi
 
 
