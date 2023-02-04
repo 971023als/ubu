@@ -20,32 +20,22 @@ EOF
 
 BAR
 
-#@@@@@@@@@@@@@@@@@@@@@@@조치해야하는 파일을 받아오는 방법 확인 필요@@@@@@@@@@@@@@@@
+# 사용 권한을 수정할 파일
+file="/etc/environment"
 
-sudo chown user /path/to/file
-
-# 확인할 파일
-file_name="/path/to/file"
-
-# 홈 디렉토리 환경 변수 파일
-home_dir_file="/etc/environment"
-
-# 새 소유자
-new_owner="username"
-
-# 홈 디렉토리 파일이 루트에 의해 소유되는지 확인
-if [ "$(stat -c %U $home_dir_file)" == "root" ]; then
-  # 소유자가 아닌 사용자에게 쓰기 권한이 있는지 확인
-  if [ -w $file_name ] && [ "$(stat -c %U $file_name)" != "root" ]; then
-    # 파일 소유자 변경
-    chown $new_owner $file_name
-    echo "Owner of $file_name changed to $new_owner"
-  else
-    echo "A non-root user does not have write permission on $file_name"
-  fi
+# 파일이 있는지 확인하십시오
+if [ -f "$file" ]; then
+  # 파일의 사용 권한 가져오기
+  perms=$(stat -c %a "$file")
+  # 다른 사용자에 대한 쓰기 권한 제거
+  perms=$((perms & 511-2))
+  # 수정된 사용 권한을 파일에 적용합니다
+  chmod "$perms" "$file"
+  OK "다른 사용자에 대한 쓰기 권한이 $file 에서 제거되었습니다."
 else
-  echo "The owner of the home directory environment variable file is not root"
+  INFO "$file 이 존재하지 않습니다."
 fi
+
 
 cat $result
 
