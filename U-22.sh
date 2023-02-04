@@ -20,7 +20,13 @@ TMP1=`SCRIPTNAME`.log
 
 >$TMP1  
 
+files=(/etc/crontab /etc/cron.hourly /etc/cron.daily /etc/cron.weekly /etc/cron.monthly /etc/cron.allow /etc/cron.deny /var/spool/cron/ /var/spool/cron/crontabs/)
 
+for file in "${files[@]}"
+do
+  chown root:root $file
+  chmod 640 $file
+done
 
 cat $result
 
