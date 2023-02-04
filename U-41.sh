@@ -27,9 +27,6 @@ file="/etc/apache2/sites-enabled/"
 sed -i 's#DocumentRoot /var/www/html#DocumentRoot /home/ubuntu/newphp/' $file
 
 
-# Restart Apache to apply the changes
-service restart apache2
-
 
 
 

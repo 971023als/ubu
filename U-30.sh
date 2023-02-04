@@ -29,13 +29,6 @@ BAR
 # Sendmail 서비스 중지
 sudo service stop sendmail 
 
-# Sendmail 서비스가 중지되었는지 확인합니다
-if [ $? -eq 0 ]; then
-  OK "메일 보내기 서비스가 성공적으로 중지됨"
-else
-  WARN "Sendmail 서비스를 중지하지 못했습니다"
-fi
-
 # 부팅 시 Sendmail 서비스를 시작하지 않도록 설정
 service disable sendmail
 

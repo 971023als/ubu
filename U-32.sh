@@ -43,7 +43,7 @@ if [ -f "$sendmail_cfg_file" ]; then
   fi
   OK "sendmail.cf 파일에 개인 정보 옵션이 추가/수정되었습니다."
 else
-  WARN "sendmail.cf 파일을 찾을 수 없습니다."
+  INFO "sendmail.cf 파일을 찾을 수 없습니다."
 fi
 
 

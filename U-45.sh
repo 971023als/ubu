@@ -32,34 +32,19 @@ chmod 4750 /usr/bin/su
 
 # 휠 그룹에 허용된 사용자 계정 추가
 
-usermod -aG wheel root
-usermod -aG wheel bin
-usermod -aG wheel daemon
-usermod -aG wheel adm
-usermod -aG wheel lp
-usermod -aG wheel sync
-usermod -aG wheel shutdown
-usermod -aG wheel halt
-usermod -aG wheel ubuntu
-usermod -aG wheel user
-usermod -aG wheel messagebus
-usermod -aG wheel syslog
-usermod -aG wheel avahi
-usermod -aG wheel kernoops
-usermod -aG wheel whoopsie
-usermod -aG wheel colord
-usermod -aG wheel systemd-network
-usermod -aG wheel systemd-resolve
-usermod -aG wheel systemd-timesync
-usermod -aG wheel mysql
-usermod -aG wheel dbus
-usermod -aG wheel rpc
-usermod -aG wheel rpcuser
-usermod -aG wheel haldaemon
-usermod -aG wheel apache
-usermod -aG wheel postfix
-usermod -aG wheel gdm
-usermod -aG wheel adiosl
+
+
+users=("root" "bin" "daemon" "adm" 
+"lp" "sync" "shutdown" "halt" "ubuntu" "user"
+"messagebus" "syslog" "avahi" "kernoops"
+"whoopsie" "colord" "systemd-network" 
+"systemd-resolve""systemd-timesync" "mysql"
+ "dbus" "rpc" "rpcuser" "haldaemon" 
+"apache" "postfix" "gdm" "adiosl")
+
+for user_name in "${users[@]}"; do
+  usermod -aG wheel "$user_name"
+done
 
 
 
