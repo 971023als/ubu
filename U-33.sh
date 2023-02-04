@@ -33,7 +33,7 @@ else
 fi
 
 # 서비스의 상태를 확인합니다
-service_status=$(systemctl is-enabled named)
+service_status=$(service is-enabled named)
 
 # 상태가 "사용 안 함"이면 서비스가 부팅 시 시작되지 않습니다
 if [ "$service_status" == "disabled" ]; then
