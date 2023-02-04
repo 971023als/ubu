@@ -20,8 +20,6 @@ sudo service autofs stop
 
 sudo service autofs status
 
-sudo chkconfig autofs off
-
 cat $result
 
 echo ; echo

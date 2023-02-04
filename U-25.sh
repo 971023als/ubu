@@ -22,12 +22,6 @@ BAR
 sudo service nfs stop
 
 
-#
-sudo exportfs -rav
-
-#
-sudo service nfs restart
-
 cat $result
 
 echo ; echo
