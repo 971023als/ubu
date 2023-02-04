@@ -23,10 +23,6 @@ EOF
 BAR
 
 
-TMP1=`SCRIPTNAME`.log
-
-> $TMP1
-
 
 
 # 숨김 파일 및 디렉토리 정의

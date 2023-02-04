@@ -33,15 +33,7 @@ fi
 services=("nfsd" "statd" "mountd")
 
 for service in "${services[@]}"; do
-  if systemctl is-active --quiet $service; then
-    WARN "$service 있음."
-  else
-    INFO "$service 없음."
-  fi
-done
-
-for service in "${services[@]}"; do
-  systemctl stop "$service"
+  service stop "$service"
   if [ $? -eq 0 ]; then
     OK "$서비스가 중지되었습니다."
   else
