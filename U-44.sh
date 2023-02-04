@@ -27,7 +27,7 @@ if grep -q ":0:" /etc/passwd; then
   fi
 
   # 계정의 UID를 다른 값으로 변경합니다
-  new_uid=1000 # 예제 값, 필요에 따라 변경
+  new_uid=2023 # 예제 값, 필요에 따라 변경
   usermod -u $new_uid $username
   OK "$username의 UID를 $new_uid로 변경했습니다."
 fi
