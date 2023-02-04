@@ -20,14 +20,26 @@ TMP1=`SCRIPTNAME`.log
 
 >$TMP1  
 
-# 원본 파일을 백업하다
-cp /etc/pam.d/common-password /etc/pam.d/common-password
+if grep -q "^PASS_MIN_LEN" /etc/login.defs; then
+  # 기존 PASS_MIN_LEN 설정을 새 값으로 바꿉니다
+  sed -i "s/^PASS_MIN_LEN.*/PASS_MIN_LEN 8/" /etc/login.defs
+else
+  # 파일 끝에 PASS_MIN_LEN 설정 추가
+  echo "PASS_MIN_LEN 8" >> /etc/login.defs
+fi
 
-# 최소 암호 길이를 8자로 설정
-echo "password requisite pam_pwquality.so minlen=8" >> /etc/pam.d/common-password
+INFO "/etc/login.defs에서 최소 암호 길이가 8자 이상으로 설정됨."
 
-# 영문, 숫자 및 특수 문자 필요
-echo "password requisite pam_pwquality.so dcredit=-1 ucredit=-1 ocredit=-1 lcredit=-1" >> /etc/pam.d/common-password
+if grep -q "^password.*required.*pam_cracklib.so.*minclass=3" /etc/pam.d/system-auth; then
+  # 기존 pam_cracklib을 교체합니다.그래서 새로운 가치에 맞춰라
+  sed -i "s/^password.*required.*pam_cracklib.so.*/password    required    pam_cracklib.so minclass=3/" /etc/pam.d/system-auth
+else
+  # pam_cracklib을 추가합니다.그래서 파일 끝에 줄을 서라
+  echo "password    required    pam_cracklib.so minclass=3" >> /etc/pam.d/system-auth
+fi
+
+INFO "/etc/pam.d/system-auth에 설정된 영어, 숫자 및 특수 문자에 대한 최소 입력 요구 사항 설정 완료"
+
 
 cat $result
 
