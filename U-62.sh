@@ -30,6 +30,11 @@ account_name="ftp"
 # /etc/passwd 파일에서 계정에 해당하는 줄 찾기
 line=$(grep "^$account_name:" /etc/passwd)
 
+# 계정이 없으면 표시 메시지 및 종료
+if [ -z "$line" ]; then
+  INFO "/etc/passwd에서 $account_name 계정을 찾을 수 없습니다"
+fi
+
 # 현재 로그인 셸 추출
 current_shell=$(echo $line | cut -d: -f7)
 
@@ -41,6 +46,7 @@ if [ "$current_shell" != "/bin/false" ]; then
   # /etc/passwd 파일 업데이트
   sudo sed -i "s#$line#$new_line#" /etc/passwd
 fi
+
 
 cat $result
 
