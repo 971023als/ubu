@@ -22,27 +22,28 @@ TMP1=`SCRIPTNAME`.log
 
 
 
-#DNS 서비스 중지
-sudo service named stop
 
-#부팅 시 DNS 서비스를 시작하지 않도록 설정
-sudo chkconfig named off
+# 서비스 중지
+systemctl stop named
 
-#DNS 서비스가 중지되었는지 확인합니다
-
-if [ $(sudo service named status | grep -c "is running") -eq 0 ]; then
-OK "DNS 서비스가 중지되었습니다."
+# /etc/bind/name.conf에 전송 허용 설정이 있는지 확인하십시오
+if grep -q "allow-transfer" /etc/bind/named.conf; then
+  OK "allow-transfer 설정이 /etc/bind/name.conf에 이미 있습니다"
 else
-WARN "DNS 서비스가 아직 실행 중입니다."
+  # /etc/bind/name.conf에 전송 허용 설정을 추가합니다
+  echo "allow-transfer { any; };" >> /etc/bind/named.conf
+  INFO "allow-transfer 설정이 /etc/bind/name.conf에 추가되었습니다"
 fi
 
-#부팅 시 DNS 서비스가 사용되지 않도록 설정되었는지 확인
-if [ "$(sudo chkconfig --list named | grep -c "3:off")" -eq 1 ]; then
-OK "DNS 서비스가 부팅 시 비활성화됩니다."
+# xfrnets 설정이 /etc/bind/name.conf에 있는지 확인합니다
+if grep -q "xfrnets" /etc/bind/named.conf; then
+  OK "xfrnets 설정이 /etc/bind/name.conf에 이미 있습니다"
 else
-WARN "부팅 시 DNS 서비스가 사용되지 않도록 설정되지 않았습니다."
+  # xfrnets 설정을 /etc/bind/name.conf에 추가합니다
+  read -p "영역 전송을 허용할 IP 주소 또는 네트워크 입력: " xfr_ip
+  echo "xfrnets { $xfr_ip; };" >> /etc/bind/named.conf
+  echo "xfrnets 설정이 /etc/bind/name.conf에 추가되었습니다"
 fi
-
 
 
 
