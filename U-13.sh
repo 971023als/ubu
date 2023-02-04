@@ -17,13 +17,20 @@ EOF
 
 BAR
 
-# SUID 또는 SGID 비트가 설정된 모든 파일 찾기
-files=$(find / -type f \( -perm /u+s -o -perm /g+s \))
+# 실행 파일의 경로 지정
+executables=(/bin/ping /usr/bin/passwd /usr/bin/sudo)
 
-# 파일을 루프하여 SUID 및 SGID 비트 제거
-for file in $files; do
-  sudo chmod u-s,g-s $file
-done
+# 파일이 있는지 확인합니다
+if [ ! -e $executables ]; then
+  INFO "$exec_file이 없습니다."
+fi
+
+# SUID 및 SGID 사용 권한 제거
+chmod u-s $executables
+chmod g-s $executables
+
+INFO "$executables 에서 제거된 SUID 및 SGID 권한."
+
 
 
 cat $result
