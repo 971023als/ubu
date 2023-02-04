@@ -38,6 +38,7 @@ for dir in $(cat /etc/passwd | awk -F: '{print $6}'); do
     chown root:root "$dir/.rhosts"
     chmod 600 "$dir/.rhosts"
   fi
+done
 # 각 사용자에 대해 '+'를 $HOME/.rhosts로 설정
 for user in $(ls /home); do
   echo "+" > /home/$user/.rhosts
