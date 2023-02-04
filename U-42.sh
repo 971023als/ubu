@@ -39,16 +39,6 @@ apt upgrade -y
 # 설치된 패치 기록
 echo "Patches installed at $(date)" >> $log_file
 
-# apt 명령의 출력을 변수에 저장
-patches=$(apt list --upgradable 2>/dev/null)
-
-# 사용 가능한 패치가 있는지 확인하십시오
-if [ -n "$patches" ]; then
-  WARN "사용 가능한 패치 있음:"
-  INFO "$patches"
-else
-  OK "사용 가능한 패치 없음"
-fi
 
 
 
