@@ -20,9 +20,6 @@ EOF
 
 BAR
 
-TMP1=`SCRIPTNAME`.log
-
-> $TMP1 
 
 
 # SMTP 서비스 중지
