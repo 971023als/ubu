@@ -28,7 +28,7 @@ TMP1=`SCRIPTNAME`.log
 filename="/etc/rsyslog.conf"
 
 if [ ! -e "$filename" ]; then
-  echo "$filename does not exist."
+  INFO "$filename 가 존재하지 않습니다"
 fi
 
 expected_content=(
@@ -46,7 +46,7 @@ for content in "${expected_content[@]}"; do
   fi
 done
 
-echo "Content has been added to $filename."
+INFO "콘텐츠가 $filename 에 추가되었습니다."
 
 
 

@@ -27,29 +27,29 @@ TMP1=`SCRIPTNAME`.log
 filename="/etc/apache2/apache2.conf"
 
 if [ ! -e "$filename" ]; then
-  echo "$filename does not exist."
+  INFO "$filename 가 존재하지 않습니다"
 fi
 
-# ServerTokens 설정이 이미 Prod로 설정되어 있는지 확인합니다
+#  ServerTokens 설정이 이미 Prod로 설정되어 있는지 확인합니다
 server_tokens=$(grep -i 'ServerTokens' "$filename" | awk '{print $2}')
 if [ "$server_tokens" == "Prod" ]; then
-  echo "The Server Tokens setting is already set to Prod."
+  OK "서버 토큰 설정이 이미 Prod로 설정되어 있습니다."
 else
   # 그렇지 않으면 ServerTokens Prod 설정을 파일에 추가합니다
-  echo "Setting Server Tokens to Prod..."
+  INFO "서버 토큰을 Prod로 설정..."
   echo "ServerTokens Prod" >> "$filename"
-  echo "Server Tokens setting has been set to Prod."
+  OK "서버 토큰 설정이 Prod로 설정되었습니다."
 fi
 
 # ServerSignature 설정이 이미 Off로 설정되어 있는지 확인합니다
 server_signature=$(grep -i 'ServerSignature' "$filename" | awk '{print $2}')
 if [ "$server_signature" == "Off" ]; then
-  echo "The Server Signature setting is already set to Off."
+  OK "서버 서명 설정이 이미 해제로 설정되어 있습니다."
 else
   # 그렇지 않은 경우, 서버 서명 끄기 설정을 파일에 추가합니다
-  echo "Setting Server Signature to Off..."
+  INFO "서버 서명을 끄기로 설정 중..."
   echo "ServerSignature Off" >> "$filename"
-  echo "Server Signature setting has been set to Off."
+  OK "Server Signature 설정이 Off로 설정되었습니다."
 fi
 
 

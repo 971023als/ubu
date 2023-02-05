@@ -24,14 +24,14 @@ TMP1=`SCRIPTNAME`.log
 > $TMP1 
 
 files=("/etc/motd" "/etc/issue.net" "/etc/vsftpd/vsftpd.conf" "/etc/mail/sendmail.cf" "/etc/named.conf")
-message="Welcome to the system. This system is for authorized use only."
+message="시스템에 오신 것을 환영합니다. 이 시스템은 인증된 용도로만 사용됩니다."
 
 for file in "${files[@]}"; do
   if [ ! -e "$file" ]; then
-    echo "$file does not exist. Skipping."
+    INFO "$fil e이 없습니다. 건너뛰기."
   else
     echo "$message" > "$file"
-    echo "Logon message has been set in $file."
+    INFO "로그온 메시지가 $file 로 설정되었습니다."
   fi
 done
 

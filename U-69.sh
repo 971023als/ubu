@@ -28,8 +28,7 @@ TMP1=`SCRIPTNAME`.log
 filename="/etc/exports"
 
 if [ ! -e "$filename" ]; then
-  echo "$filename does not exist."
-  exit 1
+  INFO "$filename 가 존재하지 않습니다"
 fi
 
 chown root "$filename"
@@ -39,15 +38,15 @@ owner=$(stat -c '%U' "$filename")
 permission=$(stat -c '%a' "$filename")
 
 if [ "$owner" == "root" ]; then
-  echo "The owner of $filename has been set to root."
+  OK "$filename의 소유자가 루트로 설정되었습니다."
 else
-  echo "Failed to set the owner of $filename to root."
+  WARN "$filename의 소유자를 루트로 설정하지 못했습니다."
 fi
 
 if [ "$permission" -le 644 ]; then
-  echo "The permission of $filename has been set to 644 or less."
+  OK "$filename의 권한이 644 이하로 설정되었습니다."
 else
-  echo "Failed to set the permission of $filename to 644 or less."
+  WARN "$filename의 권한을 644 이하로 설정하지 못했습니다."
 fi
 
 

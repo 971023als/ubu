@@ -23,14 +23,23 @@ TMP1=`SCRIPTNAME`.log
 
 > $TMP1 
 
-# change the shell of the root account to /bin/false
-if [ $(grep "^root" /etc/passwd | awk -F: '{print $7}') != "/bin/false" ]; then
-  sed -i 's#^root.*#root:x:0:0:root:/root:/bin/false#' /etc/passwd
-  echo "Root account shell has been changed to /bin/false to prevent direct FTP access."
-else
-  echo "Root account shell is already set to /bin/false."
+
+ftp_user="ftpuser"
+
+if ! grep "^$ftp_user" /etc/passwd > /dev/null 2>&1; then
+  sudo useradd $ftp_user
 fi
 
+if [ "$(id -u)" == "0" ]; then
+  if [ "$(grep "^ftp" /etc/passwd | cut -d: -f1)" == "root" ]; then
+    sudo usermod -s /usr/sbin/nologin root
+    OK "루트 FTP 액세스가 비활성화되었습니다."
+  fi
+  sudo usermod -s /bin/false $ftp_user
+  OK "FTP 액세스가 $ftp_user 계정으로 제한되었습니다."
+else
+  WARN "루트로 실행해야 합니다."
+fi
 
 
 
