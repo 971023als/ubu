@@ -32,16 +32,6 @@ else
     WARN "DNS 서비스가 아직 실행 중입니다."
 fi
 
-# 서비스의 상태를 확인합니다
-service_status=$(systemctl is-enabled named)
-
-# 상태가 "사용 안 함"이면 서비스가 부팅 시 시작되지 않습니다
-if [ "$service_status" == "disabled" ]; then
-  OK "DNS 서비스는 부팅 시 비활성화됩니다."
-else
-  WARN "DNS 서비스는 부팅 시 비활성화되지 않습니다."
-fi
-
 
 cat $result
 

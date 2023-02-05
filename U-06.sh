@@ -20,17 +20,7 @@ TMP1=`SCRIPTNAME`.log
 
 >$TMP1  
 
-# 소유자를 바꿀 사용자를 지정합니다
-new_owner=root
 
-# 존재하지 않는 소유자 및 그룹이 있는 파일 및 디렉터리 찾기
-results=$(find / \( -nouser -o -nogroup \) -print 2>/dev/null)
-
-# 결과의 각 항목을 반복해서 살펴보다
-for item in $results; do
-  # 소유자를 지정된 사용자로 변경
-  chown $new_owner:$new_owner "$item"
-done
 
 
 cat $result
