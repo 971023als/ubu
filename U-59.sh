@@ -26,8 +26,8 @@ BAR
 
 
 # 숨김 파일 및 디렉토리 정의
-hidden_files=$(find / -type f -name ".*" ! -path "/run/user/1000/gvfs/*")
-hidden_dirs=$(find / -type d -name ".*" ! -path "/run/user/1000/gvfs/*")
+hidden_files=$(sudo find / -type f -name ".*" ! -path "/run/user/1000/gvfs/*")
+hidden_dirs=$(sudo find / -type d -name ".*" ! -path "/run/user/1000/gvfs/*")
 
 # 원치 않거나 의심스러운 파일이나 디렉토리가 있는지 확인
 for file in $hidden_files; do

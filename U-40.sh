@@ -26,14 +26,19 @@ TMP1=`SCRIPTNAME`.log
 limit=1048576
 
 # 모든 집합 디렉토리에 LimitRequestBody 지시어 추가
-# R[Directory_Path]를 실제 디렉터리 경로로 바꿉니다
+# R[Directory_Path]를 실제 디렉토리 경로로 바꿉니다
 echo "
 <Directory [Directory_Path]>
     LimitRequestBody $limit
 </Directory>" >> /etc/apache2/apache2.conf
 
 # 변경 내용을 적용하려면 파일을 저장하고 Apache를 다시 시작
-sudo service apache2 restart
+if ! sudo service apache2 restart; then
+  ERROR "Apache restart failed. Checking status and logs for more information..."
+  sudo systemctl status apache2.service
+  sudo journalctl -xe
+fi
+
 
 
 

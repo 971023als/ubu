@@ -26,17 +26,22 @@ file="/etc/apache2/apache2.conf"
 # "AllowOverrideNone"을 "AllowOverride AuthConfig"로 바꿉니다
 sed -i 's/AllowOverride None/AllowOverride AuthConfig/g' $file
 
-# 변경되었는지 확인합니다
+# 변경 사항 확인
 if grep -q "AllowOverride AuthConfig" $file; then
-  OK "AllowOverrideNone이 AllowOverride AuthConfig로 성공적으로 대체되었습니다."
+OK "AllowOverrideNone이 AllowOverrideAuthConfig로 교체."
 else
-  WARN "AllowOverrideNone을 AllowOverrideAuthConfig로 바꿀 수 없음"
+WARN "AllowOverrideNone을 AllowOverrideAuthConfig로 바꾸지 못했습니다."
 fi
 
-
-
-# Apache 데몬을 재시작하여 변경된 설정 적용
-sudo service apache2 restart
+# Apache 서비스 확인 및 디버그
+systemctl status apache2.service > /dev/null
+if [ $? -eq 0 ]; then
+OK "아파치 서비스가 작동합니다."
+else
+ERROR="Failed to start Apache service."
+ERROR="$ERROR\nPlease check the status using 'systemctl status apache2.service' and journal logs using 'journalctl -xe'"
+echo -e "$ERROR"
+fi
 
 
 cat $result
