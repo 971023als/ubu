@@ -25,11 +25,30 @@ TMP1=`SCRIPTNAME`.log
 
 > $TMP1 
 
+filename="/etc/exports"
 
-sudo chown root /etc/exports
+if [ ! -e "$filename" ]; then
+  echo "$filename does not exist."
+  exit 1
+fi
 
-sudo chmod 644 /etc/exports
+chown root "$filename"
+chmod 644 "$filename"
 
+owner=$(stat -c '%U' "$filename")
+permission=$(stat -c '%a' "$filename")
+
+if [ "$owner" == "root" ]; then
+  echo "The owner of $filename has been set to root."
+else
+  echo "Failed to set the owner of $filename to root."
+fi
+
+if [ "$permission" -le 644 ]; then
+  echo "The permission of $filename has been set to 644 or less."
+else
+  echo "Failed to set the permission of $filename to 644 or less."
+fi
 
 
 cat $result

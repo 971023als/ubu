@@ -23,14 +23,14 @@ TMP1=`SCRIPTNAME`.log
 
 > $TMP1 
 
-# FTP 서비스가 실행 중인지 확인합니다
-if service is-active --quiet vsftpd; then
-  # FTP 서비스가 실행 중입니다. 루트 로그인을 차단
-  sed -i 's/#PermitRootLogin.*/PermitRootLogin no/g' /etc/ssh/sshd_config
+# change the shell of the root account to /bin/false
+if [ $(grep "^root" /etc/passwd | awk -F: '{print $7}') != "/bin/false" ]; then
+  sed -i 's#^root.*#root:x:0:0:root:/root:/bin/false#' /etc/passwd
+  echo "Root account shell has been changed to /bin/false to prevent direct FTP access."
 else
-  # FTP 서비스가 실행되고 있지 않습니다. 루트 로그인 허용
-  sed -i 's/PermitRootLogin.*/PermitRootLogin yes/g' /etc/ssh/sshd_config
+  echo "Root account shell is already set to /bin/false."
 fi
+
 
 
 

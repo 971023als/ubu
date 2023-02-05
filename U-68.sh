@@ -23,26 +23,17 @@ TMP1=`SCRIPTNAME`.log
 
 > $TMP1 
 
+files=("/etc/motd" "/etc/issue.net" "/etc/vsftpd/vsftpd.conf" "/etc/mail/sendmail.cf" "/etc/named.conf")
+message="Welcome to the system. This system is for authorized use only."
 
-# /etc/motd 파일 편집
-echo "이 시스템에 오신 것을 환영합니다!" > /etc/motd
-echo "다음 경고에 주의하십시오.: " >> /etc/motd
-
-# /etc/issue.net 파일 편집
-echo "이 시스템에 오신 것을 환영합니다!" > /etc/issue.net
-echo "다음 경고에 주의하십시오.: " >> /etc/issue.net
-
-# /etc/vsftpd/vsftpd.conf 파일 편집
-sudo sed -i 's/#ftpd_banner=.*/ftpd_banner=이 시스템에 오신 것을 환영합니다!/' /etc/vsftpd/vsftpd.conf
-sudo echo "ftpd_banner=다음 경고에 유의하십시오.: " >> /etc/vsftpd/vsftpd.conf
-
-# /etc/mail/sendmail.cf 파일 편집
-sudo echo "GreetingMessage=이 시스템에 오신 것을 환영합니다!" >> /etc/mail/sendmail.cf 
-
-# /etc/named.conf 파일 편집
-sudo sed -i 's/GreetingMessage.*/GreetingMessage=이 시스템에 오신 것을 환영합니다!/' /etc/named.conf
-sudo echo "GreetingMessage=다음 경고에 유의하십시오.: " >> /etc/named.conf
-
+for file in "${files[@]}"; do
+  if [ ! -e "$file" ]; then
+    echo "$file does not exist. Skipping."
+  else
+    echo "$message" > "$file"
+    echo "Logon message has been set in $file."
+  fi
+done
 
 cat $result
 

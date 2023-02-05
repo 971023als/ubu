@@ -24,26 +24,34 @@ TMP1=`SCRIPTNAME`.log
 
 > $TMP1 
 
+filename="/etc/apache2/apache2.conf"
 
-# ServerTokens 지시문이 이미 설정되어 있는지 확인
-grep -q "^ServerTokens" /etc/apache2/conf-available/security.conf
-if [ $? -eq 0 ]; then
-  # 기존 ServerTokens 지시문 교체
-  sed -i 's/^ServerTokens.*/ServerTokens Prod/' /etc/apache2/conf-available/security.conf
-else
-  # ServerTokens 지시문 추가
-  echo "ServerTokens Prod" >> /etc/apache2/conf-available/security.conf
+if [ ! -e "$filename" ]; then
+  echo "$filename does not exist."
 fi
 
-# ServerSignature 지시문이 이미 설정되어 있는지 확인
-grep -q "^ServerSignature" /etc/apache2/conf-available/security.conf
-if [ $? -eq 0 ]; then
-  # 기존 ServerSignature 지시문 교체
-  sed -i 's/^ServerSignature.*/ServerSignature Off/' /etc/apache2/conf-available/security.conf
+# ServerTokens 설정이 이미 Prod로 설정되어 있는지 확인합니다
+server_tokens=$(grep -i 'ServerTokens' "$filename" | awk '{print $2}')
+if [ "$server_tokens" == "Prod" ]; then
+  echo "The Server Tokens setting is already set to Prod."
 else
-  # ServerSignature 지시어 추가
-  echo "ServerSignature Off" >> /etc/apache2/conf-available/security.conf
+  # 그렇지 않으면 ServerTokens Prod 설정을 파일에 추가합니다
+  echo "Setting Server Tokens to Prod..."
+  echo "ServerTokens Prod" >> "$filename"
+  echo "Server Tokens setting has been set to Prod."
 fi
+
+# ServerSignature 설정이 이미 Off로 설정되어 있는지 확인합니다
+server_signature=$(grep -i 'ServerSignature' "$filename" | awk '{print $2}')
+if [ "$server_signature" == "Off" ]; then
+  echo "The Server Signature setting is already set to Off."
+else
+  # 그렇지 않은 경우, 서버 서명 끄기 설정을 파일에 추가합니다
+  echo "Setting Server Signature to Off..."
+  echo "ServerSignature Off" >> "$filename"
+  echo "Server Signature setting has been set to Off."
+fi
+
 
 
 cat $result

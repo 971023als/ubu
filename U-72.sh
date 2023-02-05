@@ -25,22 +25,29 @@ TMP1=`SCRIPTNAME`.log
 > $TMP1 
 
 
+filename="/etc/syslog.conf"
 
-# Backup the original file
-cp /etc/rsyslog.conf /etc/rsyslog.conf.bak
+if [ ! -e "$filename" ]; then
+  echo "$filename does not exist."
+  exit 1
+fi
 
-# Replace the original file with the new configuration
-cat > /etc/rsyslog.conf << EOF
-*.info;mail.none;authpriv.none;cron.none /var/log/info.log
-authpriv.* /var/log/secure.log
-mail.* /var/log/maillog
-cron.* /var/log/cron
-*.alert /dev/console
-*.emerg *
-EOF
+expected_content=(
+  "*.info;mail.none;authpriv.none;cron.none /var/log/messages"
+  "authpriv.* /var/log/secure"
+  "mail.* /var/log/maillog"
+  "cron.* /var/log/cron"
+  "*.alert /dev/console"
+  "*.emerg *"
+)
 
-# Restart the rsyslog service
-service rsyslog restart
+for content in "${expected_content[@]}"; do
+  if ! grep -q "$content" "$filename"; then
+    echo "$content" >> "$filename"
+  fi
+done
+
+echo "Content has been added to $filename."
 
 
 

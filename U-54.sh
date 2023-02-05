@@ -26,9 +26,14 @@ TMP1=`SCRIPTNAME`.log
 > $TMP1
 
 
-# Add the following line to the file
-echo "TMOUT=600"  >  etc/profile
-echo "export TMOUT" >  etc/profile
+# add TMOUT to /etc/profile if it doesn't exist
+if ! grep -q "TMOUT=600" /etc/profile; then
+  echo "TMOUT=600" >> /etc/profile
+  echo "export TMOUT" >> /etc/profile
+  echo "TMOUT has been added to /etc/profile"
+else
+  echo "TMOUT already exists in /etc/profile"
+fi
 
 
 
