@@ -25,7 +25,7 @@ TMP1=`SCRIPTNAME`.log
 > $TMP1 
 
 
-filename="/etc/syslog.conf"
+filename="/etc/rsyslog.conf"
 
 if [ ! -e "$filename" ]; then
   echo "$filename does not exist."
