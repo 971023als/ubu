@@ -57,13 +57,14 @@ for uid in $unique_uids; do
       fi
 
       # 새 UID 생성
-      new_uid=$((uid + count))
+      new_uid=$((new_uid + 1))
 
-      # 새 UID가 이미 있는지 확인하십시오
-      if grep -q ":$new_uid:" /etc/passwd; then
-        # 새 UID가 이미 있는 경우 새 UID 다시 생성
+      # Check if new_uid already exists
+      while grep -q ":$new_uid:" /etc/passwd; do
+        # Increment new_uid
         new_uid=$((new_uid + 1))
-      fi
+      done
+
 
       # 사용자 계정의 UID 변경
       sudo usermod --uid $new_uid $user
