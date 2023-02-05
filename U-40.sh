@@ -34,7 +34,7 @@ echo "
 
 # 변경 내용을 적용하려면 파일을 저장하고 Apache를 다시 시작
 if ! sudo service apache2 restart; then
-  ERROR "Apache restart failed. Checking status and logs for more information..."
+  INFO "Apache를 다시 시작 불가합니다. 상태 및 로그를 확인하는 중입니다..."
   sudo systemctl status apache2.service
   sudo journalctl -xe
 fi
