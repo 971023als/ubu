@@ -41,7 +41,7 @@ current_shell=$(echo $line | cut -d: -f7)
 #  현재 셸이 이미 /bin/false로 설정되어 있는지 확인하십시오
 if [ "$current_shell" != "/bin/false" ]; then
   # 현재 셸을 /bin/false로 변경합니다
-  new_line=$(echo "$line" | sed "s#$current_shell#/bin/false#")
+  new_line=$(echo "$line" | sed "s,$current_shell,/bin/false,")
 
   # /etc/passwd 파일 업데이트
   sudo sed -i "s#$line#$new_line#" /etc/passwd

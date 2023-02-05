@@ -24,7 +24,7 @@ TMP1=`SCRIPTNAME`.log
 file="/etc/apache2/sites-available/000-default.conf"
 
 # DocumentRoot 값을 원하는 경로로 바꿉니다
-sed -i 's#DocumentRoot /var/www/html#DocumentRoot /home/ubuntu/newphp/' $file
+sed -i 's#DocumentRoot /var/www/html#DocumentRoot /home/ubuntu/newphp/#g' $file
 
 # 변경 내용을 적용하려면 파일을 저장하고 Apache를 다시 시작
 sudo service apache2 restart
