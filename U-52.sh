@@ -46,7 +46,7 @@ counter=100
 for uid in $unique_uids; do
   users=$(grep ":$uid:" /etc/passwd | awk -F: '{print $1}')
   for user in $users; do
-    usermod -u $counter $user
+    sudo usermod -u $counter $user
     ((counter++))
   done
 done
