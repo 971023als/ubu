@@ -33,11 +33,6 @@ else
   INFO "DocumentRoot가 /home/ubuntu/newphp/로 변경되었습니다."
 fi
 
-
-
-
-
-
 cat $result
 
 echo ; echo
