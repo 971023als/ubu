@@ -22,9 +22,6 @@ EOF
 
 BAR
 
-
-
-
 # 숨김 파일 및 디렉토리 정의
 hidden_files=$(sudo find / -type f -name ".*" ! -path "/run/user/1000/gvfs/*")
 hidden_dirs=$(sudo find / -type d -name ".*" ! -path "/run/user/1000/gvfs/*")
