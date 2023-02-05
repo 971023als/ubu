@@ -19,8 +19,6 @@ EOF
 
 BAR
 
-
-
 sudo service snmpd stop
 
 cat $result
