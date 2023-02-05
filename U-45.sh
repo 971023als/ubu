@@ -17,21 +17,49 @@ EOF
 
 BAR
 
-# 새그룹명
-new_group=whell
+# 시스템에 사용자가 있는지 확인합니다
+function check_user() {
+  if id "$1" > /dev/null 2>&1; then
+    return 0
+  else
+    return 1
+  fi
+}
 
-# su 명령에 대한 액세스가 필요한 사용자 목록
-users=("root" "bin" "daemon"  
+# su 명령에 액세스해야 하는 사용자 배열
+user_list=("root" "bin" "daemon"  
 "lp" "sync" "user" "messagebus" 
 "syslog" "avahi" "kernoops"
 "whoopsie" "colord" "systemd-network" 
 "systemd-resolve" "systemd-timesync" 
 "mysql" "gdm" )
 
-# 새 그룹에 사용자 추가
-for user in $users; do
-  sudo usermod -a -G $new_group $user
+# 사용자 목록을 순환
+for user in "${user_list[@]}"; do
+  # Check if the user exists
+  if check_user "$user"; then
+    # 휠 그룹에 사용자 추가
+    usermod -aG wheel "$user"
+    # 사용자가 이미 휠 그룹에 속해 있는지 확인하십시오
+    if groups "$user" | grep &>/dev/null '\bwheel\b'; then
+      INFO "사용자 $user 는 이미 휠 그룹에 속해 있습니다."
+    else
+      OK "사용자 $user 가 휠 그룹에 추가되었습니다."
+    fi
+  else
+    INFO "사용자 $user가 시스템에 없습니다."
+  fi
 done
+
+# su 명령에서 권한을 4750으로 설정합니다
+chmod 4750 /bin/su
+
+# 사용 권한 확인
+if [ $(stat -c %a /bin/su) == "4750" ]; then
+  echo "/bin/su에 대한 권한이 4750으로 설정되었습니다."
+else
+  echo "/bin/su에 대한 사용 권한을 설정하지 못했습니다."
+fi
 
 
 cat $result
