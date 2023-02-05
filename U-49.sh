@@ -27,13 +27,37 @@ TMP1=`SCRIPTNAME`.log
 > $TMP1
 
 # 보관할 계정 목록
-keep_list=("root" "bin" "daemon" "adm" 
-"lp" "sync" "shutdown" "halt" "ubuntu" "user"
-"messagebus" "syslog" "avahi" "kernoops"
-"whoopsie" "colord" "systemd-network" 
-"systemd-resolve" "systemd-timesync" "mysql"
- "dbus" "rpc" "rpcuser" "haldaemon" 
-"apache" "postfix" "gdm" "adiosl")
+keep_list=(
+  "root"
+  "bin"
+  "daemon"
+  "adm"
+  "lp"
+  "sync"
+  "shutdown"
+  "halt"
+  "ubuntu"
+  "user"
+  "messagebus"
+  "syslog"
+  "avahi"
+  "kernoops"
+  "whoopsie"
+  "colord"
+  "systemd-network"
+  "systemd-resolve"
+  "systemd-timesync"
+  "mysql"
+  "dbus"
+  "rpc"
+  "rpcuser"
+  "haldaemon"
+  "apache"
+  "postfix"
+  "gdm"
+  "adiosl"
+  "cubrid"
+)
 
 # 모든 사용자 계정 목록 가져오기
 all_accounts=$(cut -d: -f1 /etc/passwd)
