@@ -38,16 +38,6 @@ else
   WARN "Sendmail 서비스가 비활성화 실패."
 fi
 
-# Sendmail 서비스 재시작
-sudo systemctl restart sendmail
-
-# 재시작 후 Sendmail 서비스가 작동하는지 확인합니다
-if [ $(sudo systemctl is-active sendmail) == "active" ]; then
-  WARN "재시작 후 Sendmail 서비스가 작동."
-else
-  OK "재시작 후 Sendmail 서비스가 작동 안함."
-fi
-
 
 
 
