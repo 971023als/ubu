@@ -17,20 +17,10 @@ EOF
 
 BAR
 
-# wheel group 삭제
-sudo groupdel wheel
+# 새그룹명
+new_group=whell
 
-# wheel group 생성
-sudo groupadd wheel
-
-# su 명령의 그룹을 휠 그룹으로 변경합니다
-sudo chgrp wheel /usr/bin/su
-
-# su 명령에 대한 사용 권한을 4750으로 설정합니다
-sudo chmod 4750 /usr/bin/su
-
-# 휠 그룹에 허용된 사용자 계정 추가
-
+# su 명령에 대한 액세스가 필요한 사용자 목록
 users=("root" "bin" "daemon"  
 "lp" "sync" "user" "messagebus" 
 "syslog" "avahi" "kernoops"
@@ -38,8 +28,9 @@ users=("root" "bin" "daemon"
 "systemd-resolve" "systemd-timesync" 
 "mysql" "gdm" )
 
-for user_name in "${users[@]}"; do
-  sudo usermod -aG wheel "$user_name"
+# 새 그룹에 사용자 추가
+for user in $users; do
+  sudo usermod -a -G $new_group $user
 done
 
 

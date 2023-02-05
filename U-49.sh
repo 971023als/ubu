@@ -26,8 +26,8 @@ TMP1=`SCRIPTNAME`.log
 
 > $TMP1
 
-
-necessary_accounts=("root" "bin" "daemon" "adm" 
+# 보관할 계정 목록
+keep_list=("root" "bin" "daemon" "adm" 
 "lp" "sync" "shutdown" "halt" "ubuntu" "user"
 "messagebus" "syslog" "avahi" "kernoops"
 "whoopsie" "colord" "systemd-network" 
@@ -35,14 +35,16 @@ necessary_accounts=("root" "bin" "daemon" "adm"
  "dbus" "rpc" "rpcuser" "haldaemon" 
 "apache" "postfix" "gdm" "adiosl")
 
-all_users=$(getent passwd | awk -F: '{print $1}')
+# 모든 사용자 계정 목록 가져오기
+all_accounts=$(cut -d: -f1 /etc/passwd)
 
-for user in $all_users; do
-  if ! echo "${necessary_accounts[@]}" | grep -wq "$user"; then
-    userdel "$user"
+# 모든 그룹에 반복
+for account in $all_accounts; do
+  if ! [[ "${keep_list[@]}" =~ " ${account}" ]]; then
+    # 유지할 그룹 목록에 없는 그룹 제거
+    sudo userdel "$account"
   fi
 done
-
 
  
 cat $result

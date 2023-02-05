@@ -25,18 +25,16 @@ EOF
 
 BAR
 
-# Sendmail 서비스 중지
-sudo systemctl stop sendmail
+# Sendmail이 실행 중인지 확인
+sendmail_status=$(systemctl is-active sendmail)
 
-# 부팅 시 Sendmail 서비스가 자동으로 시작되지 않도록 설정
-sudo systemctl disable sendmail
-
-# Sendmail 서비스가 성공적으로 비활성화되었는지 확인합니다
-if [ $(sudo systemctl is-enabled sendmail) == "disabled" ]; then
-  OK "Sendmail 서비스가 성공적으로 비활성화."
+if [ "$sendmail_status" == "active" ]; then
+  INFO "전송 메일 서비스 중지 중"
+  systemctl stop sendmail
 else
-  WARN "Sendmail 서비스가 비활성화 실패."
+  OK "메일 보내기 서비스가 이미 중지되었습니다."
 fi
+
 
 
 

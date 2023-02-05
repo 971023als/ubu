@@ -20,14 +20,18 @@ TMP1=`SCRIPTNAME`.log
 
 >$TMP1  
 
-# Apache의 구성 디렉터리로 변경
-file="/etc/apache2/sites-available/000-default.conf"
+# 확인할 Apache2 Document Root 디렉토리 설정
+config_file="/etc/apache2/sites-available/000-default.conf"
 
-# DocumentRoot 값을 원하는 경로로 바꿉니다
-sed -i 's#DocumentRoot /var/www/html#DocumentRoot /home/ubuntu/newphp/#g' $file
 
-# 변경 내용을 적용하려면 파일을 저장하고 Apache를 다시 시작
-sudo service apache2 restart
+# DocumentRoot가 기본 경로로 설정되어 있는지 확인합니다
+if [ "$config_file" = "/var/www/html" ] ; then
+  INFO "DocumentRoot가 기본 경로로 설정되었습니다: /var/www/html"
+else
+  INFO "DocumentRoot를 /home/ubuntu/newphp/로 변경"
+  sed -i 's|DocumentRoot.*|DocumentRoot "/home/ubuntu/newphp/"|' /etc/apache2/sites-available/000-default.conf
+  INFO "DocumentRoot가 /home/ubuntu/newphp/로 변경되었습니다."
+fi
 
 
 

@@ -23,26 +23,20 @@ TMP1=`SCRIPTNAME`.log
 
 
 
-# 서비스 중지
-systemctl stop named
+# DNS 서비스가 실행 중인지 확인합니다
+dns_status=$(systemctl is-active named)
 
-# /etc/bind/name.conf에 전송 허용 설정이 있는지 확인하십시오
-if grep -q "allow-transfer" /etc/bind/named.conf; then
-  OK "allow-transfer 설정이 /etc/bind/name.conf에 이미 있습니다"
+if [ "$dns_status" == "active" ]; then
+  INFO "DNS 쿼리 확인 중"
+  queries=$(ss -u | grep named | wc -l)
+  if [ $queries -eq 0 ]; then
+    OK "DNS 쿼리가 검색되지 않음, 명명된 서비스 중지"
+    systemctl stop named
+  else
+    INFO "DNS 쿼리가 탐지됨, 명명된 서비스가 계속 실행됨"
+  fi
 else
-  # /etc/bind/name.conf에 전송 허용 설정을 추가합니다
-  echo "allow-transfer { any; };" >> /etc/bind/named.conf
-  INFO "allow-transfer 설정이 /etc/bind/name.conf에 추가되었습니다"
-fi
-
-# xfrnets 설정이 /etc/bind/name.conf에 있는지 확인합니다
-if grep -q "xfrnets" /etc/bind/named.conf; then
-  OK "xfrnets 설정이 /etc/bind/name.conf에 이미 있습니다"
-else
-  # xfrnets 설정을 /etc/bind/name.conf에 추가합니다
-  read -p "영역 전송을 허용할 IP 주소 또는 네트워크 입력: " xfr_ip
-  echo "xfrnets { $xfr_ip; };" >> /etc/bind/named.conf
-  echo "xfrnets 설정이 /etc/bind/name.conf에 추가되었습니다"
+  INFO "DNS 서비스가 이미 중지되었습니다."
 fi
 
 

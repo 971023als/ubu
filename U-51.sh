@@ -33,21 +33,25 @@ TMP1=`SCRIPTNAME`.log
 
 > $TMP1
 
-necessary_groups=("root" "sudo" "sys" "adm" "wheel" 
+# 보관할 그룹 목록
+keep_groups=("root" "sudo" "sys" "adm" "wheel" 
 "daemon" "bin" "lp" "dbus" "rpc" "rpcuser" "haldaemon" 
 "apache" "postfix" "gdm" "adiosl" "mysql" "cubrid"
  "messagebus" "syslog" "avahi" "whoopsie"
 "colord" "systemd-network" "systemd-resolve"
 "systemd-timesync" "mysql" "sync" "user")
 
-all_groups=$(getent group | awk -F: '{print $1}')
+# 모든 그룹 목록 가져오기
+all_groups=$(cut -d: -f1 /etc/group)
 
+# 모든 그룹에 반복
 for group in $all_groups; do
-  if ! echo "${necessary_groups[@]}" | grep -wq "$group"; then
-    groupdel "$group"
+  if ! [[ "${keep_groups[@]}" =~ "$group" ]]; then
+    # 유지할 그룹 목록에 없는 그룹 제거
+    sudo groupdel "$group"
   fi
 done
- 
+
 
 cat $result
 

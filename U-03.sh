@@ -21,10 +21,10 @@ TMP1=`SCRIPTNAME`.log
 >$TMP1  
 
 if grep -q "auth required pam_tally2.so deny=5 unlock_time=900" /etc/pam.d/common-auth; then
-  echo "The line 'auth required pam_tally2.so deny=5 unlock_time=900' is already present in /etc/pam.d/common-auth"
+  INFO "auth required pam_required pam_required2.so deny=5 unlock_time=900 존재."
 else
   echo "auth required pam_tally2.so deny=5 unlock_time=900" >> /etc/pam.d/common-auth
-  echo "The line 'auth required pam_tally2.so deny=5 unlock_time=900' has been added to /etc/pam.d/common-auth"
+  INFO "auth required pam_required pam_required2.so deny=5 unlock_time=900 추가."
 fi
 
 

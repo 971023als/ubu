@@ -16,47 +16,16 @@ EOF
 
 BAR
 
-rlogin="/etc/xinetd.d/rlogin"
 
-rsh="/etc/xinetd.d/rsh"
+# rlogin 파일에서 'disable = yes' 설정
+sed -i 's/^[^#]*disable[^#]*/disable = yes/' /etc/xinetd.d/rlogin
 
-rexec="/etc/xinetd.d/rexec"
+# rsh 파일에서 'disable = yes' 설정
+sed -i 's/^[^#]*disable[^#]*/disable = yes/' /etc/xinetd.d/rsh
 
-# rlogin 파일 생성
-echo "service rlogin
-{
-socket_type = stream
-wait = no
-user = nobody
-log_on_success += USERID
-log_on_failure += USERID
-server = /usr/sdin/in.fingerd
-disable = yes
-}" > $rlogin
+# rexec 파일에서 'disable = yes' 설정
+sed -i 's/^[^#]*disable[^#]*/disable = yes/' /etc/xinetd.d/rexec
 
-# rsh 파일 생성
-echo "service rsh
-{
-socket_type = stream
-wait = no
-user = nobody
-log_on_success += USERID
-log_on_failure += USERID
-server = /usr/sdin/in.fingerd
-disable = yes
-}" > $rsh
-
-# rexec 파일 생성
-echo "service rexec
-{
-socket_type = stream
-wait = no
-user = nobody
-log_on_success += USERID
-log_on_failure += USERID
-server = /usr/sdin/in.fingerd
-disable = yes
-}" > $rexec
 
 
 cat $result

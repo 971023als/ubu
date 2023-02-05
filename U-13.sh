@@ -17,19 +17,26 @@ EOF
 
 BAR
 
-# 실행 파일의 경로 지정
-executables=(/bin/ping /usr/bin/passwd /usr/bin/sudo)
+executables=("/bin/ping" "/usr/bin/passwd" "/usr/bin/sudo")
 
-# 파일이 있는지 확인합니다
-if [ ! -e $executables ]; then
-  INFO "$exec_file이 없습니다."
-fi
+for exec in "${executables[@]}"; do
+  # SUID 설정
+  chmod u+s "$exec"
+  if [ $? -eq 0 ]; then
+    OK "SUID가 $exec 에 설정되었습니다."
+  else
+    WARN "ERROR: $exec에 SUID를 설정하지 못했습니다."
+  fi
 
-# SUID 및 SGID 사용 권한 제거
-chmod u-s $executables
-chmod g-s $executables
+  # Set SGID
+  chmod g+s "$exec"
+  if [ $? -eq 0 ]; then
+    OK "SGID가 $exec 에 설정되었습니다."
+  else
+    WARN "$exec 에 SGID를 설정하지 못했습니다."
+  fi
+done
 
-INFO "$executables 에서 제거된 SUID 및 SGID 권한."
 
 
 

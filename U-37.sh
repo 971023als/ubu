@@ -20,29 +20,19 @@ TMP1=`SCRIPTNAME`.log
 
 >$TMP1  
 
-# Apache 구성 파일 정의
-file="/etc/apache2/apache2.conf"
+# 인증 파일 경로 정의
+auth_file="/path/to/authentication_file"
 
-# "AllowOverrideNone"을 "AllowOverride AuthConfig"로 바꿉니다
-sed -i 's/AllowOverride None/AllowOverride AuthConfig/g' $file
+# 사용자 이름 정의
+username="user"
 
-# 변경 사항 확인
-if grep -q "AllowOverride AuthConfig" $file; then
-OK "AllowOverrideNone이 AllowOverrideAuthConfig로 교체."
+# 인증 파일에 사용자 이름이 있는지 확인합니다
+if htpasswd -D $auth_file $username &> /dev/null; then
+  OK "사용자 $username 은 이미 존재합니다"
 else
-WARN "AllowOverrideNone을 AllowOverrideAuthConfig로 바꾸지 못했습니다."
+  INFO "사용자 $username 생성"
+  htpasswd -c $auth_file $username
 fi
-
-# Apache 서비스 확인 및 디버그
-systemctl status apache2.service > /dev/null
-if [ $? -eq 0 ]; then
-OK "아파치 서비스가 작동합니다."
-else
-ERROR="Failed to start Apache service."
-ERROR="$ERROR\nPlease check the status using 'systemctl status apache2.service' and journal logs using 'journalctl -xe'"
-echo -e "$ERROR"
-fi
-
 
 cat $result
 
