@@ -21,7 +21,18 @@ TMP1=`SCRIPTNAME`.log
 >$TMP1  
 
 
-echo "PASS_MIN_LEN 8" > /etc/login.defs
+# 암호 최소 길이를 8자로 설정
+echo "PASS_MIN_LEN 8" >> /etc/login.defs
+
+# 암호 최소 길이가 올바르게 설정되었는지 확인합니다
+min_len=$(grep "^PASS_MIN_LEN" /etc/login.defs | awk '{print $2}')
+
+if [ "$min_len" -ge "8" ]; then
+  OK "암호 최소 길이가 이제 8자 이상으로 설정되었습니다."
+else
+  WARN "암호 최소 길이를 8자 이상으로 설정하지 못했습니다."
+fi
+
 
 cat $result
 
