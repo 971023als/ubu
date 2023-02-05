@@ -27,11 +27,9 @@ TMP1=`SCRIPTNAME`.log
 if service is-active --quiet vsftpd; then
   # FTP 서비스가 실행 중입니다. 루트 로그인을 차단
   sed -i 's/#PermitRootLogin.*/PermitRootLogin no/g' /etc/ssh/sshd_config
-  service restart ssh
 else
   # FTP 서비스가 실행되고 있지 않습니다. 루트 로그인 허용
   sed -i 's/PermitRootLogin.*/PermitRootLogin yes/g' /etc/ssh/sshd_config
-  service restart ssh
 fi
 
 
