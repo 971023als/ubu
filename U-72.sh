@@ -29,7 +29,6 @@ filename="/etc/rsyslog.conf"
 
 if [ ! -e "$filename" ]; then
   echo "$filename does not exist."
-  exit 1
 fi
 
 expected_content=(
