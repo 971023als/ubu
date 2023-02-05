@@ -16,9 +16,9 @@ EOF
 
 BAR
 
-sudo service autofs stop
+sudo service automountd stop
 
-sudo service autofs status
+sudo service automountd status
 
 cat $result
 

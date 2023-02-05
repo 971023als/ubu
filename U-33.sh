@@ -19,21 +19,21 @@ TMP1=`SCRIPTNAME`.log
 >$TMP1  
 
 #DNS 서비스 중지
-sudo service named stop
+sudo systemctl stop named
 
 #부팅 시 DNS 서비스를 시작하지 않도록 설정
-sudo chkconfig named off
+sudo systemctl disable named
 
 #DNS 서비스가 중지되었는지 확인합니다
 
-if [ $(sudo service named status | grep -c "is running") -eq 0 ]; then
+if [ $(sudo systemctl is-active named) == "inactive" ]; then
     OK "DNS 서비스가 중지되었습니다."
 else
     WARN "DNS 서비스가 아직 실행 중입니다."
 fi
 
 # 서비스의 상태를 확인합니다
-service_status=$(service is-enabled named)
+service_status=$(systemctl is-enabled named)
 
 # 상태가 "사용 안 함"이면 서비스가 부팅 시 시작되지 않습니다
 if [ "$service_status" == "disabled" ]; then
