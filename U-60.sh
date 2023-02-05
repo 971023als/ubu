@@ -26,15 +26,13 @@ TMP1=`SCRIPTNAME`.log
 
 > $TMP1  
 
-
 sudo apt-get install openssh-server -y
 
-sudo systemctl start ssh
+sudo service start ssh
 
-sudo systemctl enable ssh
+sudo service enable ssh
 
-systemctl status ssh
-
+service status ssh
 
 
 cat $result
