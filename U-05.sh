@@ -30,10 +30,9 @@ for profile in "$root_profile" "$etc_profile"; do
 
   tmp_file=$(mktemp)
   cat "$profile" | sed 's/PATH=.:$PATH:$HOME\/bin/PATH=$PATH:$HOME\/bin:./g' > "$tmp_file"
-  mv "$tmp_file" "$profile"
-  chmod 644 "$profile"
+  sudo mv "$tmp_file" "$profile"
+  sudo chmod 644 "$profile"
 done
-
 
 cat $result
 
