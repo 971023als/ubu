@@ -28,7 +28,7 @@ message="시스템에 오신 것을 환영합니다. 이 시스템은 인증된 
 
 for file in "${files[@]}"; do
   if [ ! -e "$file" ]; then
-    INFO "$fil e이 없습니다. 건너뛰기."
+    INFO "$file 이 없습니다. 건너뛰기."
   else
     echo "$message" > "$file"
     INFO "로그온 메시지가 $file 로 설정되었습니다."
