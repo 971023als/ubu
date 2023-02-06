@@ -16,9 +16,20 @@ EOF
 
 BAR
 
-sudo service automountd stop
 
-sudo service automountd status
+# 자동 마운트 서비스의 상태를 확인하십시오
+status=$(svcs -a | grep "autofs" | awk '{print $1}')
+
+# 서비스가 실행 중인 경우 프로세스 ID를 삭제하여 서비스를 중지합니다
+if [ "$status" == "online" ]; then
+  pid=$(svcs -a | grep "autofs" | awk '{print $3}' | awk -F ',' '{print $1}')
+  kill -9 $pid
+fi
+
+# 시작 스크립트의 이름을 변경하여 자동 마운트 서비스 사용 안 함
+if [ -f "/etc/rc.d/rc2.d/S28automountd" ]; then
+  mv /etc/rc.d/rc2.d/S28automountd /etc/rc.d/rc2.d/_S28automountd
+fi
 
 cat $result
 
