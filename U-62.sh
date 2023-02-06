@@ -32,7 +32,7 @@ line=$(grep "^$account_name:" /etc/passwd)
 
 # 계정을 찾을 수 없는 경우 메시지 표시 및 종료
 if [ -z "$line" ]; then
-  echo "/etc/passwd 파일에 $account_name 계정이 없습니다."
+  INFO "/etc/passwd 파일에 $account_name 계정이 없습니다."
 fi
 
 # 현재 로그인 셸 추출
@@ -40,6 +40,8 @@ current_shell=$(echo $line | cut -d: -f7)
 
 # 현재 셸이 이미 /bin/false로 설정되어 있는지 확인하십시오
 if [ "$current_shell" != "/bin/false" ]; then
+  OK " ftp이 이미 /bin/false로 설정."
+else
   # 현재 셸을 /bin/false로 변경합니다
   new_line=$(echo "$line" | sed "s#$current_shell#/bin/false#")
 

@@ -24,14 +24,17 @@ TMP1=`SCRIPTNAME`.log
 
 > $TMP1   
 
-# FTP 서비스를 중지합니다:
-sudo service stop ftpd 
+# vsftpd 서비스를 중지합니다:
+sudo service vsftpd stop
 
-# 부팅 시 FTP 서비스를 시작하지 않도록 설정합니다
-sudo service disable ftpd
+# vsftpd 서비스를 시작하지 않도록 설정합니다
+sudo /etc/rc.d/init.d/vsftpd stop
 
-# FTP 서비스가 중지되고 비활성화되었는지 확인합니다:
-sudo service status ftpd
+# proftp 서비스를 중지합니다:
+sudo service proftp stop
+
+# proftp를 시작하지 않도록 설정합니다
+sudo /etc/rc.d/init.d/proftp stop
 
 
 cat $result
