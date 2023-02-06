@@ -1,12 +1,9 @@
 #!/bin/bash
-
  
 
 . function.sh
 
   
- 
-
 BAR
 
 CODE [U-60] ssh 원격접속 허용
@@ -20,16 +17,16 @@ cat << EOF >> $result
 EOF
 
 BAR
- 
 
-sudo apt-get install openssh-server -y
+# SSH 설치
+sudo apt-get update -y
+sudo apt-get install ssh -y
 
+# SSH 서비스 시작
 sudo service start ssh
 
-sudo service enable ssh
-
-service status ssh
-
+# SSHD 서비스 시작
+sudo service start sshd
 
 cat $result
 

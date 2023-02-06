@@ -25,7 +25,7 @@ TMP1=`SCRIPTNAME`.log
 
 
 # 파일 정의
-file="/etc/snmpd.conf"
+file="/etc/snmp/snmpd.conf"
 
 # "get-community-name: public / set-commnunity-name : private"을 "get-community-name: min / set-commnunity-name: min"로 바꿉니다
 sed -i 's/get-community-name: public/ set-community-name: private/g; s/get-community-name: min/ set-community-name: min/g' $file
