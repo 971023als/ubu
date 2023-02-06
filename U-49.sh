@@ -58,6 +58,8 @@ keep_list=(
   "adiosl"
   "cubrid"
   "user"
+  "user root"
+  "user www-data"
 )
 
 # 모든 사용자 계정 목록 가져오기
