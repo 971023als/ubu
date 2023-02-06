@@ -20,11 +20,7 @@ cat << EOF >> $result
 EOF
 
 BAR
-
-
-TMP1=`SCRIPTNAME`.log
-
-> $TMP1  
+ 
 
 sudo apt-get install openssh-server -y
 
