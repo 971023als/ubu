@@ -20,19 +20,45 @@ TMP1=`SCRIPTNAME`.log
 
 >$TMP1  
 
-root_profile="~/.profile"
-etc_profile="/etc/profile"
+# Backup files
+cp /etc/profile /etc/profile.bak
+cp ~/.profile ~/.profile.bak
 
-for profile in "$root_profile" "$etc_profile"; do
-  if [ ! -e "$profile" ]; then
-    continue
+# PATH의 현재 값을 가져옴
+path=$(echo $PATH)
+
+# 시작 부분에 "." 또는 ":"가 있는지 확인
+if [[ "${path:0:1}" == "." || "${path:0:1}" == ":" ]]; then
+  # 첫 번째 문자("." 또는 ":")를 처음부터 제거합니다
+  path="${path:1}"
+fi
+
+# 경로를 배열로 분할
+path_array=($(echo $path | tr ":" "\n"))
+
+# 배열에서 "."의 색인을 찾음
+index=0
+for i in "${!path_array[@]}"; do
+  if [[ "${path_array[i]}" == "." ]]; then
+    index=$i
+    break
   fi
-
-  tmp_file=$(mktemp)
-  cat "$profile" | sed 's/PATH=.:$PATH:$HOME\/bin/PATH=$PATH:$HOME\/bin:./g' > "$tmp_file"
-  sudo mv "$tmp_file" "$profile"
-  sudo chmod 644 "$profile"
 done
+
+# 배열에서 "."를 제거하고 끝에 추가
+unset 'path_array[index]'
+path_array+=(".")
+
+# 배열을 ":" 구분 기호를 사용하여 문자열로 다시 조인
+new_path=$(IFS=:; echo "${path_array[*]}")
+
+# PATH 환경 변수 업데이트
+echo "PATH=$new_path" >> ~/.profile
+echo "PATH=$new_path" >> /etc/profile
+
+# 환경 변수 다시 로드
+source ~/.profile
+source /etc/profile
 
 cat $result
 
