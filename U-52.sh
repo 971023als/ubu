@@ -35,47 +35,23 @@ TMP1=`SCRIPTNAME`.log
 
 > $TMP1
 
-# 고유 UID 목록 가져오기
-unique_uids=$(cat /etc/passwd | awk -F: '{print $3}' | sort | uniq)
-
-# 각 UID를 반복합니다
-for uid in $unique_uids; do
-  # 동일한 UID를 가진 계정 수 계산
-  count=$(grep ":$uid:" /etc/passwd | wc -l)
-
-  # 동일한 UID를 가진 계정이 하나만 있는 경우 건너뛰기
-  if [ $count -le 1 ]; then
-    continue
+# 동일한 UID를 가진 사용자 계정이 없는지 확인하십시오
+check_uid() {
+  uid=$1
+  username=$(getent passwd $uid | cut -d: -f1)
+  if [ -z "$username" ]; then
+    OK "동일한 UID $uid 를 가진 사용자 계정이 없습니다."
+    # 여기서 작업 수행(예: 지정된 UID로 새 사용자 계정 만들기)
+    # user add -u $uid new user
+  else
+    WARN "UID $uid 를 가진 사용자 계정 $username 존재"
   fi
+}
 
-  # 동일한 UID를 가진 계정 목록 가져오기
-  users=$(grep ":$uid:" /etc/passwd | awk -F: '{print $1}')
-
-  # 각 계정을 반복합니다
-  for user in $users; do
-    # 동일한 UID를 가진 첫 번째 계정 건너뛰기
-    if [ $count -eq $uid ]; then
-      count=$((count - 1))
-      continue
-    fi
-
-    # 현재 uid로 new_uid 초기화
-    new_uid=$uid
-
-    # new_uid가 이미 있는지 확인하십시오
-    while grep -q ":$new_uid:" /etc/passwd; do
-      # new_uid 증가
-      new_uid=$((new_uid + 1))
-    done
-
-    # 계정의 UID 변경
-    sudo usermod --uid $new_uid $user
-
-    # 감산수
-    count=$((count - 1))
-  done
-done
-
+# 여러 UID 확인
+check_uid 1001
+check_uid 1002
+check_uid 1003
 
  
 

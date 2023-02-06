@@ -26,7 +26,7 @@ while read line; do
   # UID가 0(루트)인지 확인합니다
   if [ $uid -eq 0 ]; then
     # UID를 새 값(500, 501, 502 등)으로 변경합니다
-    new_uid=$((500 + i))
+    new_uid=$((2023 + i))
     usermod -u $new_uid $username
     INFO "$username 의 UID가 0에서 $new_uid 로 변경됨"
     i=$((i + 1))
