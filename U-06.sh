@@ -27,7 +27,7 @@ if [ -z "$invalid_owner_files" ]; then
   OK "잘못된 소유자가 있는 파일 또는 디렉터리를 찾을 수 없습니다"
 else
   INFO "잘못된 소유자가 있는 다음 파일 또는 디렉터리에 대한 액세스 제한:"
-  echo "$invalid_owner_files"
+  INFO "$invalid_owner_files"
   sudo chown root $invalid_owner_files
 fi
 
