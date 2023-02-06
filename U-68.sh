@@ -31,7 +31,7 @@ for file in "${files[@]}"; do
     INFO "$file 이 없습니다. 건너뛰기."
   else
     echo "$message" > "$file"
-    INFO "로그온 메시지가 $file 로 설정되었습니다."
+    OK "로그온 메시지가 $file 로 설정되었습니다."
   fi
 done
 
