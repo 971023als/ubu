@@ -20,7 +20,7 @@ BAR
 sudo chown root:root /etc/shadow
 
 # 파일의 권한을 600으로 설정
-sudo chmod 600 /etc/shadow
+sudo chmod 400 /etc/shadow
 
 cat $result
 
