@@ -25,8 +25,8 @@ if [ ! -e $executables ]; then
 fi
 
 # SUID 및 SGID 사용 권한 제거
-chmod u-s $executables
-chmod g-s $executables
+sudo chmod u-s $executables
+sudo chmod g-s $executables
 
 INFO "$executables 에서 제거된 SUID 및 SGID 권한."
 
