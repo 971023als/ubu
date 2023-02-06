@@ -31,7 +31,6 @@ file="/etc/snmpd.conf"
 sed -i 's/get-community-name: public/ set-community-name: private/g; s/get-community-name: min/ set-community-name: min/g' $file
 
 
-
 cat $result
 
 echo ; echo 

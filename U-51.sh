@@ -39,7 +39,8 @@ keep_groups=("root" "sudo" "sys" "adm" "wheel"
 "apache" "postfix" "gdm" "adiosl" "mysql" "cubrid"
  "messagebus" "syslog" "avahi" "whoopsie"
 "colord" "systemd-network" "systemd-resolve"
-"systemd-timesync" "mysql" "sync" "user")
+"systemd-timesync" "mysql" "user"
+"www-data" "sync")
 
 # 모든 그룹 목록 가져오기
 all_groups=$(cut -d: -f1 /etc/group)
