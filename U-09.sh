@@ -39,13 +39,13 @@ permissions=$(stat -c '%a' $HOSTS_FILE)
 if [ "$owner" != "root" ]; then
   WARN "$HOSTs_FILE 의 소유자를 루트로 설정하지 못했습니다."
 else
-  OK "$HOSTs_FILE이 이제 루트에 의해 소유됩니다."
+  OK "$HOSTs_FILE 이 이제 루트에 의해 소유됩니다."
 fi
 
 if [ "$permissions" != "600" ]; then
-  WARN "$HOSTs_FILE의 사용 권한을 600으로 설정하지 못했습니다."
+  WARN "$HOSTs_FILE 의 사용 권한을 600으로 설정하지 못했습니다."
 else
-  OK "$HOSTs_FILE에 권한 600이 있습니다."
+  OK "$HOSTs_FILE 에 권한 600이 있습니다."
 fi
 
 

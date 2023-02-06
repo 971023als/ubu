@@ -18,13 +18,13 @@ BAR
 
 
 # rlogin 서비스 사용 안 함
-service disable rlogin
+service rlogin disable
 
 # rsh 서비스 사용 안 함
-service disable rsh
+service rsh disable
 
 # exec 서비스 사용 안 함
-service disable exec
+service exec disable
 
 
 

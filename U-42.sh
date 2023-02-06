@@ -39,8 +39,6 @@ echo "Patches installed at $(date)" >> $log_file
 
 
 
-
-
 cat $result
 
 echo ; echo 

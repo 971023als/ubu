@@ -52,13 +52,13 @@ for user in "${user_list[@]}"; do
 done
 
 # su 명령에서 권한을 4750으로 설정합니다
-chmod 4750 /bin/su
+sudo chmod 4750 /bin/su
 
 # 사용 권한 확인
 if [ $(stat -c %a /bin/su) == "4750" ]; then
-  echo "/bin/su에 대한 권한이 4750으로 설정되었습니다."
+  OK "/bin/su에 대한 권한이 4750으로 설정되었습니다."
 else
-  echo "/bin/su에 대한 사용 권한을 설정하지 못했습니다."
+  WARN "/bin/su에 대한 사용 권한을 설정하지 못했습니다."
 fi
 
 

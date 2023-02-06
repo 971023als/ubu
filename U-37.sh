@@ -35,8 +35,6 @@ if [ -f "$file" ]; then
   fi
 fi
 
-# httpd 데몬을 재시작하여 구성 변경 적용
-sudo service httpd restart
 
 
 cat $result

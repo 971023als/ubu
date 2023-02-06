@@ -27,9 +27,9 @@ cp /etc/vsftpd.conf /etc/vsftpd.conf.bak
 sed -i 's/^anonymous_enable=YES/anonymous_enable=NO/' /etc/vsftpd.conf
 
 # FTP 서비스를 다시 시작하여 변경 사항 적용
-service restart vsftpd
+service vsftpd restart 
 if [ "$?" -ne 0 ]; then
-  WARN "FTP 서비스를 다시 시작하지 못했습니다."
+  INFO "FTP 서비스를 다시 시작하지 못했습니다."
 else
   OK "FTP 서비스가 다시 시작되었습니다."
 fi

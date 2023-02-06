@@ -31,7 +31,7 @@ if [ "$dns_status" == "active" ]; then
     INFO "DNS 쿼리가 탐지됨, 명명된 서비스가 계속 실행됨"
   fi
 else
-  INFO "DNS 서비스가 이미 중지되었습니다."
+  OK "DNS 서비스가 이미 중지되었습니다."
 fi
 
 

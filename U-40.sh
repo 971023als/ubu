@@ -32,11 +32,6 @@ echo "
     LimitRequestBody $limit
 </Directory>" >> /etc/apache2/apache2.conf
 
-# 변경 내용을 적용하려면 파일을 저장하고 Apache를 다시 시작
-if ! sudo service apache2 restart; then
-  INFO "Apache를 다시 시작 불가합니다. 상태 및 로그를 확인하는 중입니다..."
-fi
-
 
 
 
