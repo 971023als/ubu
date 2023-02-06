@@ -16,6 +16,22 @@ EOF
 
 BAR
 
+# /etc/passwd 파일 읽기
+while read line; do
+  # 줄을 필드로 분할합니다
+  fields=($(echo $line | tr ":" " "))
+  username=${fields[0]}
+  uid=${fields[2]}
+
+  # UID가 0(루트)인지 확인합니다
+  if [ $uid -eq 0 ]; then
+    # UID를 새 값(500, 501, 502 등)으로 변경합니다
+    new_uid=$((500 + i))
+    usermod -u $new_uid $username
+    INFO "$username 의 UID가 0에서 $new_uid 로 변경됨"
+    i=$((i + 1))
+  fi
+done < /etc/passwd
 
 
 cat $result
