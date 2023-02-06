@@ -17,14 +17,14 @@ EOF
 BAR
 
 
-# rlogin 파일에서 'disable = yes' 설정
-sed -i 's/^[^#]*disable[^#]*/disable = yes/' /etc/xinetd.d/rlogin
+# rlogin 서비스 사용 안 함
+service disable rlogin
 
-# rsh 파일에서 'disable = yes' 설정
-sed -i 's/^[^#]*disable[^#]*/disable = yes/' /etc/xinetd.d/rsh
+# rsh 서비스 사용 안 함
+service disable rsh
 
-# rexec 파일에서 'disable = yes' 설정
-sed -i 's/^[^#]*disable[^#]*/disable = yes/' /etc/xinetd.d/rexec
+# exec 서비스 사용 안 함
+service disable exec
 
 
 
