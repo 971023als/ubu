@@ -19,11 +19,11 @@ EOF
 BAR
 
 # Sendmail이 실행 중인지 확인
-sendmail_status=$(systemctl is-active sendmail)
+sendmail_status=$(service is-active sendmail)
 
 if [ "$sendmail_status" == "active" ]; then
   INFO "전송 메일 서비스 중지 중"
-  systemctl stop sendmail
+  service stop sendmail
 else
   OK "메일 보내기 서비스가 이미 중지되었습니다."
 fi
