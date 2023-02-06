@@ -17,14 +17,14 @@ EOF
 
 BAR
 
-# Remove write permissions for other users on the specified file
+# 지정한 파일에서 다른 사용자에 대한 쓰기 권한 제거
 remove_write_permissions() {
   filename=$1
-  chmod o-w "$filename"
-  echo "Removed write permissions for other users on $filename"
+  sudo chmod o-w "$filename"
+  INFO "$filename 에서 다른 사용자에 대한 쓰기 권한 제거"
 }
 
-# Remove write permissions for other users on all specified files
+# 지정된 모든 파일에서 다른 사용자에 대한 쓰기 권한 제거
 remove_write_permissions .profile
 remove_write_permissions .kshrc
 remove_write_permissions .cshrc
