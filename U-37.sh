@@ -20,19 +20,24 @@ TMP1=`SCRIPTNAME`.log
 
 >$TMP1  
 
-# 인증 파일 경로 정의
-auth_file="/path/to/authentication_file"
+# Apache 구성 파일 정의
+file="/etc/apache2/apache2.conf"
 
-# 사용자 이름 정의
-username="user"
+if [ -f "$file" ]; then
+  # "AllowOverrideNone"을 "AllowOverride AuthConfig"로 바꿉니다
+  sed -i 's/AllowOverride None/AllowOverride AuthConfig/g' $file
 
-# 인증 파일에 사용자 이름이 있는지 확인합니다
-if htpasswd -D $auth_file $username &> /dev/null; then
-  OK "사용자 $username 은 이미 존재합니다"
-else
-  INFO "사용자 $username 생성"
-  htpasswd -c $auth_file $username
+  # 변경 여부 확인
+  if grep -q "AllowOverride AuthConfig" $file; then
+    OK "AllowOverrideNone이 AllowOverrideAuthConfig로 대체."
+  else
+    WARN "AllowOverrideNone을 AllowOverrideAuthConfig로 대체 불가."
+  fi
 fi
+
+# httpd 데몬을 재시작하여 구성 변경 적용
+sudo service httpd restart
+
 
 cat $result
 
