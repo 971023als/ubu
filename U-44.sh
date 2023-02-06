@@ -16,26 +16,26 @@ EOF
 
 BAR
 
-# 루트 계정의 UID 가져오기
-root_uid=$(id -u root)
+# /etc/passwd를 한 줄씩 읽습니다
+while read line; do
+  # 세 번째 필드(UID) 가져오기
+  uid=$(echo $line | awk -F: '{print $3}')
 
-# 모든 사용자 계정 목록 가져오기
-user_list=$(awk -F: '{print $1}' /etc/passwd)
-
-# 목록의 각 사용자를 반복합니다
-for user in $user_list; do
-  # 현재 사용자의 UID 가져오기
-  uid=$(id -u $user)
- # 현재 사용자의 UID가 루트 계정과 동일한지 확인하십시오
-  if [ $uid -eq $root_uid ]; then
-    # 루트 계정과 다른 새 UID 생성
-    new_uid=$((root_uid + 1))
-    # 현재 사용자의 UID를 새 UID로 변경
-    sudo usermod -u $new_uid $user
-    # UID가 변경되었음을 나타내는 메시지 출력
-    INFO "사용자 '$user'의 UID가 $root_uid에서 $new_uid로 변경됨"
+  # UID가 0이 아닌 경우 건너뛰기
+  if [ $uid -ne 0 ]; then
+    continue
   fi
-done
+
+  # 사용자 이름 가져오기
+  username=$(echo $line | awk -F: '{print $1}')
+
+  # UID 1 증가
+  new_uid=$((uid + 1))
+
+  # /etc/passwd의 항목 업데이트
+  sed -i "s/$username:x:$uid:/$username:x:$new_uid:/" /etc/passwd
+done < /etc/passwd
+
 
 
 cat $result
