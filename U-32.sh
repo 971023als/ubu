@@ -18,17 +18,13 @@ EOF
 
 BAR
 
-# Sendmail이 실행 중인지 확인
-sendmail_status=$(systemctl stuatus sendmail)
+# Sendmail 서비스의 PID 찾기
+PIDs=$(ps -ef | grep sendmail | awk '{print $2}')
 
-if [ "$sendmail_status" == "active" ]; then
-  INFO "전송 메일 서비스 중지 중"
-  service stop sendmail
-else
-  OK "메일 보내기 서비스가 이미 중지되었습니다."
-fi
-
-
+# Sendmail 서비스 중지
+for PID in $PIDs; do
+    kill -9 $PID
+done
 
 cat $result
 
