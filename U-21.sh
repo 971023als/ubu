@@ -17,14 +17,41 @@ EOF
 BAR
 
 
-# rlogin 서비스 사용 안 함
-service rlogin disable
+# /etc/xinetd.d/rlogin 파일 설정
+echo "service rlogin
+{
+        socket_type= stream 
+        wait= no 
+        user= nobody 
+        log_on_success+= USERID 
+        log_on_failure+= USERID 
+        server= /usr/sdin/in.fingerd 
+        disable= yes
+}" > /etc/xinetd.d/rlogin
 
-# rsh 서비스 사용 안 함
-service rsh disable
+# /etc/xinetd.d/rsh 파일 설정
+echo "service rsh
+{
+        socket_type= stream 
+        wait= no 
+        user= nobody 
+        log_on_success+= USERID 
+        log_on_failure+= USERID 
+        server= /usr/sdin/in.fingerd 
+        disable= yes
+}" > /etc/xinetd.d/rsh
 
-# exec 서비스 사용 안 함
-service exec disable
+# /etc/xinetd.d/rexec 파일 설정
+echo "service rexec
+{
+        socket_type= stream 
+        wait= no 
+        user= nobody 
+        log_on_success+= USERID 
+        log_on_failure+= USERID 
+        server= /usr/sdin/in.fingerd 
+        disable= yes
+}" > /etc/xinetd.d/rexec
 
 
 
