@@ -24,8 +24,17 @@ TMP1=`SCRIPTNAME`.log
 # /etc/login.defs에서 최소 암호 길이 설정
 sed -i 's/^PASS_MIN_LEN.*/PASS_MIN_LEN 8/' /etc/login.defs
 
+auth_file="/etc/pam.d/system-auth"
+auth_config="password requisite pam_cracklib.so retry=3 minlen=8 lcredit=-1 ucredit=-1 dcredit=-1 ocredit=-1"
 
+INFO "$auth_file에 구성 추가 중..."
 
+if grep -q "$auth_config" "$auth_file"; then
+  INFO "구성이 이미 설정되었습니다."
+else
+  echo "$auth_config" | sudo tee -a "$auth_file"
+  OK "구성이 추가되었습니다."
+fi
 
 cat $result
 
