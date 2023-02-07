@@ -21,20 +21,40 @@ TMP1=`SCRIPTNAME`.log
 >$TMP1  
 
 
-# /etc/login.defs에서 최소 암호 길이 설정
-sed -i 's/^PASS_MIN_LEN.*/PASS_MIN_LEN 8/' /etc/login.defs
+DEF_FILE="/etc/login.defs"
+MIN_LEN=8
 
-auth_file="/etc/pam.d/system-auth"
-auth_config="password requisite pam_cracklib.so retry=3 minlen=8 lcredit=-1 ucredit=-1 dcredit=-1 ocredit=-1"
-
-INFO "$auth_file에 구성 추가 중..."
-
-if grep -q "$auth_config" "$auth_file"; then
-  INFO "구성이 이미 설정되었습니다."
+if [ ! -f "$DEF_FILE" ]; then
+    INFO "$DEF_FILE 찾을 수 없습니다."
 else
-  echo "$auth_config" | sudo tee -a "$auth_file"
-  OK "구성이 추가되었습니다."
+    CURR_LEN=$(grep "^PASS_MIN_LEN" "$DEF_FILE" | awk '{print $2}')
+
+    if [ -z "$CURR_LEN" ]; then
+        INFO "$DEF_FILE 에서 PASS_MIN_LEN을 찾을 수 없습니다. 지금 추가하는 중..."
+        echo "PASS_MIN_LEN $MIN_LEN" >> "$DEF_FILE"
+    elif [ "$CURR_LEN" -lt "$MIN_LEN" ]; then
+        INFO "PASS_MIN_LEN 값이 $DEF_FILE의 $MIN_LEN보다 작습니다. 지금 업데이트하는 중..."
+        sed -i "s/^PASS_MIN_LEN.*/PASS_MIN_LEN $MIN_LEN/" "$DEF_FILE"
+    else
+        OK "$DEF_FILE 에서 PASS_MIN_LEN 값이 이미 $MIN_LEN 이상으로 설정되어 있습니다."
+    fi
 fi
+
+AUTH_FILE="/etc/pam.d/common-auth"
+SETTING="password requisite /lib/security/$ISA/pam_cracklib.so retry=3 minlen=8 lcredit=-1 ucredit=-1 dcredit=-1 ocredit=-1"
+
+if [ ! -f "$AUTH_FILE" ]; then
+    INFO "$AUTH_FILE 을 찾을 수 없습니다."
+else
+    if grep -q "$SETTING" "$AUTH_FILE"; then
+        OK "설정이 $AUTH_FILE 에 이미 있습니다."
+    else
+        INFO "$AUTH_FILE 에 설정 추가 중..."
+        echo "$SETTING" >> "$AUTH_FILE"
+    fi
+fi
+
+
 
 cat $result
 
