@@ -25,7 +25,6 @@ PIDs=$(ps -ef | grep named | awk '{print $2}')
 for PID in $PIDs; do
     kill -9 $PID
 done
-  
 
 
 cat $result
