@@ -39,7 +39,7 @@ sudo chmod 600 $HOME/.rhosts
 sudo sed -i '/^+/d' /etc/hosts.equiv
 
 # $HOME/.r 호스트에서 '+' 제거
-sed -i '/^+/d' $HOME/.rhosts
+sudo sed -i '/^+/d' $HOME/.rhosts
 
 
 
