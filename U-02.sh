@@ -24,29 +24,6 @@ TMP1=`SCRIPTNAME`.log
 # /etc/login.defs에서 최소 암호 길이 설정
 sed -i 's/^PASS_MIN_LEN.*/PASS_MIN_LEN 8/' /etc/login.defs
 
-# 최소 대문자 수 설정
-min_upper=3
-
-# 최소 소문자 수 설정
-min_lower=3
-
-# 최소 숫자 문자 수 설정
-min_numeric=2
-
-# 최소 특수 문자 수 설정
-min_special=2
-
-# pam_cracklib이 있는지 확인합니다.so는 /etc/syslog.d/common-auth에 있습니다
-if grep -q "pam_tally2.so " /etc/pam.d/common-auth; then
-  # 기존 pam_cracklib을 업데이트합니다.
-  sed -i "s/\(pam_tally2.so .*\)ucredit=[0-9]*\(.*\)/\1ucredit=$min_upper\2/" /etc/pam.d/common-auth
-  sed -i "s/\(pam_tally2.so .*\)lcredit=[0-9]*\(.*\)/\1lcredit=$min_lower\2/" /etc/pam.d/common-auth
-  sed -i "s/\(pam_tally2.so .*\)dcredit=[0-9]*\(.*\)/\1dcredit=$min_numeric\2/" /etc/pam.d/common-auth
-  sed -i "s/\(pam_tally2.so .*\)ocredit=[0-9]*\(.*\)/\1ocredit=$min_special\2/" /etc/pam.d/common-auth
-else
-  # pam_cracklib을 사용하여 새 줄을 추가합니다.
-  echo "password    required    pam_tally2.so  retry=3 ucredit=$min_upper lcredit=$min_lower dcredit=$min_numeric ocredit=$min_special" >> /etc/pam.d/common-auth
-fi
 
 
 
