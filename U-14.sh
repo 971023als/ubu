@@ -20,17 +20,24 @@ EOF
 
 BAR
 
-
-files=( "$HOME/.bashrc" "$HOME/.bash_profile" "$HOME/.bash_aliases" )
+files=(".profile" ".kshrc" ".cshrc" ".bashrc" ".bash_profile" ".login" ".exrc" ".netrc")
 
 for file in "${files[@]}"; do
-  if [ -e "$file" ]; then
-    chmod o-w "$file"
-    if [ $? -eq 0 ]; then
-      OK "$file 에서 다른 사용자에 대한 쓰기 권한이 제거되었습니다."
-    else
-      WARN "$file 에서 다른 사용자에 대한 쓰기 권한을 제거하지 못했습니다."
-    fi
+  if [ ! -f $file ]; then
+    INFO "$file 이 없습니다."
+    continue
+  fi
+
+  owner=$(stat -c '%U' $file)
+  if [ "$owner" != "root" ] && [ "$owner" != "$USER" ]; then
+    INFO "$file 소유자를 $USER 로 변경 중..."
+    sudo chown $USER $file
+  fi
+
+  permission=$(stat -c '%a' $file)
+  if [ "$permission" != "600" ] && [ "$permission" != "700" ]; then
+    INFO "$file 의 권한을 700으로 변경하는 중..."
+    sudo chmod 700 $file
   fi
 done
 
