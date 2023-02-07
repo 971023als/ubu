@@ -17,48 +17,31 @@ EOF
 
 BAR
 
-# 시스템에 사용자가 있는지 확인합니다
-function check_user() {
-  if id "$1" > /dev/null 2>&1; then
-    return 0
-  else
-    return 1
+# 휠 그룹이 /etc/group 파일에 정의되어 있는지 확인하십시오
+grep -q '^wheel:' /etc/group
+if [ $? -eq 0 ]; then
+  # 휠 그룹이 정의됨
+  
+  # SUID 비트가 su 명령에 대해 아직 설정되지 않았는지 확인하십시오
+  ls -l $(which su) | grep -q '^-rwsr-xr-x'
+  if [ $? -ne 0 ]; then
+    # SUID bit is not set, set it
+    sudo chmod u+s $(which su)
   fi
-}
-
-# su 명령에 액세스해야 하는 사용자 배열
-user_list=("root" "bin" "daemon"  
-"lp" "sync" "user" "messagebus" 
-"syslog" "avahi" "kernoops"
-"whoopsie" "colord" "systemd-network" 
-"systemd-resolve" "systemd-timesync" 
-"mysql" "gdm" )
-
-# 사용자 목록을 순환
-for user in "${user_list[@]}"; do
-  # Check if the user exists
-  if check_user "$user"; then
-    # 휠 그룹에 사용자 추가
-    usermod -aG wheel "$user"
-    # 사용자가 이미 휠 그룹에 속해 있는지 확인하십시오
-    if groups "$user" | grep &>/dev/null '\bwheel\b'; then
-      INFO "사용자 $user 는 이미 휠 그룹에 속해 있습니다."
-    else
-      OK "사용자 $user 가 휠 그룹에 추가되었습니다."
-    fi
-  else
-    INFO "사용자 $user가 시스템에 없습니다."
+  
+  # 그룹 실행 권한이 휠 그룹으로만 아직 제한되지 않았는지 점검하십시오
+  ls -l $(which su) | grep -q '^.*wheel.*$'
+  if [ $? -ne 0 ]; then
+    # 허가는 휠 그룹으로만 제한되지 않습니다. 제한합니다
+    sudo chgrp wheel $(which su)
+    sudo chmod g-rwx $(which su)
+    sudo chmod g+rxs $(which su)
   fi
-done
-
-# su 명령에서 권한을 4750으로 설정합니다
-sudo chmod 4750 /bin/su
-
-# 사용 권한 확인
-if [ $(stat -c %a /bin/su) == "4750" ]; then
-  OK "/bin/su에 대한 권한이 4750으로 설정되었습니다."
+  
+  OK "SU 명령은 이제 휠 그룹의 사용자로 제한됩니다."
 else
-  WARN "/bin/su에 대한 사용 권한을 설정하지 못했습니다."
+  # 휠 그룹이 정의되지 않음
+  INFO "휠 그룹이 /etc/group 파일에 정의되어 있지 않습니다."
 fi
 
 

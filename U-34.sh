@@ -20,10 +20,10 @@ TMP1=`SCRIPTNAME`.log
 
 >$TMP1  
 
-# Sendmail 서비스의 PID 찾기
+# named 서비스의 PID 찾기
 PIDs=$(ps -ef | grep named | awk '{print $2}')
 
-# Sendmail 서비스 중지
+# named 서비스 중지
 for PID in $PIDs; do
     kill -9 $PID
 done
