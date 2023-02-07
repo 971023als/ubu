@@ -26,52 +26,21 @@ TMP1=`SCRIPTNAME`.log
 
 > $TMP1
 
-# 보관할 계정 목록
-keep_list=(
-  "root"
-  "bin"
-  "daemon"
-  "adm"
-  "lp"
-  "sync"
-  "shutdown"
-  "halt"
-  "ubuntu"
-  "user"
-  "messagebus"
-  "syslog"
-  "avahi"
-  "kernoops"
-  "whoopsie"
-  "colord"
-  "systemd-network"
-  "systemd-resolve"
-  "systemd-timesync"
-  "mysql"
-  "dbus"
-  "rpc"
-  "rpcuser"
-  "haldaemon"
-  "apache"
-  "postfix"
-  "gdm"
-  "adiosl"
-  "cubrid"
-  "user"
-  "user root"
-  "user www-data"
-)
+# /etc/passwd에서 "lp|uucp|nuucp"와 일치하는 사용자 목록을 가져옵니다
+user_list=$(cat /etc/passwd | egrep "lp|uucp|nuucp" | awk -F: '{print $1}')
 
-# 모든 사용자 계정 목록 가져오기
-all_accounts=$(cut -d: -f1 /etc/passwd)
-
-# 모든 그룹에 반복
-for account in $all_accounts; do
-  if ! [[ "${keep_list[@]}" =~ " ${account}" ]]; then
-    # 유지할 그룹 목록에 없는 그룹 제거
-    sudo userdel "$account"
+# 사용자 목록을 순환
+for user in $user_list; do
+ # 사용자 셸을 /bin/false로 변경합니다
+  usermod -s /bin/false $user
+  if [ $? -eq 0 ]; then
+    echo "Login is now impossible for user: $user"
+  else
+    echo "Could not make login impossible for user: $user"
   fi
 done
+
+
 
  
 cat $result
