@@ -31,53 +31,21 @@ TMP1=`SCRIPTNAME`.log
 
 > $TMP1
 
+# 명령 출력에서 사용자 목록 가져오기
+user_list=$(cat /etc/passwd | egrep "^daemon|^bin|^sys|^adm|^listen|^nobody|^nobody4|^ noaccess|^diag|^operator|^games|^gopher" | grep -v "admin" | awk -F: '{print $1}')
 
-# 필수 계정 배열
-required_accounts=(
-  "root"
-  "bin"
-  "daemon"
-  "adm"
-  "lp"
-  "sync"
-  "shutdown"
-  "halt"
-  "ubuntu"
-  "user"
-  "messagebus"
-  "syslog"
-  "avahi"
-  "kernoops"
-  "whoopsie"
-  "colord"
-  "systemd-network"
-  "systemd-resolve"
-  "systemd-timesync"
-  "mysql"
-  "dbus"
-  "rpc"
-  "rpcuser"
-  "haldaemon"
-  "apache"
-  "postfix"
-  "gdm"
-  "adiosl"
-  "cubrid"
-)
-
-# 모든 사용자를 순환시키다
-for user in $(cut -d: -f1 /etc/passwd); do
-  # 사용자가 필수 계정 목록에 없는지 확인합니다
-  if ! [[ " ${required_accounts[@]} " =~ " ${user} " ]]; then
-    # 불필요한 사용자에 대해 셸을 nonlogin으로 변경
+# 사용자 목록을 순환
+for user in $user_list; do
+  # 사용자 셸이 이미 /bin/false 또는 /sbin/nlogin으로 설정되어 있는지 확인하십시오
+  shell=$(grep "^$user:" /etc/passwd | awk -F: '{print $7}')
+  if [[ $shell == "/bin/false" || $shell == "/sbin/nologin" ]]; then
+    OK "사용자 $user 에 이미 $shell 로 설정된 셸이 있습니다."
+  else
+    # 사용자 셸을 /bin/false로 설정합니다
     sudo usermod -s /bin/false $user
+    INFO "user $user 셸을 /bin/false로 설정"
   fi
 done
-
-
-
-
-
 
  
 
