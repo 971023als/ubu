@@ -14,11 +14,7 @@ cat << EOF >> $result
 
 EOF
 
-BAR
-
-TMP1=`SCRIPTNAME`.log
-
->$TMP1  
+BAR 
 
 
 invalid_owner_files=$(find / -nouser 2>/dev/null)

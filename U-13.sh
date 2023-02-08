@@ -17,22 +17,25 @@ EOF
 
 BAR
 
-# 지정한 파일에서 다른 사용자에 대한 쓰기 권한 제거
-remove_write_permissions() {
-  filename=$1
-  sudo chmod o-w "$filename"
-  INFO "$filename 에서 다른 사용자에 대한 쓰기 권한 제거"
-}
+# SUID 또는 SGID 권한이 있는 모든 파일 찾기
+output=$(find / -user root -type f \( -perm -04000 -o -perm -02000 \) -xdev -exec ls –al {} \;)
 
-# 지정된 모든 파일에서 다른 사용자에 대한 쓰기 권한 제거
-remove_write_permissions .profile
-remove_write_permissions .kshrc
-remove_write_permissions .cshrc
-remove_write_permissions .bashrc
-remove_write_permissions .bash_profile
-remove_write_permissions .login
-remove_write_permissions .exrc
-remove_write_permissions .netrc
+# 출력을 배열로 분할
+arr=($output)
+
+# 어레이를 순환하여 SUID 및 SGID 확인
+for line in "${arr[@]}"
+do
+  if [[ $line == *"r-s"* ]]; then
+    file=$(echo $line | awk '{print $9}')
+    INFO "SUID 제거 중: $file"
+    sudo chmod u-s $file
+  elif [[ $line == *"r-S"* ]]; then
+    file=$(echo $line | awk '{print $9}')
+    INFO "SGID 제거 중: $file"
+    sudo chmod g-s $file
+  fi
+done
 
 cat $result
 
