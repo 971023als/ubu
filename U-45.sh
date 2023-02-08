@@ -18,14 +18,11 @@ EOF
 BAR
 
 # su 명령을 사용해야 하는 계정 목록
-accounts=("root" "bin" "daemon" "adm" 
-"lp" "sync" "shutdown" "halt" "ubuntu" "user"
+accounts=("root" "bin" "daemon"  "lp" "sync" "user"
 "messagebus" "syslog" "avahi" "kernoops"
 "whoopsie" "colord" "systemd-network" 
-"systemd-resolve" "systemd-timesync" "mysql"
- "dbus" "rpc" "rpcuser" "haldaemon" 
-"apache" "postfix" "gdm" "adiosl" 
-"www-data" "user www-data")
+"systemd-resolve" "systemd-timesync" "mysql" 
+"gdm" "www-data" "user www-data")
 
 # wheel group 생성
 sudo groupadd wheel
