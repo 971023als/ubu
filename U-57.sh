@@ -1,7 +1,5 @@
 #!/bin/bash
 
- 
-
 . function.sh
 
 BAR
@@ -17,7 +15,6 @@ cat << EOF >> $result
 EOF
 
 BAR
-
 
 TMP1=`SCRIPTNAME`.log
 

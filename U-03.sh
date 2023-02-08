@@ -23,11 +23,17 @@ TMP1=`SCRIPTNAME`.log
 # 원본 파일 백업
 cp /etc/pam.d/common-auth /etc/pam.d/common-auth.bak
 
-# 파일의 줄 바꾸기
-sed -i 's/auth.*/auth required \/lib\/security\/pam_tally.so deny=5 unlock_time=120 no_magic_root/' /etc/pam.d/common-auth
+# 잠금 임계값 설정
+threshold=10
 
+# 현재 잠금 임계값 설정을 가져옵니다
+current_setting=$(grep "auth required pam_tally2.so" /etc/pam.d/common-auth | awk '{print $4}')
 
-
+# 잠금 임계값이 10 이하로 설정되어 있는지 점검하십시오
+if [ "$current_setting" != "onerr=fail deny=$threshold" ]; then
+  # 현재 설정을 원하는 설정으로 바꿉니다
+  sed -i "s/$current_setting/onerr=fail deny=$threshold/g" /etc/pam.d/common-auth
+fi
 
 cat $result
 
