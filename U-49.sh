@@ -32,7 +32,7 @@ user_list=$(cat /etc/passwd | egrep "lp|uucp|nuucp" | awk -F: '{print $1}')
 # 사용자 목록을 순환
 for user in $user_list; do
  # 사용자 셸을 /bin/false로 변경합니다
-  usermod -s /bin/false $user
+  sudo usermod -s /bin/false $user
   if [ $? -eq 0 ]; then
     INFO "이제 사용자: $user 에 대해 로그인할 수 없습니다."
   else
@@ -69,8 +69,6 @@ default_accounts=(
   "apache"
   "postfix"
   "gdm"
-  "adiosl"
-  "cubrid"
   "sys"
   "games"
   "man"
@@ -101,6 +99,8 @@ default_accounts=(
   "gnone-initial-setup"
   "systmd-coredump"
   "fwupd-refresh"
+  "adiosl"
+  "cubrid"
 )
 
 # 셸이 bash로 설정된 사용자 목록을 /etc/passwd에서 가져옵니다
@@ -114,7 +114,7 @@ for user in $user_list; do
     :
   else
     INFO "기본이 아닌 계정 제거 중: $user"
-    sudo userdel "$user"
+    userdel "$user"
   fi
 done
 
