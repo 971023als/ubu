@@ -20,12 +20,12 @@ TMP1=`SCRIPTNAME`.log
 
 >$TMP1  
 
-if grep -q "auth required pam_tally2.so deny=5 unlock_time=900" /etc/pam.d/common-auth; then
-  INFO "auth required pam_required pam_required2.so deny=5 unlock_time=900 존재."
-else
-  echo "auth required pam_tally2.so deny=5 unlock_time=900" >> /etc/pam.d/common-auth
-  INFO "auth required pam_required pam_required2.so deny=5 unlock_time=900 추가."
-fi
+# 원본 파일 백업
+cp /etc/pam.d/common-auth /etc/pam.d/common-auth.bak
+
+# 파일의 줄 바꾸기
+sed -i 's/auth.*/auth required \/lib\/security\/pam_tally.so deny=5 unlock_time=120 no_magic_root/' /etc/pam.d/common-auth
+
 
 
 
