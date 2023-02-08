@@ -27,8 +27,10 @@ while read home_dir; do
     # 홈 디렉토리 소유자가 사용자 이름과 일치하는지 확인합니다
     username=$(basename "$home_dir")
 
-    # 홈 디렉토리의 소유권을 다른 계정으로 변경
-    sudo chown new_owner "$home_dir"
+    # 홈 디렉토리 소유자가 사용자 이름과 일치하도록 변경
+    if [ "$owner" != "$username" ]; then
+      sudo chown "$username" "$home_dir"
+    fi
     
     # 최종 사용자에 대한 쓰기 권한 제거
     sudo chmod o-w "$home_dir"
