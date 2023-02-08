@@ -16,7 +16,6 @@ EOF
 
 BAR
 
-
 # /etc/xinetd.d/rlogin 파일 설정
 echo "service rlogin
 {
