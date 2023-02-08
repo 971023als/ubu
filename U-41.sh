@@ -28,9 +28,8 @@ config_file="/etc/apache2/sites-available/000-default.conf"
 if [ "$config_file" = "/var/www/html" ] ; then
   INFO "DocumentRoot가 기본 경로로 설정되었습니다: /var/www/html"
 else
-  INFO "DocumentRoot를 /home/ubuntu/newphp/로 변경"
   sed -i 's|DocumentRoot.*|DocumentRoot "/home/ubuntu/newphp/"|' /etc/apache2/sites-available/000-default.conf
-  INFO "DocumentRoot가 /home/ubuntu/newphp/로 변경되었습니다."
+  INFO "DocumentRoot를 /home/ubuntu/newphp/로 변경되었습니다."
 fi
 
 cat $result
