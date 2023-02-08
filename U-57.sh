@@ -16,9 +16,6 @@ EOF
 
 BAR
 
-TMP1=`SCRIPTNAME`.log
-
-> $TMP1
 
 # /etc/passwd의 각 줄을 반복합니다
 while read line; do
