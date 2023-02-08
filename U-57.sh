@@ -16,7 +16,6 @@ EOF
 
 BAR
 
-
 # /etc/passwd의 각 줄을 반복합니다
 while read line; do
   # 구분 기호로 ':'를 사용하여 줄을 필드로 분할
@@ -32,7 +31,6 @@ while read line; do
   fi
 done < /etc/passwd
 
-
 # /etc/passwd에서 홈 디렉토리 목록 가져오기
 while read home_dir; do
   # 홈 디렉토리의 소유자 및 그룹 가져오기
@@ -47,7 +45,6 @@ while read home_dir; do
     sudo chmod "$new_permissions" "$home_dir"
   done < <(ls -ld "$home_dir")
 done < <(cat /etc/passwd | awk -F ':' '{print $6}')
-
 
 cat $result
 
