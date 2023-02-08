@@ -16,9 +16,6 @@ EOF
 
 BAR
 
-
-
-
 # tftp 파일 생성
 echo "service tftp
 {
@@ -54,7 +51,6 @@ server = /usr/sbin/in.tftpd
 server_args = -s /tftpboot
 disable = yes
 }" > /etc/xinetd.d/ntalk
-
 
 cat $result
 
