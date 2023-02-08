@@ -4,9 +4,6 @@
 
 . function.sh
 
-
- 
-
 BAR
 
 CODE [U-57] 홈 디렉터리 소유자 및 권한
@@ -26,6 +23,26 @@ TMP1=`SCRIPTNAME`.log
 
 > $TMP1
 
+# /etc/passwd에서 홈 디렉토리 읽기
+while read line; do
+  # 홈 디렉토리 경로 추출
+  home_dir=$(echo "$line" | awk -F ':' '{print $6}')
+  # 홈 디렉토리의 권한, 소유자 및 그룹 가져오기
+  permissions=$(ls -ld "$home_dir" | awk '{print $1}')
+  owner=$(ls -ld "$home_dir" | awk '{print $3}')
+  group=$(ls -ld "$home_dir" | awk '{print $4}')
+
+  # 홈 디렉토리 소유자가 사용자 이름과 동일한지 확인합니다
+  username=$(basename "$home_dir")
+  if [ "$username" != "$owner" ]; then
+    # 홈 디렉토리의 소유권을 해당 사용자 이름으로 변경
+    sudo chown "$username" "$home_dir"
+  fi
+
+  # 최종 사용자에 대한 쓰기 권한 제거
+  new_permissions=$(echo "$permissions" | sed 's/w/x/')
+  sudo chmod "$new_permissions" "$home_dir"
+done < <(cat /etc/passwd | awk -F ':' '{print $6}')
 
 cat $result
 
