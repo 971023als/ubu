@@ -16,10 +16,6 @@ EOF
 
 BAR
 
-TMP1=`SCRIPTNAME`.log
-
->$TMP1  
-
 # 검사할 로그 파일 정의
 log_files=(/var/log/wtmp /var/log/btmp /var/log/lastlog)
 
