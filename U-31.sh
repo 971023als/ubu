@@ -28,7 +28,6 @@ sed -i "s/#//" $file
 # 라인이 수정되었는지 확인
 grep "$line" $file
 
-#
 sed -i '/#R/ s/#//' $file
 
 cat $result
