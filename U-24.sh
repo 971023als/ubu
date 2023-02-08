@@ -16,19 +16,15 @@ EOF
 
 BAR
 
-# NFS 관련 프로세스의 PID 찾기
-PIDs=$(ps -ef | grep "nfs\|statd\|lockd" | awk '{print $2}')
+# 명명된 프로세스가 실행 중인지 확인하십시오
+result=$(ps -ef | egrep "nfs|statd|lockd" | grep -v grep)
 
-# NFS 관련 프로세스 중지
-for PID in $PIDs; do
-    kill -9 $PID
-done
+pid=$(echo $result | awk '{print $2}')
 
-# 부팅 시 NFS 서비스 사용 안 함
-if [ -f "/etc/rc.d/rc2.d/S60nfs" ]; then
-    mv /etc/rc.d/rc2.d/S60nfs /etc/rc.d/rc2.d/_S60nfs
-fi
+# 프로세스 ID를 사용하여 명명된 프로세스 중지
+kill $pid
 
+mv /etc/rc.d/rc2.d/S60nfs /etc/rc.d/rc2.d/_S60nfs
 
 cat $result
 
