@@ -14,11 +14,7 @@ cat << EOF >> $result
 
 EOF
 
-BAR
-
-TMP1=`SCRIPTNAME`.log
-
->$TMP1  
+BAR  
 
 ftp_account="ftp"
 
@@ -39,8 +35,6 @@ else
   # 파일을 찾을 수 없음
   INFO " $vsftpd_conf_file 을 찾을 수 없습니다."
 fi
-
-
 
 cat $result
 
