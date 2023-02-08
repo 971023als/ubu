@@ -20,33 +20,96 @@ TMP1=`SCRIPTNAME`.log
 
 >$TMP1  
 
-# 현재 날짜 및 시간 저장
-current_date_time=$(date +"%Y-%m-%d %T")
+# 검사할 로그 파일 정의
+log_files=(/var/log/wtmp /var/log/btmp /var/log/lastlog)
 
-# su를 사용한 사용자의 사용자 이름 가져오기
-username=$(last | awk '/su/ {print $1}')
+# 로그 파일을 확인하는 기능 정의
+check_log_files() {
+  for log in "${log_files[@]}"; do
+    if [ -f "$log" ]; then
+      INFO "$log 파일 확인 중"
+      last -f "$log"
+    else
+      WARN "$log 파일을 찾을 수 없음"
+    fi
+  done
+}
 
-# sulog 파일에 로그 추가
-echo "$current_date_time $username used su" >> /var/log/sulog
+# 로그 파일을 확인하기 위해 함수를 호출합니다
+check_log_files
 
 
-# 반복적인 로그인 실패에 대한 임계값 설정
-threshold=5
+ALLOWED_USERS=(
+  "root"
+  "bin"
+  "daemon"
+  "adm"
+  "lp"
+  "sync"
+  "shutdown"
+  "halt"
+  "ubuntu"
+  "user"
+  "messagebus"
+  "syslog"
+  "avahi"
+  "kernoops"
+  "whoopsie"
+  "colord"
+  "systemd-network"
+  "systemd-resolve"
+  "systemd-timesync"
+  "mysql"
+  "dbus"
+  "rpc"
+  "rpcuser"
+  "haldaemon"
+  "apache"
+  "postfix"
+  "gdm"
+  "adiosl"
+  "cubrid"
+)
 
-# 로그 파일에서 반복되는 로그인 실패 횟수를 가져옵니다
-count=$(grep -c "Failed password" /var/log/auth.log)
+LOG_FILE="sulog"
+UNAUTH_LOG="unauthorized_su.log"
 
-echo "Threshold of $threshold repeated login failures reached. Total failures: $count" >> /var/log/auth.log
+# 로그 파일의 각 줄을 확인합니다
+while read line
+do
+  # 줄에서 사용자 이름 추출
+  username=$(echo $line | awk '{print $1}')
+
+  # 사용자 이름이 허용 목록에 없는지 확인합니다
+  if [[ ! "$ALLOWED_USERS" =~ "$username" ]]; then
+    # 무단 시도를 기록합니다
+    echo "$line" >> $UNAUTH_LOG
+  fi
+done < $LOG_FILE
 
 
-# 로그인 거부 이벤트에서 사용자 이름 가져오기
-username=$(grep "authentication failure" /var/log/auth.log | tail -n 1 | awk '{print $(NF-5)}')
+# xferlog 파일이 있는지 확인합니다
+if [ ! -f "/var/log/xferlog" ]; then
+  echo "Error: xferlog file not found."
+fi
 
-# 현재 날짜 및 시간 저장
-current_date_time=$(date +"%Y-%m-%d %T")
+# 현재 날짜 및 시간을 변수에 저장
+now=$(date +"%Y-%m-%d %T")
 
-# auth_logs 파일에 로그 저장
-echo "$current_date_time Login rejection for user $username" >> /var/log/auth_logs
+# xferlog 파일 내용을 변수에 저장
+xferlog=$(cat /var/log/xferlog)
+
+# 무단 액세스 검색
+unauthorized=$(echo "$xferlog" | grep -vE "anonymous|ftp")
+
+# 무단 액세스가 기록되었는지 확인하십시오
+if [ -z "$unauthorized" ]; then
+  OK "[$now] 무단 FTP 액세스가 탐지되지 않았습니다."
+else
+  WARN "[$now] 무단 FTP 액세스가 탐지되었습니다."
+  INFO "$unauthorized"
+fi
+
 
 
 
