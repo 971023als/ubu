@@ -17,14 +17,15 @@ BAR
 TMP1=`SCRIPTNAME`.log
 
 >$TMP1  
-    
-# named 서비스의 PID 찾기
-PIDs=$(ps -ef | grep named | awk '{print $2}')
 
-# named 서비스 중지
-for PID in $PIDs; do
-    kill -9 $PID
-done
+# 명명된 프로세스가 실행 중인지 확인하십시오
+result=$(ps -ef | grep named | grep -v grep)
+
+pid=$(echo $result | awk '{print $2}')
+
+# 프로세스 ID를 사용하여 명명된 프로세스 중지
+kill $pid
+
 
 
 cat $result
