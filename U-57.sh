@@ -37,10 +37,17 @@ done < /etc/passwd
 while read home_dir; do
   # 홈 디렉토리의 소유자 및 그룹 가져오기
   while read permissions owner group; do
-    # 소유자 그룹 등에 쓰기 권한 부여
-    sudo chmod g+w,o+w "$home_dir"
+    # 디렉터리에 대한 현재 사용 권한 가져오기
+    current_permissions=$(stat -c "%a" "$home_dir")
+
+    # 소유자 그룹 등에 대한 쓰기 권한 제거
+    new_permissions=$(echo $current_permissions | sed 's/[7,6,5]/0/g')
+
+    # 새 권한 적용
+    sudo chmod "$new_permissions" "$home_dir"
   done < <(ls -ld "$home_dir")
 done < <(cat /etc/passwd | awk -F ':' '{print $6}')
+
 
 cat $result
 
