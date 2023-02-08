@@ -27,7 +27,7 @@ while read line; do
   
   # 홈 디렉토리 소유자가 사용자 이름과 일치하는지 확인합니다
   if [ "$owner_group" != "$username:$username" ]; then
-    INFO "$homeedir 의 소유권을 $username 으로 변경:$username"
+    INFO "$username 으로 변경:$username"
     sudo chown "$username:$username" "$homedir"
   fi
 done < /etc/passwd
