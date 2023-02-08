@@ -22,12 +22,6 @@ BAR
 sudo apt-get update -y
 sudo apt-get install ssh -y
 
-# SSH 서비스 시작
-sudo service start ssh
-
-# SSHD 서비스 시작
-sudo service start sshd
-
 cat $result
 
 echo ; echo 
