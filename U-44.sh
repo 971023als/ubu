@@ -16,22 +16,21 @@ EOF
 
 BAR
 
-# /etc/passwd 파일 읽기
-while read line; do
-  # 줄을 필드로 분할합니다
-  fields=($(echo $line | tr ":" " "))
-  username=${fields[0]}
-  uid=${fields[2]}
+# 루트 계정과 동일한 UID를 가진 계정의 사용자 이름을 가져옵니다
+username=$(awk -F: '$3==0{print $1}' /etc/passwd)
 
-  # UID가 0(루트)인지 확인합니다
-  if [ $uid -eq 0 ]; then
-    # UID를 새 값(500, 501, 502 등)으로 변경합니다
-    new_uid=$((2023 + i))
-    usermod -u $new_uid $username
-    INFO "$username 의 UID가 0에서 $new_uid 로 변경됨"
-    i=$((i + 1))
-  fi
-done < /etc/passwd
+if [ -n "$username" ]; then
+  # UID 배열
+  uids=(2023 2024 2025)
+
+  for uid in "${uids[@]}"; do
+    # 계정의 UID 변경
+   sudo usermod -u $uid $username
+  done
+else
+  OK "루트 계정과 동일한 UID를 가진 계정을 찾을 수 없습니다"
+fi
+
 
 
 cat $result
