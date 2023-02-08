@@ -118,8 +118,6 @@ for user in $user_list; do
   fi
 done
 
-OK "기본이 아닌 모든 계정이 제거되었습니다."
-
  
 cat $result
 
