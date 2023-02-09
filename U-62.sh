@@ -41,9 +41,6 @@ else
   INFO "FTP 계정의 셸을 /bin/false로 설정할 수 없습니다."
 fi
 
-
-
-
 cat $result
 
 echo ; echo 
