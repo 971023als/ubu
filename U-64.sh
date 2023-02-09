@@ -24,23 +24,34 @@ TMP1=`SCRIPTNAME`.log
 > $TMP1 
 
 
-ftp_user="ftpuser"
-
-if ! grep "^$ftp_user" /etc/passwd > /dev/null 2>&1; then
-  sudo useradd $ftp_user
-fi
-
-if [ "$(id -u)" == "0" ]; then
-  if [ "$(grep "^ftp" /etc/passwd | cut -d: -f1)" == "root" ]; then
-    sudo usermod -s /usr/sbin/nologin root
-    OK "루트 FTP 액세스가 비활성화되었습니다."
-  fi
-  sudo usermod -s /bin/false $ftp_user
-  OK "FTP 액세스가 $ftp_user 계정으로 제한되었습니다."
+# /etc/ftpusers 파일이 있고 내용이 있는지 확인하십시오
+if [ -s /etc/ftpusers ]; then
+  OK "일부 사용자에 대해 FTP 서비스가 이미 비활성화되어 /etc/ftp 사용자에 루트를 추가하고 있습니다."
+  echo "root" >> /etc/ftpusers
 else
-  WARN "루트로 실행해야 합니다."
+  INFO "/etc/ftp 사용자에서 제한을 찾을 수 없습니다. 루트 로그인 제한을 확인합니다."
 fi
 
+# /etc/proftpd.conf에서 RootLogin이 off로 설정되어 있는지 확인합니다
+root_login=$(grep -i "RootLogin" /etc/proftpd.conf)
+if [ -n "$root_login" ]; then
+  if [ "$root_login" != "RootLogin off" ]; then
+    INFO "/etc/proftpd.conf에서 루트 로그인 사용 안 함"
+    sed -i 's/RootLogin.*/RootLogin off/' /etc/proftpd.conf
+  else
+    INFO "루트 로그인이 /etc/proftpd.conf에서 이미 사용할 수 없도록 설정되었습니다."
+  fi
+else
+  INFO "/etc/proftpd.conf에서 정보를 찾을 수 없습니다. /etc/vsftp/ftp 사용자를 확인합니다."
+fi
+
+# /etc/vsftp/ftpusers 파일이 있고 내용이 있는지 확인하십시오
+if [ -s /etc/vsftp/ftpusers ]; then
+  OK "일부 사용자에 대해 FTP 서비스가 이미 사용되지 않도록 설정되어 있으며 /etc/vsftp/ftp 사용자에 루트를 추가하고 있습니다."
+  echo "root" >> /etc/vsftp/ftpusers
+else
+  INFO "/etc/vsftp/ftp 사용자에서 제한을 찾을 수 없습니다."
+fi
 
 
 cat $result
