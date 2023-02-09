@@ -23,20 +23,13 @@ TMP1=`SCRIPTNAME`.log
 # 원본 파일 백업
 cp /etc/pam.d/common-auth /etc/pam.d/common-auth.bak
 
-# 잠금 임계값 설정
-threshold=10
-
-# 현재 잠금 임계값 설정을 가져옵니다
-current_setting=$(grep "auth required pam_tally2.so" /etc/pam.d/common-auth | awk '{print $4}')
-
-# 잠금 임계값이 10 이하로 설정되어 있는지 점검하십시오
-if [ "$current_setting" != "onerr=fail deny=$threshold" ]; then
-  # "#current_setting"를 "current_setting"로 바꿉니다
-  sed -i "s/# $current_setting/$current_setting/g" /etc/pam.d/common-auth
-
-  # 현재 설정을 원하는 설정으로 바꿉니다
-  sed -i "s/$current_setting/onerr=fail deny=$threshold/g" /etc/pam.d/common-auth
+if grep -q "auth required pam_tally2.so deny=10 unlock_time=900" /etc/pam.d/common-auth; then
+  INFO "auth required pam_required pam_required2.so deny=10 unlock_time=900 존재."
+else
+  echo "auth required pam_tally2.so deny=10 unlock_time=900" >> /etc/pam.d/common-auth
+  INFO "auth required pam_required pam_required2.so deny=10 unlock_time=900 추가."
 fi
+
 
 cat $result
 
