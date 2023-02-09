@@ -19,10 +19,19 @@ BAR
 # 로그 파일 경로 설정
 log_file="/var/log/patch.log"
 
-# 패치 로그 파일이 존재하는지 확인
-if [ ! -f $log_file ]; then
-  touch $log_file
+# /var/log/patch.log 파일이 이미 있는지 확인하십시오
+if [ -e $log_file ]; then
+  OK "/var/log/messages.log가 이미 있습니다."
+else
+  WARN "/var/log/messages.log가 이미 없습니다."
 fi
+
+# /var/log/patch.log 파일 생성
+touch $log_file
+
+# 파일에 대한 적절한 사용 권한 및 소유권 설정
+chmod 644 $log_file
+chown root:root $log_file
 
 # 패치 설치
 sudo apt update -y
