@@ -86,7 +86,9 @@ done < $LOG_FILE
 
 # xferlog 파일이 있는지 확인합니다
 if [ ! -f "/var/log/xferlog" ]; then
-  echo "Error: xferlog file not found."
+  OK "xferlog 파일이 있습니다."
+else
+  INFO "xferlog 파일이 있습니다."
 fi
 
 # 현재 날짜 및 시간을 변수에 저장
