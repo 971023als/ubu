@@ -22,8 +22,19 @@ keep_groups=("root" "sudo" "sys" "adm" "wheel"
 "apache" "postfix" "gdm" "adiosl" "mysql" "cubrid"
  "messagebus" "syslog" "avahi" "whoopsie"
 "colord" "systemd-network" "systemd-resolve"
-"systemd-timesync" "mysql" "user"
-"www-data" "sync")
+"systemd-timesync" "mysql" "sync" "user"
+"tty" "disk" "men" "kmen" "mail" "uucp"
+"man" "games" "gopher" "video" "dip"
+"ftp" "lock" "audio" "nobody" "users"
+"usbmuxd" "utmp" "utempter" "rtkit"
+"avahi-autoipd" "desktop_admin_r"
+"desktop_user_r" "floppy"
+"vcsa" "abrt" "cdrom" "tape"
+"dialout" "wbpriv" "nfsnonody"
+"ntp" "saslauth" "postdrop"
+"pulse" "pulse-access" "fuse" 
+"sshd" "slocate" "stapusr"
+"stapsys" "tcpdump" "named")
 
 # 모든 그룹 목록 가져오기
 all_groups=$(cut -d: -f1 /etc/group)
