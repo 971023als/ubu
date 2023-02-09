@@ -30,7 +30,6 @@ sudo groupadd wheel
 # 명령어 그룹을 변경
 sudo chgrp wheel /bin/su
 
-# change the permission of the su command to 4750
 sudo chmod 4750 /bin/su
 
 # su 명령의 허가를 4750으로 변경하다

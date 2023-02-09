@@ -16,6 +16,9 @@ EOF
 
 BAR 
 
+# "#PASS"를 "PASS"로 바꿉니다
+sed -i 's/#PASS/PASS/g' "$file"
+
 # PASS_MIN_LEN 값을 8 이상으로 설정합니다
 echo "PASS_MIN_LEN 8" | sudo tee -a /etc/login.defs
 
