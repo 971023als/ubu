@@ -52,8 +52,6 @@ echo "service rexec
         disable= yes
 }" > /etc/xinetd.d/rexec
 
-
-
 cat $result
 
 echo ; echo
