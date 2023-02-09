@@ -34,6 +34,8 @@ else
         echo "PASS_MIN_LEN $MIN_LEN" >> "$DEF_FILE"
     elif [ "$CURR_LEN" -lt "$MIN_LEN" ]; then
         INFO "PASS_MIN_LEN 값이 $DEF_FILE의 $MIN_LEN보다 작습니다. 지금 업데이트하는 중..."
+        # "#PASS"를 "PASS"로 바꿉니다
+        sed -i 's/#PASS/PASS/g' "$file"
         sed -i "s/^PASS_MIN_LEN.*/PASS_MIN_LEN $MIN_LEN/" "$DEF_FILE"
     else
         OK "$DEF_FILE 에서 PASS_MIN_LEN 값이 이미 $MIN_LEN 이상으로 설정되어 있습니다."
