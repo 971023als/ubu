@@ -25,13 +25,11 @@ if [ -n "$username" ]; then
 
   for uid in "${uids[@]}"; do
     # 계정의 UID 변경
-   sudo usermod -u $uid $username
+   usermod -u $uid $username
   done
 else
   OK "루트 계정과 동일한 UID를 가진 계정을 찾을 수 없습니다"
 fi
-
-
 
 cat $result
 
