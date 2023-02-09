@@ -21,24 +21,23 @@ EOF
 
 BAR
 
-
 TMP1=`SCRIPTNAME`.log
 
 > $TMP1
 
-# /etc/passwd에서 "lp|uucp|nuucp"와 일치하는 사용자 목록을 가져옵니다
-user_list=$(cat /etc/passwd | egrep "lp|uucp|nuucp" | awk -F: '{print $1}')
+# 사용자 이름이 lp, uucp 또는 nuucp인 시스템 계정이 있는지 확인합니다
+results=$(cat /etc/passwd | grep "lp\|uucp\|nuucp")
 
-# 사용자 목록을 순환
-for user in $user_list; do
- # 사용자 셸을 /bin/false로 변경합니다
-  sudo usermod -s /bin/false $user
-  if [ $? -eq 0 ]; then
-    INFO "이제 사용자: $user 에 대해 로그인할 수 없습니다."
-  else
-    OK "사용자: $user 에 대해 로그인할 수 없습니다."
-  fi
-done
+if [ -n "$results" ]; then
+  # 셸을 "/usr/sbin/nlogin"으로 변경하여 계정 잠금
+  echo "$results" | while read line; do
+    username=$(echo $line | cut -d: -f1)
+    usermod --shell /usr/sbin/nologin $username
+  done
+  INFO "lp, uucp, nuucp 로그인이 성공적으로 차단되었습니다."
+else
+  OK "사용자 이름 lp, uucp 또는 nuucp를 가진 시스템 계정이 없습니다."
+fi
 
 # 기본 계정 목록 지정
 default_accounts=(
@@ -111,7 +110,7 @@ for user in $user_list; do
   # 사용자가 기본 계정인지 확인합니다
   if echo "$default_accounts" | grep -qw "$user"; then
     # 아무것도 하지마
-    :
+    OK "bash 셸을 사용하는 일반 사용자 계정이 없습니다."
   else
     INFO "기본이 아닌 계정 제거 중: $user"
     userdel "$user"
