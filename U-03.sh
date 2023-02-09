@@ -32,7 +32,7 @@ current_setting=$(grep "auth required pam_tally2.so" /etc/pam.d/common-auth | aw
 # 잠금 임계값이 10 이하로 설정되어 있는지 점검하십시오
 if [ "$current_setting" != "onerr=fail deny=$threshold" ]; then
   # "#current_setting"를 "current_setting"로 바꿉니다
-  sed -i "s/#$current_setting/$current_setting/g" /etc/pam.d/common-auth
+  sed -i "s/# $current_setting/$current_setting/g" /etc/pam.d/common-auth
 
   # 현재 설정을 원하는 설정으로 바꿉니다
   sed -i "s/$current_setting/onerr=fail deny=$threshold/g" /etc/pam.d/common-auth
