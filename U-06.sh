@@ -16,7 +16,6 @@ EOF
 
 BAR 
 
-
 invalid_owner_files=$(find / -nouser 2>/dev/null)
 
 if [ -z "$invalid_owner_files" ]; then
@@ -26,8 +25,6 @@ else
   INFO "$invalid_owner_files"
   sudo chown root $invalid_owner_files
 fi
-
-
 
 cat $result
 
