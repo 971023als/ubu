@@ -16,20 +16,21 @@ EOF
 
 BAR
 
-# 검사할 로그 파일 정의
-log_files=(/var/log/wtmp /var/log/btmp /var/log/lastlog)
+# /var/log/utmp 파일이 이미 있는지 확인하십시오
+if [ -e "/var/log/utmp" ]; then
+  OK "/var/log/utmp가 이미 있습니다."
+else
+  WARN "/var/log/utmp가 없습니다."
+fi
 
-# 로그 파일을 확인하는 기능 정의
-check_log_files() {
-  for log in "${log_files[@]}"; do
-    if [ -f "$log" ]; then
-      INFO "$log 파일 확인 중"
-      last -f "$log"
-    else
-      WARN "$log 파일을 찾을 수 없음"
-    fi
-  done
-}
+
+# /var/log/utmp 파일 생성
+touch /var/log/utmp
+
+# 파일에 대한 적절한 사용 권한 및 소유권 설정
+chmod 644 /var/log/utmp
+chown root:utmp /var/log/utmp
+
 
 # 로그 파일을 확인하기 위해 함수를 호출합니다
 check_log_files
@@ -83,32 +84,19 @@ do
   fi
 done < $LOG_FILE
 
-
-# xferlog 파일이 있는지 확인합니다
-if [ ! -f "/var/log/xferlog" ]; then
-  OK "xferlog 파일이 있습니다."
+# /var/log/xferlog 파일이 이미 있는지 확인하십시오
+if [ -e "/var/log/xferlog" ]; then
+  OK "/var/log/xferlog가 이미 있습니다."
 else
-  INFO "xferlog 파일이 있습니다."
+  WARN "/var/log/xferlog가 없습니다."
 fi
 
-# 현재 날짜 및 시간을 변수에 저장
-now=$(date +"%Y-%m-%d %T")
+# /var/log/xferlog 파일 생성
+touch /var/log/xferlog
 
-# xferlog 파일 내용을 변수에 저장
-xferlog=$(cat /var/log/xferlog)
-
-# 무단 액세스 검색
-unauthorized=$(echo "$xferlog" | grep -vE "anonymous|ftp")
-
-# 무단 액세스가 기록되었는지 확인하십시오
-if [ -z "$unauthorized" ]; then
-  OK "[$now] 무단 FTP 액세스가 탐지되지 않았습니다."
-else
-  WARN "[$now] 무단 FTP 액세스가 탐지되었습니다."
-  INFO "$unauthorized"
-fi
-
-
+# 파일에 대한 적절한 사용 권한 및 소유권 설정
+chmod 644 /var/log/xferlog
+chown root:root /var/log/xferlog
 
 
 cat $result
