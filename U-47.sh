@@ -20,6 +20,11 @@ TMP1=`SCRIPTNAME`.log
 
 >$TMP1  
 
+DEF_FILE="/etc/login.defs"
+
+# "#PASS"를 "PASS"로 바꿉니다
+sudo sed -i 's/#PASS/PASS/g' "$DEF_FILE"
+
 sudo sed -i "s/^PASS_MAX_DAYS.*/PASS_MAX_DAYS\ 90/" /etc/login.defs
 
 
