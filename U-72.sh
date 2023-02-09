@@ -1,10 +1,6 @@
 #!/bin/bash
 
- 
-
 . function.sh
-
- 
 
 BAR
 
@@ -23,7 +19,6 @@ BAR
 TMP1=`SCRIPTNAME`.log
 
 > $TMP1 
-
 
 filename="/etc/rsyslog.conf"
 
@@ -47,10 +42,6 @@ for content in "${expected_content[@]}"; do
 done
 
 INFO "콘텐츠가 $filename 에 추가되었습니다."
-
-
-
-
 
 cat $result
 

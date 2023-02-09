@@ -1,18 +1,6 @@
 #!/bin/bash
 
- 
-
 . function.sh
-
- 
-
-TMP2=/tmp/tmp1
-
-TMP3=/tmp/tmp2
-
-TMP4=/tmp/tmp3
-
- 
 
 BAR
 
@@ -27,11 +15,6 @@ cat << EOF >> $result
 EOF
 
 BAR
-
-
-TMP1=`SCRIPTNAME`.log
-
-> $TMP1
 
 # 보관할 그룹 목록
 keep_groups=("root" "sudo" "sys" "adm" "wheel" 

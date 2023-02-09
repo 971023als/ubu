@@ -24,7 +24,7 @@ for PID in $PIDs; do
     kill -9 $PID
 done
 
-mv /etc/rc.d/rc2.d/S60nfs /etc/rc.d/rc2.d/_S60nfs
+sudo mv /etc/rc.d/rc2.d/S60nfs /etc/rc.d/rc2.d/_S60nfs
 
 cat $result
 

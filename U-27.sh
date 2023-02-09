@@ -16,8 +16,6 @@ EOF
 
 BAR
 
-
-
 # finger 파일 생성
 echo "service finger
 {
@@ -27,8 +25,6 @@ user = nobody
 server = /usr/sbin/in.fingerd
 disable = yes
 }" > /etc/xinetd.d/finger
-
-
 
 cat $result
 

@@ -16,11 +16,6 @@ EOF
 
 BAR
 
-TMP1=`SCRIPTNAME`.log
-
->$TMP1  
-
-
 sudo chown root:root /etc/crontab
 sudo chmod 640 /etc/crontab
 

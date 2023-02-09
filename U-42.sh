@@ -1,10 +1,7 @@
 #!/bin/bash
 
- 
-
 . function.sh 
    
-
 BAR
 
 CODE [U-42] 최신 보안패치 및 벤더 권고사항 적용
@@ -18,7 +15,6 @@ cat << EOF >> $result
 EOF
 
 BAR
-
 
 # 로그 파일 경로 설정
 log_file="/var/log/patch.log"
@@ -34,10 +30,6 @@ apt upgrade -y
 
 # 설치된 패치 기록
 echo "Patches installed at $(date)" >> $log_file
-
-
-
-
 
 cat $result
 

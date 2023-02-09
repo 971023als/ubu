@@ -16,10 +16,6 @@ EOF
 
 BAR
 
-
-
-
-
 # echo 파일 생성
 echo "service echo
 {
@@ -59,7 +55,6 @@ type = internal
 wait = no
 socket_type = stream
 }" > /etc/xinetd.d/chargen
-
 
 cat $result
 

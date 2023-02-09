@@ -17,32 +17,32 @@ EOF
 
 BAR
 
-# 휠 그룹이 /etc/group 파일에 정의되어 있는지 확인하십시오
-grep -q '^wheel:' /etc/group
-if [ $? -eq 0 ]; then
-  # 휠 그룹이 정의됨
-  
-  # SUID 비트가 su 명령에 대해 아직 설정되지 않았는지 확인하십시오
-  ls -l $(which su) | grep -q '^-rwsr-xr-x'
-  if [ $? -ne 0 ]; then
-    # SUID bit is not set, set it
-    sudo chmod u+s $(which su)
-  fi
-  
-  # 그룹 실행 권한이 휠 그룹으로만 아직 제한되지 않았는지 점검하십시오
-  ls -l $(which su) | grep -q '^.*wheel.*$'
-  if [ $? -ne 0 ]; then
-    # 허가는 휠 그룹으로만 제한되지 않습니다. 제한합니다
-    sudo chgrp wheel $(which su)
-    sudo chmod g-rwx $(which su)
-    sudo chmod g+rxs $(which su)
-  fi
-  
-  OK "SU 명령은 이제 휠 그룹의 사용자로 제한됩니다."
-else
-  # 휠 그룹이 정의되지 않음
-  INFO "휠 그룹이 /etc/group 파일에 정의되어 있지 않습니다."
-fi
+# su 명령을 사용해야 하는 계정 목록
+accounts=("root" "bin" "daemon"  "lp" "sync" "user"
+"messagebus" "syslog" "avahi" "kernoops"
+"whoopsie" "colord" "systemd-network" 
+"systemd-resolve" "systemd-timesync" "mysql" 
+"gdm" "www-data" "user www-data")
+
+# wheel group 생성
+sudo groupadd wheel
+
+# 명령어 그룹을 변경
+sudo chgrp wheel /bin/su
+
+# change the permission of the su command to 4750
+sudo chmod 4750 /bin/su
+
+# su 명령의 허가를 4750으로 변경하다
+for account in "${accounts[@]}"; do
+  sudo usermod -aG wheel $account
+done
+
+# 변경 사항을 확인하다
+for account in "${accounts[@]}"; do
+  groups $account | grep wheel
+done
+
 
 
 cat $result
