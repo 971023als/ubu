@@ -1,12 +1,6 @@
 #!/bin/bash
 
- 
-
 . function.sh
-
- 
-
- 
 
 BAR
 
@@ -42,8 +36,6 @@ for dir in $hidden_dirs; do
     sudo rm -r $dir
   fi
 done
-
-
 
 cat $result
 
