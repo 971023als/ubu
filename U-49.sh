@@ -32,7 +32,7 @@ if [ -n "$results" ]; then
   # 셸을 "/usr/sbin/nlogin"으로 변경하여 계정 잠금
   echo "$results" | while read line; do
     username=$(echo $line | cut -d: -f1)
-    usermod --shell /usr/sbin/nologin $username
+    sudo usermod --shell /usr/sbin/nologin $username
   done
   INFO "lp, uucp, nuucp 로그인이 성공적으로 차단되었습니다."
 else
