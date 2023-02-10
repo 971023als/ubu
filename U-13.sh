@@ -34,10 +34,10 @@ do
 
       # SUID 또는 SGID가 설정되어 있는지 확인합니다
       if [[ $permissions == *"r-s"* ]]; then
-        echo "SUID가 $main_exec 로 설정됨"
+        INFO "SUID가 $main_exec 로 설정됨"
         sudo chmod u+s "$main_exec"
       elif [[ $permissions == *"r-S"* ]]; then
-        echo "SGID가 $main_exec 로 설정됨"
+        INFO "SGID가 $main_exec 로 설정됨"
         sudo chmod g+s "$main_exec"
       fi
     fi
