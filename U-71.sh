@@ -50,15 +50,6 @@ if ! grep -q "ServerSignature Off" "$filename"; then
   echo "ServerSignature Off" >> "$filename"
 fi
 
-# Apache를 재시작하여 변경 사항 적용
-sudo systemctl restart apache2
-
-INFO "서버 토큰 서버 시그니처 설정 완료:  $filename."
-
-
-
-
-
 cat $result
 
 echo ; echo 

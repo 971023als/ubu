@@ -24,33 +24,51 @@ TMP1=`SCRIPTNAME`.log
 > $TMP1 
 
 
-# /etc/ftpusers 파일이 있고 내용이 있는지 확인하십시오
-if [ -s /etc/ftpusers ]; then
-  OK "일부 사용자에 대해 FTP 서비스가 이미 비활성화되어 /etc/ftp 사용자에 루트를 추가하고 있습니다."
-  echo "root" >> /etc/ftpusers
-else
-  INFO "/etc/ftp 사용자에서 제한을 찾을 수 없습니다. 루트 로그인 제한을 확인합니다."
-fi
+# ftp와 관련된 프로세스 목록을 가져옵니다
+ftp_processes=$(ps -ef | grep ftp)
 
-# /etc/proftpd.conf에서 RootLogin이 off로 설정되어 있는지 확인합니다
-root_login=$(grep -i "RootLogin" /etc/proftpd.conf)
-if [ -n "$root_login" ]; then
-  if [ "$root_login" != "RootLogin off" ]; then
-    INFO "/etc/proftpd.conf에서 루트 로그인 사용 안 함"
-    sed -i 's/RootLogin.*/RootLogin off/' /etc/proftpd.conf
+# ftp와 관련된 프로세스가 있는지 확인합니다
+if [ -n "$ftp_processes" ]; then
+  # ftp 서비스 이름 가져오기
+  ftp_service=""
+  if ls /etc/ftp* 1> /dev/null 2>&1; then
+    ftp_service="ftp"
+  elif ls /etc/vsftp* 1> /dev/null 2>&1; then
+    ftp_service="vsftp"
+  fi
+
+ # ftp 서비스 중지
+  if [ -n "$ftp_service" ]; then
+    sudo service "$ftp_service" stop
+    if [ $? -eq 0 ]; then
+      OK "$ftp_service 서비스를 중지했습니다."
+    else
+      WARN "$ftp_service 서비스를 중지하지 못했습니다."
+    fi
   else
-    INFO "루트 로그인이 /etc/proftpd.conf에서 이미 사용할 수 없도록 설정되었습니다."
+    INFO "ftp 서비스를 확인할 수 없습니다."
   fi
 else
-  INFO "/etc/proftpd.conf에서 정보를 찾을 수 없습니다. /etc/vsftp/ftp 사용자를 확인합니다."
-fi
+  INFO "ftp 관련 프로세스를 찾을 수 없습니다."
+fi 
 
-# /etc/vsftp/ftpusers 파일이 있고 내용이 있는지 확인하십시오
-if [ -s /etc/vsftp/ftpusers ]; then
-  OK "일부 사용자에 대해 FTP 서비스가 이미 사용되지 않도록 설정되어 있으며 /etc/vsftp/ftp 사용자에 루트를 추가하고 있습니다."
-  echo "root" >> /etc/vsftp/ftpusers
+# ftp 계정의 현재 로그인 셸을 가져옵니다
+current_shell=$(grep "^ftp:" /etc/passwd | cut -d ':' -f 7)
+
+# 현재 로그인 셸이 이미 /bin/false로 설정되어 있는지 확인하십시오
+if [ "$current_shell" == "/bin/false" ]; then
+  OK "ftp 계정이 이미 /bin/false를 로그인 셸로 가지고 있습니다."
 else
-  INFO "/etc/vsftp/ftp 사용자에서 제한을 찾을 수 없습니다."
+  # ftp 계정의 로그인 셸을 /bin/false로 변경합니다
+  sudo usermod -s /bin/false ftp
+  
+  # ftp 계정의 로그인 셸이 성공적으로 변경되었는지 확인합니다
+  updated_shell=$(grep "^ftp:" /etc/passwd | cut -d ':' -f 7)
+  if [ "$updated_shell" == "/bin/false" ]; then
+    OK "ftp 계정 로그인 셸이 /bin/false로 성공적으로 변경되었습니다."
+  else
+    INFO "ftp 계정 로그인 셸을 /bin/false로 변경하지 못했습니다."
+  fi
 fi
 
 
