@@ -21,9 +21,9 @@ log_file="/var/log/patch.log"
 
 # /var/log/patch.log 파일이 이미 있는지 확인하십시오
 if [ -e $log_file ]; then
-  OK "/var/log/messages.log가 이미 있습니다."
+  OK " $log_file 가 이미 있습니다."
 else
-  WARN "/var/log/messages.log가 이미 없습니다."
+  WARN " $log_file 가  없습니다."
 fi
 
 # /var/log/patch.log 파일 생성
@@ -38,7 +38,7 @@ sudo apt update -y
 sudo apt upgrade -y
 
 # 설치된 패치 기록
-echo "Patches installed at $(date)" >> $log_file
+echo "Patches installed " >> $log_file
 
 cat $result
 
