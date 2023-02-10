@@ -33,7 +33,7 @@ else
         INFO "$DEF_FILE 에서 PASS_MIN_LEN을 찾을 수 없습니다. 지금 추가하는 중..."
         echo "PASS_MIN_LEN $MIN_LEN" >> "$DEF_FILE"
     elif [ "$CURR_LEN" -lt "$MIN_LEN" ]; then
-        INFO "PASS_MIN_LEN 값이 $DEF_FILE의 $MIN_LEN보다 작습니다. 지금 업데이트하는 중..."
+        INFO "PASS_MIN_LEN 값이 $DEF_FILE 의 $MIN_LEN 보다 작습니다. 지금 업데이트하는 중..."
         # "#PASS_MIN_LEN"를 "PASS_MIN_LEN"로 바꿉니다
         sed -i 's/#PASS_MIN_LEN/PASS_MIN_LEN/g' "$DEF_FILE"
         sed -i "s/^PASS_MIN_LEN.*/PASS_MIN_LEN $MIN_LEN/" "$DEF_FILE"
@@ -43,14 +43,14 @@ else
 fi
 
 PAM_FILE="/etc/pam.d/common-auth"
-EXPECTED_OPTIONS="password requisite pam_cracklib.so try_first_pass restry=3 minlen=8 lcredit=-1 ucredit=-1 dcredit=-1 ocredit=-1"
+EXPECTED_OPTIONS="password    requisite    pam_cracklib.so try_first_pass restry=3 minlen=8 lcredit=-1 ucredit=-1 dcredit=-1 ocredit=-1"
 
 
 if [ -f "$PAM_FILE" ]; then
     if grep -q "$EXPECTED_OPTIONS" "$PAM_FILE" ; then
         OK " "$PAM_FILE" 에 $EXPECTED_OPTIONS 없음  "
     else
-        echo "password requisite pam_cracklib.so try_first_pass retry=3 minlen=8 lcredit=-1 ucredit=-1 dcredit=-1 ocredit=-1" >> /etc/pam.d/common-auth
+        echo "password    requisite    pam_cracklib.so try_first_pass restry=3 minlen=8 lcredit=-1 ucredit=-1 dcredit=-1 ocredit=-1" >> /etc/pam.d/system-auth
         INFO " "$PAM_FILE" 에 설정되었습니다  "
     fi
 else
