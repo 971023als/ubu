@@ -17,31 +17,31 @@ EOF
 BAR
 
 sudo chown root:root /etc/crontab
-sudo chmod 640 /etc/crontab
+sudo chmod 630 /etc/crontab
 
 sudo chown root:root /etc/cron.hourly 
-sudo chmod 640 /etc/cron.hourly 
+sudo chmod 630 /etc/cron.hourly 
 
 sudo chown root:root /etc/cron.daily 
-sudo chmod 640 /etc/cron.daily 
+sudo chmod 630 /etc/cron.daily 
 
 sudo chown root:root /etc/cron.weekly
-sudo chmod 640 /etc/cron.weekly
+sudo chmod 630 /etc/cron.weekly
 
 sudo chown root:root /etc/cron.monthly
-sudo chmod 640 /etc/cron.monthly
+sudo chmod 630 /etc/cron.monthly
 
 sudo chown root:root /etc/cron.allow 
-sudo chmod 640 /etc/cron.allow 
+sudo chmod 630 /etc/cron.allow 
 
 sudo chown root:root /etc/cron.deny 
-sudo chmod 640 /etc/cron.deny 
+sudo chmod 630 /etc/cron.deny 
 
 sudo chown root:root /var/spool/cron*
-sudo chmod 640 /var/spool/cron*
+sudo chmod 630 /var/spool/cron*
 
 sudo chown root:root /var/spool/cron/crontabs/
-sudo chmod 640 /var/spool/cron/crontabs/
+sudo chmod 630 /var/spool/cron/crontabs/
 
 
 cat $result
