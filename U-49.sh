@@ -25,20 +25,6 @@ TMP1=`SCRIPTNAME`.log
 
 > $TMP1
 
-# 사용자 이름이 lp, uucp 또는 nuucp인 시스템 계정이 있는지 확인합니다
-results=$(cat /etc/passwd | grep "lp\|uucp\|nuucp")
-
-if [ -n "$results" ]; then
-  # 셸을 "/usr/sbin/nlogin"으로 변경하여 계정 잠금
-  echo "$results" | while read line; do
-    username=$(echo $line | cut -d: -f1)
-    sudo usermod --shell /usr/sbin/nologin $username
-  done
-  INFO "lp, uucp, nuucp 로그인이 성공적으로 차단되었습니다."
-else
-  OK "사용자 이름 lp, uucp 또는 nuucp를 가진 시스템 계정이 없습니다."
-fi
-
 # 기본 계정 목록 지정
 default_accounts=(
   "root"
