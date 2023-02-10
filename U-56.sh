@@ -26,7 +26,7 @@ TMP1=`SCRIPTNAME`.log
 
 # /etc/profile에 UMASK 추가(존재하지 않는 경우)
 if ! grep -q "UMASK=022" /etc/profile; then
-  echo "UMASK 022" >> /etc/profile
+  echo "umask 022" >> /etc/profile
   echo "export umask" >> /etc/profile
   INFO "UMASK가 /etc/profile에 추가되었습니다."
 else
