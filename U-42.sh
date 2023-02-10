@@ -23,7 +23,7 @@ log_file="/var/log/patch.log"
 if [ -e $log_file ]; then
   OK " $log_file 가 이미 있습니다."
 else
-  WARN " $log_file 가  없습니다."
+  WARN " $log_file 생성 시작합니디."
 fi
 
 # /var/log/patch.log 파일 생성
@@ -33,12 +33,15 @@ touch $log_file
 chmod 644 $log_file
 chown root:root $log_file
 
-# 패치 설치
+# 변수에 날짜 저장
+date=$(date +%Y-%m-%d)
+
+# 시스템 업데이트 및 업그레이드
 sudo apt update -y
 sudo apt upgrade -y
 
-# 설치된 패치 기록
-echo "Patches installed " >> $log_file
+# 파일에 패치 명령 기록
+echo "Patches installed on $date" | tee -a $log_file
 
 cat $result
 
