@@ -1,10 +1,7 @@
 #!/bin/bash
 
- 
-
 . function.sh
  
-
 BAR
 
 CODE [U-71] Apache 웹서비스 정보 숨김
@@ -29,10 +26,9 @@ filename="/etc/apache2/apache2.conf"
 # 파일이 있는지 확인하십시오
 if [ ! -e "$filename" ]; then
   INFO "$filename 없음"
+else 
+  OK "$filename 있음"
 fi
-
-# 파일을 백업합니다
-sudo cp "$filename" "$filename".bak
 
 #  apache2.conf 파일에서 "ServerTokens Full"을 "ServerTokens Prod"로 바꿉니다
 sudo sed -i 's/ServerTokens Full/ServerTokens Prod/g' "$filename"
