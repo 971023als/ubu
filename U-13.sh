@@ -17,25 +17,33 @@ EOF
 
 BAR
 
-# SUID 또는 SGID 권한이 있는 모든 파일 찾기
-output=$(find / -user root -type f \( -perm -04000 -o -perm -02000 \) -xdev -exec ls -al {} \;)
-
-# 출력을 배열로 분할
-arr=($output)
-
-# 어레이를 순환하여 SUID 및 SGID 확인
-for line in "${arr[@]}"
+# /etc/passwd 파일을 읽고 홈 디렉토리 정보 추출
+while IFS=: read -r username passwd uid gid name home shell
 do
-  if [[ $line == *"r-s"* ]]; then
-    file=$(echo $line | awk '{print $9}')
-    INFO "SUID 제거 중: $file"
-    sudo chmod u-s $file
-  elif [[ $line == *"r-S"* ]]; then
-    file=$(echo $line | awk '{print $9}')
-    INFO "SGID 제거 중: $file"
-    sudo chmod g-s $file
+  # 각 홈 디렉토리에 대해 반복
+  if [ -d "$home" ]; then
+    # 홈 디렉토리에서 기본 실행 파일의 사용 권한 정보를 가져옵니다
+    main_exec=$(find "$home" -type f \( -perm -04000 -o -perm -02000 \) -xdev -exec ls -al {} \;)
+
+    # 주 실행 파일이 존재하는 경우
+    if [ -n "$main_exec" ]; then
+      # 권한 정보를 가져옵니다
+      permissions=$(ls -ld "$main_exec" | awk '{print $1}')
+      owner=$(ls -ld "$main_exec" | awk '{print $3}')
+      group=$(ls -ld "$main_exec" | awk '{print $4}')
+
+      # SUID 또는 SGID가 설정되어 있는지 확인합니다
+      if [[ $permissions == *"r-s"* ]]; then
+        echo "SUID가 $main_exec 로 설정됨"
+        sudo chmod u+s "$main_exec"
+      elif [[ $permissions == *"r-S"* ]]; then
+        echo "SGID가 $main_exec 로 설정됨"
+        sudo chmod g+s "$main_exec"
+      fi
+    fi
   fi
-done
+done < /etc/passwd
+
 
 cat $result
 
