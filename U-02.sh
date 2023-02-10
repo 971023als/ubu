@@ -42,20 +42,20 @@ else
     fi
 fi
 
-AUTH_FILE="/etc/pam.d/common-auth"
-SETTING="password requisite /lib/security/$ISA/pam_cracklib.so retry=3 minlen=8 lcredit=-1 ucredit=-1 dcredit=-1 ocredit=-1"
+PAM_FILE="/etc/pam.d/common-auth"
+EXPECTED_OPTIONS="password requisite pam_cracklib.so try_first_pass restry=3 minlen=8 lcredit=-1 ucredit=-1 dcredit=-1 ocredit=-1"
 
-if [ ! -f "$AUTH_FILE" ]; then
-    INFO "$AUTH_FILE 을 찾을 수 없습니다."
-else
-    if grep -q "$SETTING" "$AUTH_FILE"; then
-        OK "설정이 $AUTH_FILE 에 이미 있습니다."
+
+if [ -f "$PAM_FILE" ]; then
+    if grep -q "$EXPECTED_OPTIONS" "$PAM_FILE" ; then
+        OK " "$PAM_FILE" 에 $EXPECTED_OPTIONS 없음  "
     else
-        INFO "$AUTH_FILE 에 설정 추가 중..."
-        echo "$SETTING" >> "$AUTH_FILE"
+        echo "password requisite pam_cracklib.so try_first_pass retry=3 minlen=8 lcredit=-1 ucredit=-1 dcredit=-1 ocredit=-1" >> /etc/pam.d/common-auth
+        INFO " "$PAM_FILE" 에 설정되었습니다  "
     fi
+else
+    INFO " "$PAM_FILE" 못 찾음"
 fi
-
 
 
 cat $result
