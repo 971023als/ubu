@@ -26,7 +26,7 @@ LOGIN_DEFS_FILE="/etc/login.defs"
 # 전에 있던 PASS_MIN_LEN 값을 #PASS_MIN_LEN
 sed -i 's/PASS_MIN_LEN/#PASS_MIN_LEN/g' $LOGIN_DEFS_FILE
 
-echo "PASS_MIN_LEN 8" >> "$LOGIN_DEFS_FILE"
+echo "PASS_MIN_LEN 9" >> "$LOGIN_DEFS_FILE"
 
 PAM_FILE="/etc/pam.d/common-auth"
 EXPECTED_OPTIONS="password requisite pam_cracklib.so try_first_pass restry=3 minlen=8 lcredit=-1 ucredit=-1 dcredit=-1 ocredit=-1"
