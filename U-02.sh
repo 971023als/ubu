@@ -20,27 +20,9 @@ TMP1=`SCRIPTNAME`.log
 
 >$TMP1  
 
-
 DEF_FILE="/etc/login.defs"
-MIN_LEN=8
 
-if [ ! -f "$DEF_FILE" ]; then
-    INFO "$DEF_FILE 찾을 수 없습니다."
-else
-    CURR_LEN=$(grep "^PASS_MIN_LEN" "$DEF_FILE" | awk '{print $2}')
-
-    if [ -z "$CURR_LEN" ]; then
-        INFO "$DEF_FILE 에서 PASS_MIN_LEN을 찾을 수 없습니다. 지금 추가하는 중..."
-        echo "PASS_MIN_LEN $MIN_LEN" >> "$DEF_FILE"
-    elif [ "$CURR_LEN" -lt "$MIN_LEN" ]; then
-        INFO "PASS_MIN_LEN 값이 $DEF_FILE 의 $MIN_LEN 보다 작습니다. 지금 업데이트하는 중..."
-        # "#PASS_MIN_LEN"를 "PASS_MIN_LEN"로 바꿉니다
-        sed -i 's/#PASS_MIN_LEN/PASS_MIN_LEN/g' "$DEF_FILE"
-        sed -i "s/^PASS_MIN_LEN.*/PASS_MIN_LEN $MIN_LEN/" "$DEF_FILE"
-    else
-        OK "$DEF_FILE 에서 PASS_MIN_LEN 값이 이미 $MIN_LEN 이상으로 설정되어 있습니다."
-    fi
-fi
+echo "PASS_MIN_LEN 8" > "$DEF_FILE"
 
 PAM_FILE="/etc/pam.d/common-auth"
 EXPECTED_OPTIONS="password    requisite    pam_cracklib.so try_first_pass restry=3 minlen=8 lcredit=-1 ucredit=-1 dcredit=-1 ocredit=-1"
