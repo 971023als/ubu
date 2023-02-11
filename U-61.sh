@@ -46,7 +46,7 @@ fi
 ftp_entry=$(grep "^ftp:" /etc/passwd)
 
 # FTP 계정의 셸을 /bin/false로 변경합니다
-chsh -s /bin/false ftp
+sudo chsh -s /bin/false ftp
 
 cat $result
 
