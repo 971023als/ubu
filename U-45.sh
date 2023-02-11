@@ -25,16 +25,16 @@ accounts=("root" "bin" "daemon"  "lp" "sync" "user"
 "gdm" "www-data" "user www-data")
 
 # wheel group 생성
-sudo groupadd wheel
+groupadd wheel
 
 # 명령어 그룹을 변경
-sudo chgrp wheel /bin/su
+chgrp wheel /bin/su
 
-sudo chmod 4750 /bin/su
+chmod 4750 /bin/su
 
 # su 명령의 허가를 4750으로 변경하다
 for account in "${accounts[@]}"; do
-  sudo usermod -aG wheel $account
+  usermod -aG wheel $account
 done
 
 # 변경 사항을 확인하다
