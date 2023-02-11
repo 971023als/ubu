@@ -26,7 +26,7 @@ BAR
 
 DEF_FILE="/etc/login.defs"
 
-echo "PASS_MIN_DAYS 7" > "$DEF_FILE"
+echo "PASS_MIN_DAYS 7" >> "$DEF_FILE"
  
 cat $result
 

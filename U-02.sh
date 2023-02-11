@@ -22,7 +22,9 @@ TMP1=`SCRIPTNAME`.log
 
 DEF_FILE="/etc/login.defs"
 
-echo "PASS_MIN_LEN 8" > "$DEF_FILE"
+pass=8
+
+echo "PASS_MIN_LEN $pass" >> "$DEF_FILE"
 
 PAM_FILE="/etc/pam.d/common-auth"
 EXPECTED_OPTIONS="password    requisite    pam_cracklib.so try_first_pass restry=3 minlen=8 lcredit=-1 ucredit=-1 dcredit=-1 ocredit=-1"

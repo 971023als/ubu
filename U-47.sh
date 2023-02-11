@@ -22,7 +22,7 @@ TMP1=`SCRIPTNAME`.log
 
 DEF_FILE="/etc/login.defs"
 
-echo "PASS_MAX_DAYS 90" > "$DEF_FILE"
+echo "PASS_MAX_DAYS 90" >> "$DEF_FILE"
 
 cat $result
 
