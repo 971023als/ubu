@@ -22,7 +22,6 @@ TMP1=`SCRIPTNAME`.log
 
 find / -type f -perm 777 -exec chmod 755 {} \;
 
-
 cat $result
 
 echo ; echo

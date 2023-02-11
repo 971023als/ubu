@@ -19,20 +19,11 @@ BAR
 # /etc/securety 파일에서 pts/0 tops/x 설정 제거
 sudo sed -i 's/^[^#]*pts\/[0-9]/#&/g' /etc/securety
 
-# /etc/pam.d/login 파일 백업
-sudo cp /etc/pam.d/login /etc/pam.d/login.bak
-
 # /etc/pam.d/login 파일에 새 설정 삽입
 sudo echo "auth required pam_tally2.so deny=5 onerr=fail unlock_time=1800" >> /etc/pam.d/login
 
-
-
-# /etc/securety 파일 백업
-sudo cp /etc/securety /etc/securety.bak
-
 # /etc/securety 파일에서 pts/x 관련 설정 제거
 sudo sed -i '/pts\/[0-9]/d' /etc/securety
-
 
 cat $result
 

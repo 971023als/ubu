@@ -22,8 +22,6 @@ sudo chown root:root /etc/hosts
 # 파일의 권한을 600으로 설정
 sudo chmod 600 /etc/hosts
 
-
-
 cat $result
 
 echo ; echo

@@ -34,8 +34,6 @@ while read file; do
     fi
 done
  
-
- 
 cat $result
 
 echo ; echo

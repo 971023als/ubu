@@ -48,7 +48,6 @@ do
   fi
 done < /etc/passwd
 
-
 cat $result
 
 echo ; echo
