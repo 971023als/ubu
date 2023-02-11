@@ -48,7 +48,7 @@ for uid in "${DUPLICATE_UID[@]}"; do
       NEW_UID=$(($CURR_UID + 1))
 
       # 사용자의 UID 변경
-      sudo usermod -u $NEW_UID $user
+      usermod -u $NEW_UID $user
 
       # 결과 인쇄
       INFO "$user 의 UID가 $CURR_UID 에서 $NEW_UID 로 변경됨"
@@ -57,7 +57,7 @@ for uid in "${DUPLICATE_UID[@]}"; do
 done
 
 # 임시 파일 제거
-sudo rm $TMP2
+rm $TMP2
 
 
 

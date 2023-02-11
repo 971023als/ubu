@@ -1,16 +1,6 @@
 #!/bin/bash
 
- 
-
 . function.sh
-
- 
-
-TMP2=/tmp/tmp1
-
-> $TMP2
-
- 
 
 BAR
 
@@ -42,12 +32,10 @@ for user in $user_list; do
     OK "사용자 $user 에 이미 $shell 로 설정된 셸이 있습니다."
   else
     # 사용자 셸을 /bin/false로 설정합니다
-    sudo usermod -s /bin/false $user
+    usermod -s /bin/false $user
     INFO "user $user 셸을 /bin/false로 설정"
   fi
 done
-
- 
 
 cat $result
 

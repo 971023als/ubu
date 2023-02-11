@@ -43,10 +43,6 @@ for user in $all_users; do
   fi
 done
 
- 
-
- 
-
 cat $result
 
 echo ; echo
