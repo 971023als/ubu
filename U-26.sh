@@ -27,7 +27,7 @@ fi
 
 # 시작 스크립트의 이름을 변경하여 자동 마운트 서비스 사용 안 함
 if [ -f "/etc/rc.d/rc2.d/S28automountd" ]; then
-  sudo mv /etc/rc.d/rc2.d/S28automountd /etc/rc.d/rc2.d/_S28automountd
+  mv /etc/rc.d/rc2.d/S28automountd /etc/rc.d/rc2.d/_S28automountd
 fi
 
 cat $result

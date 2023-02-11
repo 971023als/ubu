@@ -18,7 +18,7 @@ EOF
 
 BAR
 
-sudo service nfs stop
+service nfs stop
 
 cat $result
 
