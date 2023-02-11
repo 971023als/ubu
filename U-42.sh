@@ -37,8 +37,8 @@ chown root:root $log_file
 date=$(date +%Y-%m-%d)
 
 # 시스템 업데이트 및 업그레이드
-sudo apt update -y
-sudo apt upgrade -y
+apt update -y
+apt upgrade -y
 
 # 파일에 패치 명령 기록
 echo "Patches installed on $date" | tee -a $log_file

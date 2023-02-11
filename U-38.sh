@@ -25,7 +25,7 @@ else
     for item in $UNWANTED_ITEMS
     do
         if [ -d "$HTTPD_ROOT/$item" ] || [ -f "$HTTPD_ROOT/$item" ]; then
-            sudo rm -rf "$HTTPD_ROOT/$item"
+            rm -rf "$HTTPD_ROOT/$item"
             INFO "$item 이 $HTTPD_ROOT 에서 제거되었습니다."
         fi
     done
