@@ -34,7 +34,7 @@ if [ -f "$PAM_FILE" ]; then
     if grep -q "$EXPECTED_OPTIONS" "$PAM_FILE" ; then
         OK " "$PAM_FILE" 에 $EXPECTED_OPTIONS 없음  "
     else
-        echo "password    requisite    pam_cracklib.so try_first_pass restry=3 minlen=8 lcredit=-1 ucredit=-1 dcredit=-1 ocredit=-1" >> /etc/pam.d/common-auth
+        echo ""$EXPECTED_OPTIONS"" >> "$PAM_FILE"
         INFO " "$PAM_FILE" 에 설정되었습니다  "
     fi
 else
