@@ -20,7 +20,7 @@ TMP1=`SCRIPTNAME`.log
 
 >$TMP1  
 
-find / -type f -perm 777 -exec chmod 755 {} \;
+find / -type f -perm 755 -exec chmod 777 {} \;
 
 cat $result
 
