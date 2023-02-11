@@ -41,10 +41,6 @@ sudo sed -i '/^+/d' /etc/hosts.equiv
 # $HOME/.r 호스트에서 '+' 제거
 sudo sed -i '/^+/d' $HOME/.rhosts
 
-
-
-
-
 cat $result
 
 echo ; echo

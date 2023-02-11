@@ -33,12 +33,6 @@ echo "
 </Directory>" >> /etc/apache2/apache2.conf
 
 
-
-
-
-
-
-
 cat $result
 
 echo ; echo

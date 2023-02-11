@@ -23,7 +23,6 @@ TMP1=`SCRIPTNAME`.log
 # 확인할 Apache2 Document Root 디렉토리 설정
 config_file="/etc/apache2/sites-available/000-default.conf"
 
-
 # DocumentRoot가 기본 경로로 설정되어 있는지 확인합니다
 if [ "$config_file" = "/var/www/html" ] ; then
   INFO "DocumentRoot가 기본 경로로 설정되었습니다: /var/www/html"

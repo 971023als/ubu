@@ -26,8 +26,6 @@ file="/etc/apache2/apache2.conf"
 # "Options FollowSymLinks"을 "Options"로 바꿉니다
 sed -i 's/Options FollowSymLinks/Options/g' $file
 
-
-
 cat $result
 
 echo ; echo

@@ -29,7 +29,6 @@ GROUPNAME=user
 sed -i "s/User.*/User $USERNAME/g" $APACHE_CONF_FILE
 sed -i "s/Group.*/Group $GROUPNAME/g" $APACHE_CONF_FILE
 
-
 cat $result
 
 echo ; echo

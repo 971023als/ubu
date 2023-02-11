@@ -27,7 +27,6 @@ sudo sed -i 's/#PASS_MAX_DAYS/PASS_MAX_DAYS/g' "$DEF_FILE"
 
 sudo sed -i "s/^PASS_MAX_DAYS.*/PASS_MAX_DAYS\ 90/" "$DEF_FILE"
 
-
 cat $result
 
 echo ; echo

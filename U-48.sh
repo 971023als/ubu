@@ -26,12 +26,8 @@ BAR
 
 DEF_FILE="/etc/login.defs"
 
-# "#PASS_MIN_DAYS"를 "PASS_MIN_DAYS"로 바꿉니다
-sudo sed -i 's/#PASS_MIN_DAYS/PASS_MIN_DAYS/g' "$DEF_FILE"
-
-echo "PASS_MIN_DAYS 7" > /etc/login.defs
+echo "PASS_MIN_DAYS 7" > "$DEF_FILE"
  
-
 cat $result
 
 echo ; echo

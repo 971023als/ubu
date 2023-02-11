@@ -26,8 +26,6 @@ echo "sshd: 192.168.0.1" >> /etc/hosts.allow
 # 포트 22(SSH)의 다른 모든 IP 주소에서 연결 거부
 echo "sshd: ALL" >> /etc/hosts.deny
 
-
-
 cat $result
 
 echo ; echo

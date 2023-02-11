@@ -43,7 +43,6 @@ sudo chmod 640 /var/spool/cron*
 sudo chown root:root /var/spool/cron/crontabs/
 sudo chmod 640 /var/spool/cron/crontabs/
 
-
 cat $result
 
 echo ; echo

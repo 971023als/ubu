@@ -22,7 +22,7 @@ DEF_FILE="/etc/login.defs"
 sudo sed -i 's/#PASS_MIN_LEN/PASS_MIN_LEN/g' "$DEF_FILE"
 
 # PASS_MIN_LEN 값을 8 이상으로 설정합니다
-echo "PASS_MIN_LEN 8" | sudo tee -a /etc/login.defs
+sudo sed -i "s/^PASS_MIN_LEN.*/PASS_MIN_LEN\ 8/" "$DEF_FILE"
 
 cat $result
 

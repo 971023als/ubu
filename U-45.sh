@@ -42,8 +42,6 @@ for account in "${accounts[@]}"; do
   groups $account | grep wheel
 done
 
-
-
 cat $result
 
 echo ; echo

@@ -98,7 +98,6 @@ touch /var/log/xferlog
 chmod 644 /var/log/xferlog
 chown root:root /var/log/xferlog
 
-
 cat $result
 
 echo ; echo

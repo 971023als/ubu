@@ -31,8 +31,6 @@ else
     done
 fi
 
-
-
 cat $result
 
 echo ; echo
