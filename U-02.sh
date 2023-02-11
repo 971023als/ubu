@@ -56,7 +56,6 @@ if [ -f "$PAM_FILE" ]; then
 else
     INFO " "$PAM_FILE" 못 찾음"
 
-
 cat $result
 
 echo ; echo

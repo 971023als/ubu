@@ -20,10 +20,10 @@ TMP1=`SCRIPTNAME`.log
 
 >$TMP1  
 
-if grep -q "auth required pam_tally2.so deny=10 unlock_time=900" /etc/pam.d/system-auth; then
+if grep -q "auth required pam_tally2.so deny=10 unlock_time=900" /etc/pam.d/common-auth; then
   INFO "auth required pam_required pam_required2.so deny=10 unlock_time=900 존재."
 else
-  echo "auth required pam_tally2.so deny=10 unlock_time=900" >> /etc/pam.d/system-auth
+  echo "auth required pam_tally2.so deny=10 unlock_time=900" >> /etc/pam.d/common-auth
   INFO "auth required pam_required pam_required2.so deny=10 unlock_time=900 추가."
 fi
 
