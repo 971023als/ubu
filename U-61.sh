@@ -16,6 +16,12 @@ EOF
 
 BAR
 
+# FTP 서비스 중지
+sudo service ftp stop
+
+# FTP 서비스 사용 안 함
+sudo service ftp disable
+
 # vsftpd 서비스를 중지합니다:
 sudo service vsftpd stop
 
