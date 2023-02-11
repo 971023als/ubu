@@ -30,17 +30,13 @@ do
     owner=$(ls -ld "$main_exec" | awk '{print $3}')
     group=$(ls -ld "$main_exec" | awk '{print $4}')
 
-    new_permissions=$((permissions & ~04000))
-
-    new_permission=$((permissions & ~02000))
-
     # SUID 또는 SGID가 설정되어 있는지 확인합니다
-    if [[ $permissions == *"r-s"* ]]; then
+    if [ -u "$main_exec" ]; then
       INFO "SUID가 $main_exec 로 설정됨"
-      "$new_permissions" "$main_exec"
-    elif [[ $permissions == *"r-S"* ]]; then
+      chmod u+s "$main_exec"
+    elif [ -g "$main_exec" ]; then
       INFO "SGID가 $main_exec 로 설정됨"
-      "$new_permission" "$main_exec"
+      chmod g+s "$main_exec"
     fi
   fi
 done < /etc/passwd
