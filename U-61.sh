@@ -17,22 +17,22 @@ EOF
 BAR
 
 # FTP 서비스 중지
-sudo service ftp stop
+service ftp stop
 
 # FTP 서비스 사용 안 함
-sudo service ftp disable
+service ftp disable
 
 # vsftpd 서비스를 중지합니다:
-sudo service vsftpd stop
+service vsftpd stop
 
 # vsftpd 서비스를 시작하지 않도록 설정합니다
-sudo /etc/rc.d/init.d/vsftpd stop
+/etc/rc.d/init.d/vsftpd stop
 
 # proftp 서비스를 중지합니다:
-sudo service proftp stop
+service proftp stop
 
 # proftp를 시작하지 않도록 설정합니다
-sudo /etc/rc.d/init.d/proftp stop
+/etc/rc.d/init.d/proftp stop
 
 # FTP 포트가 수신 중인지 확인합니다
 if netstat -tnlp | grep -q ':21'; then

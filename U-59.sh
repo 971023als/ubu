@@ -25,7 +25,7 @@ for file in $hidden_files; do
   if [[ $(basename $file) =~ "unwanted-file" ]]; then
     INFO "원하지 않는 파일 발견: $file"
      # 파일 삭제 또는 알림 전송과 같은 원하는 작업을 수행합니다.
-    sudo rm $file
+    rm $file
   fi
 done
 
@@ -33,7 +33,7 @@ for dir in $hidden_dirs; do
   if [[ $(basename $dir) =~ "suspicious-dir" ]]; then
     INFO "수상한 디렉토리를 찾았습니다: $dir"
     # 디렉터리 삭제 또는 알림 전송과 같은 원하는 작업을 수행합니다.
-    sudo rm -r $dir
+    rm -r $dir
   fi
 done
 

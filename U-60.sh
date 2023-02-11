@@ -17,8 +17,8 @@ EOF
 BAR
 
 # SSH 설치
-sudo apt-get update -y
-sudo apt-get install ssh -y
+apt-get update -y
+apt-get install ssh -y
 
 cat $result
 
