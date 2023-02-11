@@ -21,7 +21,7 @@ BAR
 while IFS=: read -r username passwd uid gid name home shell
 do
   # 홈 디렉토리에서 기본 실행 파일의 사용 권한 정보를 가져옵니다
-  main_exec=$(find -user root -type f \( -perm -04000 -o -perm -02000 \) -exec ls -al {} \;)
+  main_exec=$(find / -user root -type f \( -perm -04000 -o -perm -02000 \) -exec ls -al {} \;)
 
   # 주 실행 파일이 존재하는 경우
   if [ -n "$main_exec" ]; then
