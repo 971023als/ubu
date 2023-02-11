@@ -18,10 +18,10 @@ EOF
 BAR
 
 # 파일 소유자를 "root" 사용자와 "root" 그룹으로 변경
-sudo chown root:root /etc/passwd
+chown root:root /etc/passwd
 
 # 파일의 권한을 644로 설정
-sudo chmod 644 /etc/passwd
+chmod 644 /etc/passwd
 
 cat $result
 

@@ -30,7 +30,7 @@ while read file; do
     # 삭제하기 전에 확인
     read -p "Delete $file? [y/n] " confirm
     if [ "$confirm" == "y" ]; then
-        sudo rm -f "$file"
+        rm -f "$file"
     fi
 done
  

@@ -31,13 +31,13 @@ for file in "${files[@]}"; do
   owner=$(stat -c '%U' $file)
   if [ "$owner" != "root" ] && [ "$owner" != "$USER" ]; then
     INFO "$file 소유자를 $USER 로 변경 중..."
-    sudo chown $USER $file
+    chown $USER $file
   fi
 
   permission=$(stat -c '%a' $file)
   if [ "$permission" != "600" ] && [ "$permission" != "700" ]; then
     INFO "$file 의 권한을 700으로 변경하는 중..."
-    sudo chmod 700 $file
+    chmod 700 $file
   fi
 done
 

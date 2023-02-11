@@ -26,16 +26,16 @@ done
 
 # 부팅 시 프로세스 시작 사용 안 함
 if [ -f "/etc/init.d/nfs" ]; then
-  sudo update-rc.d nfs disable
+  update-rc.d nfs disable
 fi
 if [ -f "/etc/init.d/statd" ]; then
-  sudo update-rc.d statd disable
+  update-rc.d statd disable
 fi
 if [ -f "/etc/init.d/lockd" ]; then
-  sudo update-rc.d lockd disable
+  update-rc.d lockd disable
 fi
 
-sudo mv /etc/rc.d/rc2.d/S60nfs /etc/rc.d/rc2.d/_S60nfs
+mv /etc/rc.d/rc2.d/S60nfs /etc/rc.d/rc2.d/_S60nfs
 
 cat $result
 

@@ -23,7 +23,7 @@ if [ -z "$invalid_owner_files" ]; then
 else
   INFO "잘못된 소유자가 있는 다음 파일 또는 디렉터리에 대한 액세스 제한:"
   INFO "$invalid_owner_files"
-  sudo chown root $invalid_owner_files
+  chown root $invalid_owner_files
 fi
 
 cat $result

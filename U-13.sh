@@ -37,10 +37,10 @@ do
     # SUID 또는 SGID가 설정되어 있는지 확인합니다
     if [[ $permissions == *"r-s"* ]]; then
       INFO "SUID가 $main_exec 로 설정됨"
-      sudo "$new_permissions" "$main_exec"
+      "$new_permissions" "$main_exec"
     elif [[ $permissions == *"r-S"* ]]; then
       INFO "SGID가 $main_exec 로 설정됨"
-      sudo "$new_permission" "$main_exec"
+      "$new_permission" "$main_exec"
     fi
   fi
 done < /etc/passwd

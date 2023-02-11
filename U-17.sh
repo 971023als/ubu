@@ -24,22 +24,22 @@ TMP1=`SCRIPTNAME`.log
 >$TMP1  
 
 # /etc/hosts.equiv의 소유자를 루트로 변경합니다
-sudo chown root /etc/hosts.equiv
+chown root /etc/hosts.equiv
 
 # /etc/hosts.equiv의 사용 권한을 600으로 변경합니다
-sudo chmod 600 /etc/hosts.equiv
+chmod 600 /etc/hosts.equiv
 
 # $HOME/.r 호스트의 소유자를 루트로 변경
-sudo chown root $HOME/.rhosts
+chown root $HOME/.rhosts
 
 # $HOME/.r 호스트의 사용 권한을 600으로 변경
-sudo chmod 600 $HOME/.rhosts
+chmod 600 $HOME/.rhosts
 
 # /etc/hosts.equiv에서 '+' 제거
-sudo sed -i '/^+/d' /etc/hosts.equiv
+sed -i '/^+/d' /etc/hosts.equiv
 
 # $HOME/.r 호스트에서 '+' 제거
-sudo sed -i '/^+/d' $HOME/.rhosts
+sed -i '/^+/d' $HOME/.rhosts
 
 cat $result
 
