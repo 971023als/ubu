@@ -25,7 +25,7 @@ DEF_FILE="/etc/login.defs"
 # "#PASS_MAX_DAYS"를 "PASS_MAX_DAYS"로 바꿉니다
 sudo sed -i 's/#PASS_MAX_DAYS/PASS_MAX_DAYS/g' "$DEF_FILE"
 
-sudo sed -i "s/^PASS_MAX_DAYS.*/PASS_MAX_DAYS\ 90/" /etc/login.defs
+sudo sed -i "s/^PASS_MAX_DAYS.*/PASS_MAX_DAYS\ 90/" "$DEF_FILE"
 
 
 cat $result
