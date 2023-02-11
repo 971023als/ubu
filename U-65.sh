@@ -1,10 +1,6 @@
-#!/bin/bash
-
- 
+#!/bin/bash 
 
 . function.sh
-
- 
 
 BAR
 
@@ -25,11 +21,11 @@ TMP1=`SCRIPTNAME`.log
 > $TMP1 
 
 
-sudo chmod 4750 /usr/bin/at
+chmod 4750 /usr/bin/at
 
-sudo chown root /etc/at.deny
+chown root /etc/at.deny
 
-sudo chmod 640 /etc/at.deny
+chmod 640 /etc/at.deny
 
 cat $result
 

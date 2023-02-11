@@ -19,7 +19,7 @@ EOF
 
 BAR
 
-sudo service snmpd stop
+service snmpd stop
 
 cat $result
 

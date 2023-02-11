@@ -25,28 +25,28 @@ TMP1=`SCRIPTNAME`.log
 > $TMP1 
 
 # FTP 서비스 중지
-sudo service ftp stop
+service ftp stop
 
 # FTP 서비스 사용 안 함
-sudo service ftp disable
+service ftp disable
 
 # vsftpd 서비스를 중지합니다:
-sudo service vsftpd stop
+service vsftpd stop
 
 # vsftpd 서비스를 시작하지 않도록 설정합니다
-sudo /etc/rc.d/init.d/vsftpd stop
+/etc/rc.d/init.d/vsftpd stop
 
 # proftp 서비스를 중지합니다:
-sudo service proftp stop
+service proftp stop
 
 # proftp를 시작하지 않도록 설정합니다
-sudo /etc/rc.d/init.d/proftp stop
+/etc/rc.d/init.d/proftp stop
 
 # /etc/passwd에서 FTP 계정을 확인합니다
 ftp_entry=$(grep "^ftp:" /etc/passwd)
 
 # FTP 계정의 셸을 /bin/false로 변경합니다
-sudo chsh -s /bin/false ftp
+chsh -s /bin/false ftp
 
 cat $result
 
