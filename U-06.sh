@@ -16,7 +16,7 @@ EOF
 
 BAR 
 
-invalid_owner_files=$(find / -nouser 2>/dev/null)
+invalid_owner_files=$(find /root/ -nouser -print 2>/dev/null)
 
 if [ -z "$invalid_owner_files" ]; then
   OK "잘못된 소유자가 있는 파일 또는 디렉터리를 찾을 수 없습니다"
