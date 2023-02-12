@@ -26,6 +26,9 @@ BAR
 
 DEF_FILE="/etc/login.defs"
 
+# 전에 있던 PASS_MIN_LEN 값을 #PASS_MIN_LEN
+sed -i 's/PASS_MIN_LEN/#PASS_MIN_LEN/g' "$DEF_FILE"
+
 echo "PASS_MIN_DAYS 7" >> "$DEF_FILE"
  
 cat $result
