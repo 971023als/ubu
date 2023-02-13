@@ -39,7 +39,7 @@ service proftp stop
 /etc/rc.d/init.d/proftp stop
 
 # FTP 포트가 수신 중인지 확인합니다
-if netstat -tnlp | grep -q ':21'; then
+if ss -tnlp | grep -q ':21'; then
   INFO "FTP 포트 닫기(21)..."
   iptables -A INPUT -p tcp --dport 21 -j DROP
 else
