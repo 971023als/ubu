@@ -16,6 +16,10 @@ EOF
 
 BAR
 
+apt install net-tools -y
+
+apt-get install -y iproute2
+
 # FTP 서비스 중지
 service ftp stop
 
@@ -33,9 +37,6 @@ service proftp stop
 
 # proftp를 시작하지 않도록 설정합니다
 /etc/rc.d/init.d/proftp stop
-
-
-apt install net-tools -y
 
 # FTP 포트가 수신 중인지 확인합니다
 if netstat -tnlp | grep -q ':21'; then
