@@ -24,8 +24,11 @@ accounts=("root" "bin" "daemon"  "lp" "sync" "user"
 "systemd-resolve" "systemd-timesync" "mysql" 
 "gdm" "www-data" "user www-data")
 
-# wheel group 생성
-groupadd wheel
+# 원래의 wheel 그룹 삭제
+groupdel wheel
+
+# 새로운 wheel 그룹 추가
+groupadd -r wheel
 
 # 명령어 그룹을 변경
 chgrp wheel /bin/su
